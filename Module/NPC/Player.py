@@ -5,6 +5,7 @@ class Player(Entity):
     def __init__(self, pos, size, img):
         super().__init__(100, 10, 4, pos, size)
         self.image = img
+        # self.image.fill((255, 255, 255))
         self.gravity = 0.5
         self.jump_speed = -8
 

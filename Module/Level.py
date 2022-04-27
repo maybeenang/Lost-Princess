@@ -35,19 +35,16 @@ class Level:
                         dumb.add(block)
 
                     if type == 'player':
+                        print(col)
                         img = slice_img(LEVEL_1_IMG['player'])[int(col)]
                         player = Player((x, y), BLOCKSIZE, img)
                         dumb.add(player)
         return dumb
-                
-                # if col == 'P':
-                #     self.Player.add(Player((x, y), BLOCKSIZE))
     
     def collision_x(self, entity, block):
         entity.rect.x += entity.pos.x * entity.speed
         for tile in block:
             if tile.rect.colliderect(entity.rect):
-                # pygame.draw.rect(self.surface, (0, 255, 0), tile.rect)
                 if entity.pos.x > 0:
                     entity.rect.right = tile.rect.left
                     entity.pos.x = 0
@@ -59,7 +56,6 @@ class Level:
         entity.cek_gravity()
         for tile in block:
             if tile.rect.colliderect(entity.rect):
-                # pygame.draw.rect(self.surface, (255, 0, 0), tile.rect)
                 if entity.pos.y > 0:
                     entity.rect.bottom = tile.rect.top
                     entity.pos.y = 0
