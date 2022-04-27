@@ -23,9 +23,9 @@ class Level:
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
     
     def setuplevel(self, level, type):
-        if type == 'floor' or type == 'item':
+        if type == 'floor' or type == 'item' or type == 'enemy':
             dumb = pygame.sprite.Group()
-        elif type == 'player' or type == 'enemy':
+        elif type == 'player':
             dumb = pygame.sprite.GroupSingle()
 
         for row_index, row in enumerate(level):
@@ -111,6 +111,7 @@ class Level:
         self.camera()
 
         self.enemy.draw(self.surface)
+        self.enemy.update(self.camera_x)
 
         self.player.sprite.health_bar(self.surface)
         self.player.update()
