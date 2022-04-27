@@ -1,14 +1,15 @@
 import pygame
 import sys
 from Assets.Settings import *
+from Assets.Level_set import *
 from Module.Level import *
 
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((HEIGHT, WIDTH))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
-        self.level = Level(LEVEL_SET, self.screen)
+        self.level = Level(LEVEL_1, self.screen)
         self.running = True
         self.run()
     

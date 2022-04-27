@@ -2,9 +2,9 @@ import pygame
 from ..Entity import Entity
 
 class Player(Entity):
-    def __init__(self, pos, size):
+    def __init__(self, pos, size, img):
         super().__init__(100, 10, 4, pos, size)
-        self.image.fill('red')
+        self.image = img
         self.gravity = 0.5
         self.jump_speed = -8
 
@@ -38,6 +38,5 @@ class Player(Entity):
 
     def update(self):
         self.get_input()
-        
         self.cek_gravity()
         
