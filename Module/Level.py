@@ -3,23 +3,29 @@ from Assets.Tools import *
 from Assets.Settings import *
 from Assets.Level_set import *
 from Module.Dump.Block import Block
+from Module.Dump.Pisang import Pisang
 from Module.NPC.Player import Player
+from Module.NPC.Enemy import Enemy
 
 class Level:
     def __init__(self, level, surface):
         self.surface = surface
         self.camera_x = 0
 
-
         level_layout = read_csv(level['floor'])
         player_layout = read_csv(level['player'])
+        item_layout = read_csv(level['item'])
+        enemy_layout = read_csv(level['enemy'])
+
+        self.item = self.setuplevel(item_layout, 'item')
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
+        self.enemy = self.setuplevel(enemy_layout, 'enemy')
     
     def setuplevel(self, level, type):
-        if type == 'floor':
+        if type == 'floor' or type == 'item':
             dumb = pygame.sprite.Group()
-        elif type == 'player':
+        elif type == 'player' or type == 'enemy':
             dumb = pygame.sprite.GroupSingle()
 
         for row_index, row in enumerate(level):
@@ -33,9 +39,18 @@ class Level:
                         img = slice_img(LEVEL_1_IMG['floor'])[int(col)]
                         block = Block((x, y), BLOCKSIZE, img)
                         dumb.add(block)
+                    
+                    if type == 'item':
+                        img = slice_img(LEVEL_1_IMG['item'])[int(col)]
+                        pisang = Pisang((x, y), BLOCKSIZE, img)
+                        dumb.add(pisang)
+                    
+                    if type == 'enemy':
+                        img = slice_img(LEVEL_1_IMG['enemy'])[int(col)]
+                        enemy = Enemy((x, y), BLOCKSIZE, img)
+                        dumb.add(enemy)
 
                     if type == 'player':
-                        print(col)
                         img = slice_img(LEVEL_1_IMG['player'])[int(col)]
                         player = Player((x, y), BLOCKSIZE, img)
                         dumb.add(player)
@@ -63,6 +78,18 @@ class Level:
                     entity.rect.top = tile.rect.bottom
                     entity.pos.y = 0
     
+    def coll_item(self, player, item):
+
+        for pisang in item:
+            if player.rect.colliderect(pisang.rect):
+                player.get_health(100)
+    
+    def coll_enemy(self, player, enemy):
+
+        for enemy in self.enemy:
+            if player.rect.colliderect(enemy.rect):
+                player.get_dmg(enemy.damage)
+    
     def camera(self):
         player = self.player.sprite
         if player.rect.centerx < WIDTH / 4 and player.pos.x < 0:
@@ -79,9 +106,16 @@ class Level:
     def draw(self):
         self.floor.update(self.camera_x)
         self.floor.draw(self.surface)
+        self.item.update(self.camera_x)
+        self.item.draw(self.surface)
         self.camera()
 
+        self.enemy.draw(self.surface)
+
+        self.player.sprite.health_bar(self.surface)
         self.player.update()
+        self.coll_item(self.player.sprite, self.item.sprites())
+        self.coll_enemy(self.player.sprite, self.enemy.sprites())
         self.collision_x(self.player.sprite, self.floor.sprites())
         self.collision_y(self.player.sprite, self.floor.sprites())
         self.player.draw(self.surface)

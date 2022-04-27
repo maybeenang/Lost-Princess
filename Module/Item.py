@@ -9,5 +9,5 @@ class Item(pygame.sprite.Sprite):
     def spawn(self):
         pass
 
-    def update(self):
-        pass
+    def update(self, x):
+        self.rect.x += x
