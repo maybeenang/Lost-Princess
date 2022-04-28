@@ -23,8 +23,7 @@ Anda diharuskan untuk mengunduh keseluruhan source code berikut asset yang terda
    Daffa Sandri Ramadhan dengan NIM 120140193, biasa dipanggil dengan Daffa berperan sebagai karakter desain. Tugas yang dilakukan dalam desain karakter pada proyek ini meliputi pembuatan sketsa karakter dan npc yang dilakukan dengan gambaran tangan untuk berikutnya diimplementasikan dalam bentuk digital menggunakan software Adobe Photoshop.
 
 4. Reyhan Gandaresta
-   Reyhan Gandaresta dengan NIM 120140183, biasa dipanggil dengan Reyhan berperan sebagai pengelola suara pada game meliputi efek suara yang akan digunakan dalam game. Asset untuk efek suara pada game ini diunduh dari website [mixkit](https://mixkit.co/)
-
+   Reyhan Gandaresta dengan NIM 120140183, biasa dipanggil dengan Reyhan berperan sebagai level editor meliputi perancangan obstacle dalam map dan mengatur tata letak map.
 5. Muhammad Nur Aziz
    Muhammad Nur Aziz dengan NIM 120140175, biasa dipanggil dengan Aziz berperan sebagai game desainer dalam proyek ini. Tugasnya sebagai game desainer meliputi dari perancangan alur hingga penataan level dalam game.
 
