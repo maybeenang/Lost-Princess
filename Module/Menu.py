@@ -14,6 +14,9 @@ class Menu:
     def quit(self):
         pass
 
+    def menu_buttons(self):
+        pass
+
 class InGameMenu(Menu):
     def __init__(self):
         super().__init__()
@@ -24,5 +27,11 @@ class InGameMenu(Menu):
     def main_menu(self):
         pass
 
-    def quit_game(self):
-        pass
+    def options(self):
+        return super().options()
+
+    def quit(self):
+        return super().quit()
+
+    def menu_buttons(self):
+        return super().menu_buttons()
