@@ -83,12 +83,14 @@ class Level:
         for pisang in item:
             if player.rect.colliderect(pisang.rect):
                 player.get_health(100)
+                pisang.kill()
     
     def coll_enemy(self, player, enemy):
 
         for enemy in self.enemy:
             if player.rect.colliderect(enemy.rect):
                 player.get_dmg(enemy.damage)
+                enemy.kill()
     
     def camera(self):
         player = self.player.sprite
