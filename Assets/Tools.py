@@ -21,7 +21,7 @@ def slice_img(path):
             x = col * BLOCKSIZE
             y = row * BLOCKSIZE
 
-            temp = pygame.Surface((BLOCKSIZE, BLOCKSIZE))
+            temp = pygame.Surface((BLOCKSIZE, BLOCKSIZE), flags=pygame.SRCALPHA)
             temp.blit(img, (0, 0), (x, y, BLOCKSIZE, BLOCKSIZE))
             img_list.append(temp)
     return img_list
