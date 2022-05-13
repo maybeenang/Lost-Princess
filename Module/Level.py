@@ -8,6 +8,7 @@ from Module.Dump.Pisang import Pisang
 from Module.NPC.Player import Player
 from Module.NPC.Enemy import Enemy
 from Module.MenuPack.Pause import *
+from Module.MenuPack.Gameover import *
 
 class Level:
     def __init__(self, level, surface):
@@ -19,7 +20,10 @@ class Level:
         item_layout = read_csv(level['item'])
         enemy_layout = read_csv(level['enemy'])
 
-        self.status = True
+        self.status = "running"
+
+        # gameover
+        self.gameover = Gameover(self.surface)
 
         # pause button
         self.pause = Pause(self.surface)
@@ -36,6 +40,10 @@ class Level:
         if self.pausebutton_rect.collidepoint(pointer):
             return True
         return False
+
+    def cek_gameover(self):
+        if self.player.sprite.health_now <= 0:
+            self.status = "gameover"
     
     def setuplevel(self, level, type):
         if type == 'floor' or type == 'item' or type == 'enemy':
@@ -122,7 +130,7 @@ class Level:
     
     def draw(self):
 
-        if self.status:
+        if self.status == "running":
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
             self.item.update(self.camera_x)
@@ -141,5 +149,8 @@ class Level:
             self.player.draw(self.surface)
 
             self.surface.blit(self.pausebutton, self.pausebutton_rect)
-        else:
+            self.cek_gameover()
+        elif self.status == "pause":
             self.pause.draw()
+        elif self.status == "gameover":
+            self.gameover.draw()

@@ -49,12 +49,12 @@ class Game:
                         self.menu.status = 'main'
                 
                 if not self.cek_menu:
-                    if self.level.status:
+                    if self.level.status == 'running':
                         if self.level.pause_game(pointer):
-                            self.level.status = False
+                            self.level.status = 'pause'
                     else:
                         if self.level.pause.cek_button(pointer) == 'resume':
-                            self.level.status = True
+                            self.level.status = 'running'
                         elif self.level.pause.cek_button(pointer) == 'quit':
                             self.menu.status = 'main'
                             self.cek_menu = True
@@ -69,7 +69,7 @@ class Game:
             self.cek_menu = True
 
     def run(self):
-        
+
         while self.running:
             self.events()
 
