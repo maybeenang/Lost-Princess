@@ -64,7 +64,7 @@ class Game:
             if self.cek_menu:
                 self.drawmenu()
             else:
-                self.bg.fadeout(1000)
+                #self.bg_sound.fadeout(1000)
                 self.draw()
 
             pygame.display.update()
