@@ -5,5 +5,6 @@ Menu_path = {
     "sound_bg": "./Assets/LayoutMenu/Sound.mp3",
     "logo_game": "./Assets/LayoutMenu/Logo_Game.png",
     "optlogo": "./Assets/LayoutMenu/Option_logo.png",
-    "bg": "./Assets/LayoutMenu/Background.png"
+    "bg": "./Assets/LayoutMenu/Background.png",
+    "pause_button" : "./Assets/LayoutMenu/Pause_icon.png",
 }

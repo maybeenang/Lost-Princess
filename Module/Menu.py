@@ -7,8 +7,6 @@ class Menu:
         self.surface = surface
         # click sound
         self.click_sound = pygame.mixer.Sound(Menu_path['sound_klik'])
-        self.bg_sound = pygame.mixer.Sound(Menu_path['sound_bg'])
-        self.bg_sound.play(-1)
     
     def cek_button(self, pointer):
         pass
