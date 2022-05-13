@@ -4,6 +4,7 @@ from Assets.Settings import *
 from Assets.Level_set import *
 from Module.Level import *
 from Module.Menu import *
+from Assets.Menu_set import *
 
 class Game:
     def __init__(self):
@@ -39,12 +40,15 @@ class Game:
             self.cek_menu = True
 
     def run(self):
+        self.bg = pygame.mixer.Sound(Menu_path['sound_bg'])
+        self.bg.play(-1)
         while self.running:
             self.events()
 
             if self.cek_menu:
                 self.drawmenu()
             else:
+                self.bg.fadeout(1000)
                 self.draw()
 
             pygame.display.update()
