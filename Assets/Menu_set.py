@@ -4,5 +4,6 @@ Menu_path = {
     "sound_klik": "./Assets/LayoutMenu/Click.wav",
     "sound_bg": "./Assets/LayoutMenu/Sound.mp3",
     "logo_game": "./Assets/LayoutMenu/Logo_Game.png",
+    "optlogo": "./Assets/LayoutMenu/Option_logo.png",
     "bg": "./Assets/LayoutMenu/Background.png"
 }
