@@ -3,10 +3,10 @@ from Assets.Tools import *
 from Assets.Settings import *
 from Assets.Level_set import *
 from Assets.Menu_set import *
-from Module.Dump.Block import Block
-from Module.Dump.Pisang import Pisang
-from Module.NPC.Player import Player
-from Module.NPC.Enemy import Enemy
+from Module.ItemPack.Block import Block
+from Module.ItemPack.Pisang import Pisang
+from Module.Entitypack.Player import Player
+from Module.Entitypack.Enemy import Enemy
 from Module.MenuPack.Pause import *
 from Module.MenuPack.Gameover import *
 
@@ -23,23 +23,23 @@ class Level:
         self.status = "running"
 
         # gameover
-        self.gameover = Gameover(self.surface)
+        # self.gameover = Gameover(self.surface)
 
         # pause button
-        self.pause = Pause(self.surface)
-        self.pausebutton = pygame.surface.Surface((BLOCKSIZE, BLOCKSIZE))
-        self.pausebutton = pygame.image.load(Menu_path['pause_button']).convert_alpha()
-        self.pausebutton_rect = self.pausebutton.get_rect(center=(WIDTH - 35, HEIGHT - 385))
+        # self.pause = Pause(self.surface)
+        # self.pausebutton = pygame.surface.Surface((BLOCKSIZE, BLOCKSIZE))
+        # self.pausebutton = pygame.image.load(Menu_path['pause_button']).convert_alpha()
+        # self.pausebutton_rect = self.pausebutton.get_rect(center=(WIDTH - 35, HEIGHT - 385))
 
         self.item = self.setuplevel(item_layout, 'item')
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
     
-    def pause_game(self, pointer):
-        if self.pausebutton_rect.collidepoint(pointer):
-            return True
-        return False
+    # def pause_game(self, pointer):
+    #     if self.pausebutton_rect.collidepoint(pointer):
+    #         return True
+    #     return False
 
     def cek_gameover(self):
         if self.player.sprite.health_now <= 0:
@@ -142,15 +142,15 @@ class Level:
 
             self.player.sprite.health_bar(self.surface)
             self.player.update()
-            # self.coll_item(self.player.sprite, self.item.sprites())
+            self.coll_item(self.player.sprite, self.item.sprites())
             self.coll_enemy(self.player.sprite, self.enemy.sprites())
             self.collision_x(self.player.sprite, self.floor.sprites())
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.player.draw(self.surface)
 
-            self.surface.blit(self.pausebutton, self.pausebutton_rect)
-            self.cek_gameover()
-        elif self.status == "pause":
-            self.pause.draw()
-        elif self.status == "gameover":
-            self.gameover.draw()
+            # self.surface.blit(self.pausebutton, self.pausebutton_rect)
+            # self.cek_gameover()
+        # elif self.status == "pause":
+        #     self.pause.draw()
+        # elif self.status == "gameover":
+        #     self.gameover.draw()

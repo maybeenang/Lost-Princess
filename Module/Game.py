@@ -9,56 +9,68 @@ from Assets.Menu_set import *
 class Game:
     def __init__(self):
         pygame.init()
+
+        # window yang digunakan
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        # FPS
         self.clock = pygame.time.Clock()
+
+        # setup level
         self.level = Level(LEVEL_1, self.screen)
+
+        # setup menu utama
         self.menu = MainMenu(self.screen)
 
+        # perkondisian
         self.running = True
         self.cek_menu = True
         self.run()
     
-    
+    # event ketika ada sesuatu ketika game berjalan
     def events(self):
-        pointer = pygame.mouse.get_pos()
         for event in pygame.event.get():
+
+            # jika tombol close ditekan
             if event.type == pygame.QUIT:
                 self.running = False
                 sys.exit()
             
+            # jika salah satu tombol keyboard ditekan
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    if not self.cek_menu:
-                        if self.level.status:
-                            self.level.status = False
-                        else:
-                            self.level.status = True
-            
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pointer = pygame.mouse.get_pos()
-                if self.menu.status == 'main':
-                    if self.menu.cek_button(pointer) == 'start':
-                        self.cek_menu = False
-                    elif self.menu.cek_button(pointer) == 'opt':
-                        self.menu.status = 'opt'
-                    elif self.menu.cek_button(pointer) == False:
-                        self.running = False
-                        sys.exit()
-                elif self.menu.status == 'opt':
-                    if self.menu.cek_button(pointer) == 'backopt':
-                        self.menu.status = 'main'
                 
-                if not self.cek_menu:
-                    if self.level.status == 'running':
-                        if self.level.pause_game(pointer):
-                            self.level.status = 'pause'
-                    else:
-                        if self.level.pause.cek_button(pointer) == 'resume':
-                            self.level.status = 'running'
-                        elif self.level.pause.cek_button(pointer) == 'quit':
-                            self.menu.status = 'main'
-                            self.cek_menu = True
+                # ketika berada di main menu
+                if self.cek_menu:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        # ketika berada di menu utama
+                        if self.menu.status == "main":
+                            if self.menu.currentbutton >= len(self.menu.buttons) - 1:
+                                self.menu.currentbutton = len(self.menu.buttons) - 1
+                            else:
+                                self.menu.currentbutton += 1
+                        # ketika berada di menu option
+                        elif self.menu.status == "opt":
+                            if self.menu.currentoptbutton >= len(self.menu.optbutton)-1:
+                                self.menu.currentoptbutton = len(self.menu.optbutton)-1
+                            else:
+                                self.menu.currentoptbutton += 1
 
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        # ketika berada di menu utama
+                        if self.menu.status == "main":
+                            if self.menu.currentbutton == 0:
+                                self.menu.currentbutton = 0
+                            else:
+                                self.menu.currentbutton -= 1
+                        # ketika berada di menu option
+                        elif self.menu.status == "opt":
+                            if self.menu.currentoptbutton == 0:
+                                self.menu.currentoptbutton = 0
+                            else:
+                                self.menu.currentoptbutton -= 1
+                    
+                    elif event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                        self.menu.cek_button()
+                    
     def drawmenu(self):
         self.menu.draw()
     
@@ -69,15 +81,13 @@ class Game:
             self.cek_menu = True
 
     def run(self):
-
         while self.running:
             self.events()
-
             if self.cek_menu:
                 self.drawmenu()
-            else:
-                self.menu.bg_sound.fadeout(1000)
-                self.draw()
+            # else:
+            # self.menu.bg_sound.fadeout(1000)
+                # self.draw()
 
             pygame.display.update()
             self.clock.tick(FPS)

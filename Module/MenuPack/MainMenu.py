@@ -1,7 +1,8 @@
 from Module.Menu import *
 from Module.MenuPack.Button import *
+from Module.MenuPack.LevelSelect import *
 from Assets.Menu_set import *
-import pygame
+import pygame, sys
 
 class MainMenu(Menu):
     def __init__(self, surface):
@@ -17,67 +18,63 @@ class MainMenu(Menu):
 
         # status
         self.status = 'main'
+        self.currentbutton = 0
+        self.currentoptbutton = 0
 
         # main menu button
-        self.start = Button(self.surface, (310, 200), "START")
-        self.opt = Button(self.surface, (310, 260), "OPTIONS")
-        self.quit = Button(self.surface, (310, 320), "QUIT")
+        self.buttons = {
+            'start': Button(self.surface, (310, 200), 'Start', 0),
+            'opt': Button(self.surface, (310, 260), 'Option', 1),
+            'quit': Button(self.surface, (310, 320), 'Quit', 2)
+        }
 
         # option button
         self.optlogo = pygame.image.load(Menu_path['optlogo'])
         self.optlog_rect = self.optlogo.get_rect(center=(310, 50))
-        self.sound_button_on = Button(self.surface, (310, 200), "Sound: On")
-        self.sound_button_off = Button(self.surface, (310, 200), "Sound: Off")
-        self.back_button = Button(self.surface, (310, 312), "Back")
-        self.optbutton = [self.sound_button_on, self.sound_button_off]
-        
-        # radiobutton
-        self.index = 1
+        self.soundstatus = "on"
+        self.optbutton = {
+            'back': Button(self.surface, (310, 200), 'Back', 0),
+            'sound': Button(self.surface, (310, 260), 'Sound Off', 1)
+        }
 
-    def cek_button(self, pointer):
-
+    def cek_button(self):
         if self.status == 'main':
-            if self.start.input(pointer):
-                self.click_sound.play()
-                return 'start'
-            elif self.opt.input(pointer):
-                self.click_sound.play()
-                return 'opt'
-            elif self.quit.input(pointer):
-                self.click_sound.play()
-                return False
-
+            for button in self.buttons:
+                if self.buttons[button].input(self.currentbutton):
+                    if button == 'start':
+                        self.status = 'play'
+                    elif button == 'opt':
+                        self.status = 'opt'
+                    elif button == 'quit':
+                        self.running = False
+                        sys.exit()
         elif self.status == 'opt':
-            if self.back_button.input(pointer):
-                self.click_sound.play()
-                return 'backopt'
-            # cek sound button
-            if self.index == 0:
-                if self.sound_button_on.input(pointer):
-                    self.click_sound.play()
-                    self.index = 1
-                    self.bg_sound.play(-1)
-                    return 'sound_off'
-            elif self.index == 1:
-                if self.sound_button_off.input(pointer):
-                    self.click_sound.play()
-                    self.index = 0
-                    self.bg_sound.stop()
-                    return 'sound_on'
-                
+            for button in self.optbutton:
+                if self.optbutton[button].input(self.currentoptbutton):
+                    if button == 'back':
+                        self.currentoptbutton = 0
+                        self.status = 'main'
+                    elif button == 'sound':
+                        print(self.soundstatus)
+                        if self.soundstatus == "on":
+                            self.soundstatus = "off"
+                            self.optbutton[button].temp_text = 'Sound On'
+                            self.bg_sound.stop()
+                        elif self.soundstatus == "off":
+                            self.soundstatus = "on"
+                            self.optbutton[button].temp_text = 'Sound Off'
+                            self.bg_sound.play(-1)
     
     def draw(self):
-        pointer = pygame.mouse.get_pos()
         self.surface.fill('grey')
-
         if self.status == 'main':
             self.surface.blit(self.logo, self.logo_rect)
-            self.start.update(pointer)
-            self.opt.update(pointer)
-            self.quit.update(pointer)
-
+            for button in self.buttons:
+                self.buttons[button].update(self.currentbutton)
         elif self.status == 'opt':
             self.surface.blit(self.optlogo, self.optlog_rect)
-            self.optbutton[self.index].update(pointer)
-            self.back_button.update(pointer)
-
+            for button in self.optbutton:
+                self.optbutton[button].update(self.currentoptbutton)
+        elif self.status == 'play':
+            levelselect = LevelSelect(self.surface)
+            levelselect.draw()

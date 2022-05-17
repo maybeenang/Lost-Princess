@@ -1,3 +1,5 @@
 from Module.Game import *
 
-game = Game()
+# menjalankan games
+if __name__ == '__main__':
+    game = Game()
