@@ -51,7 +51,6 @@ class Player(Entity):
         self.pos.y = self.jump_speed
     
     def cek_gravity(self):
-
         self.pos.y += self.gravity
         self.rect.y += self.pos.y
 
