@@ -11,11 +11,11 @@ class OptionMenu(Menu):
         self.createmenu = menu
         
 
+        self.soundstatus = soundstatus
         self.buttons = {
             'back': Button(self.surface, (310, 200), 'Back', 0),
-            'sound': Button(self.surface, (310, 260), 'Sound Off', 1)
+            'sound': Button(self.surface, (310, 260), 'Sound: ' + str(self.soundstatus), 1)
         }
-        self.soundstatus = soundstatus
 
         # time
         self.time = pygame.time.get_ticks()
@@ -23,6 +23,8 @@ class OptionMenu(Menu):
     
     def input(self):
         keys = pygame.key.get_pressed()
+
+        # vertical input
         if keys[pygame.K_s] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == len(self.buttons) - 1:
@@ -35,6 +37,27 @@ class OptionMenu(Menu):
                 self.currentbutton = 0
             else:
                 self.currentbutton -= 1
+        
+        # horizontal input
+        if keys[pygame.K_d] and (pygame.time.get_ticks() > self.time + self.delay):
+            self.time = pygame.time.get_ticks()
+            for button in self.buttons:
+                if self.buttons[button].input(self.currentbutton):
+                    if button == 'sound':
+                        if self.soundstatus < 1:
+                            self.soundstatus += 0.1
+                        else:
+                            self.soundstatus = 1
+        elif keys[pygame.K_a] and (pygame.time.get_ticks() > self.time + self.delay):
+            self.time = pygame.time.get_ticks()
+            for button in self.buttons:
+                if self.buttons[button].input(self.currentbutton):
+                    if button == 'sound':
+                        if self.soundstatus > 0:
+                            self.soundstatus -= 0.1
+                        else:
+                            self.soundstatus = 0
+
 
         if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
@@ -43,25 +66,16 @@ class OptionMenu(Menu):
                     if button == 'back':
                         self.createmenu()
                     elif button == 'sound':
-                        if self.soundstatus == "off":
-                            self.soundstatus = "on"
-                            self.buttons['sound'].temp_text = "Sound Off"
-                        else:
-                            self.soundstatus = "off"
-                            self.buttons['sound'].temp_text = "Sound On"
-    
-    def soundset(self):
-        return self.soundstatus      
+                        pass
+                        # self.soundstatus(0.0)     
 
     def draw(self):
         self.input()
         self.surface.fill('grey')
         self.surface.blit(self.logo, self.logo_rect)
 
-        if self.soundstatus == "off":
-            self.buttons['sound'].temp_text = "Sound On"
-        else:
-            self.buttons['sound'].temp_text = "Sound Off"
+        # update sound button
+        self.buttons['sound'].temp_text = 'Sound: ' + str(self.soundstatus)
 
         for button in self.buttons:
             self.buttons[button].update(self.currentbutton)
