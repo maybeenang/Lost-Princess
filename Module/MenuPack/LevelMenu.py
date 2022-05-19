@@ -15,6 +15,14 @@ class LevelMenu(Menu):
         self.buttons[len(LEVEL_SET)] = Button(self.surface, (310, 200 + (len(LEVEL_SET)-1)*60), "Back", len(LEVEL_SET))
         self.back = back
 
+        # sound click
+        self.soundclick = pygame.mixer.Sound(Menu_path['sound_klik'])
+        self.soundclicked = [
+            pygame.mixer.Sound(Menu_path['positive_click']), 
+            pygame.mixer.Sound(Menu_path['negative_click']), 
+            pygame.mixer.Sound(Menu_path['error_click'])
+        ]
+
         # time 
         self.time = pygame.time.get_ticks()
         self.delay = 200
@@ -26,12 +34,14 @@ class LevelMenu(Menu):
             if self.currentbutton == len(self.buttons) - 1:
                 self.currentbutton = len(self.buttons)-1
             else:
+                self.soundclick.play()
                 self.currentbutton += 1
         elif keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 0:
                 self.currentbutton = 0
             else:
+                self.soundclick.play()
                 self.currentbutton -= 1
         
         if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
@@ -39,7 +49,10 @@ class LevelMenu(Menu):
             for button in self.buttons:
                 if self.buttons[button].input(self.currentbutton):
                     if button == len(LEVEL_SET):
+                        self.soundclicked[1].play()
                         self.back()
+                    else:
+                        self.soundclicked[2].play()
     
 
     def draw(self):

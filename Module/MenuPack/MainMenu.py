@@ -24,6 +24,14 @@ class MainMenu(Menu):
             'opt': Button(self.surface, (310, 260), 'Option', 1),
             'quit': Button(self.surface, (310, 320), 'Quit', 2)
         }
+
+        # sound click
+        self.soundclick = pygame.mixer.Sound(Menu_path['sound_klik'])
+        self.soundclicked = [
+            pygame.mixer.Sound(Menu_path['positive_click']), 
+            pygame.mixer.Sound(Menu_path['negative_click']), 
+            pygame.mixer.Sound(Menu_path['error_click'])
+        ]
         
         # time
         self.time = pygame.time.get_ticks()
@@ -36,12 +44,14 @@ class MainMenu(Menu):
             if self.currentbutton == len(self.buttons) - 1:
                 self.currentbutton = len(self.buttons)-1
             else:
+                self.soundclick.play()
                 self.currentbutton += 1
         elif keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 0:
                 self.currentbutton = 0
             else:
+                self.soundclick.play()
                 self.currentbutton -= 1
         
         if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
@@ -49,8 +59,10 @@ class MainMenu(Menu):
             for button in self.buttons:
                 if self.buttons[button].input(self.currentbutton):
                     if button == 'start':
+                        self.soundclicked[0].play()
                         self.level()
                     elif button == 'opt':
+                        self.soundclicked[0].play()
                         self.opt()
                     elif button == 'quit':
                         pygame.quit()
