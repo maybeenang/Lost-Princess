@@ -76,7 +76,7 @@ class OptionMenu(Menu):
             for button in self.buttons:
                 if self.buttons[button].input(self.currentbutton):
                     if button == 'back':
-                        self.soundclicked[1].play()
+                        self.soundclicked[0].play()
                         self.createmenu()
                     elif button == 'sound':
                         self.soundclicked[2].play()

@@ -65,6 +65,7 @@ class MainMenu(Menu):
                         self.soundclicked[0].play()
                         self.opt()
                     elif button == 'quit':
+                        self.soundclicked[1].play()
                         pygame.quit()
                         sys.exit()
     
