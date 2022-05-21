@@ -25,6 +25,7 @@ class Player(Entity):
             self.health_now = 0
     
     def health_bar(self, screen):
+
         pygame.draw.rect(screen, (255, 0, 0), (5, 5, self.health_now / self.health_ratio, 25))
         pygame.draw.rect(screen, (0, 255, 0), (5, 5, self.max_health_bar, 25), 1)
 

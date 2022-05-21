@@ -8,7 +8,7 @@ class Button:
         self.surface = surface
 
         # component
-        self.font = pygame.font.Font(Menu_path['font'], 25)
+        self.font = pygame.font.Font(Menu_path['font'], 20)
         self.image = pygame.image.load(Menu_path['frame_tombol'])
         self.color = "#fde047"
         self.hover_color = "white"

@@ -10,5 +10,6 @@ Menu_path = {
     "logo_game": "./Assets/LayoutMenu/Logo_Game.png",
     "optlogo": "./Assets/LayoutMenu/Option_logo.png",
     "bg": "./Assets/LayoutMenu/Background.png",
-    "pause_button" : "./Assets/LayoutMenu/Pause_icon.png"
+    "pause_button" : "./Assets/LayoutMenu/Pause_icon.png",
+    "ingamebg" : "./Assets/LayoutMenu/ingamebacksound.mp3"
 }

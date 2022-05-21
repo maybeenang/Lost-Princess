@@ -12,13 +12,21 @@ class LevelMenu(Menu):
         self.logo = self.font.render("Level Select", True, "white")
         self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 50))
 
+        # setup button
         self.maxlevel = maxlevel
         self.currentbutton = 0
         self.buttons = {}
         for level in LEVEL_SET:
-            self.buttons[level] = Button(self.surface, (WIDTH/2, 200 + (level-1)*60), str(level), level)
+            if level == 0:
+                self.buttons[level] = Button(self.surface, (WIDTH/2, 200 + (level-1)*60), "Tutorial", level)
+            else:
+                self.buttons[level] = Button(self.surface, (WIDTH/2, 200 + (level-1)*60), "Level " + str(level), level)
+            
+            # ketika level belum di unlock
             if level > self.maxlevel:
                 self.buttons[level].image = pygame.image.load(Menu_path['frame_tombol_negative'])
+        
+        # back button
         self.buttons[len(LEVEL_SET)] = Button(self.surface, (WIDTH/2, 200 + (len(LEVEL_SET)-1)*60), "Back", len(LEVEL_SET))
         
         # kembali ke main menu
@@ -39,9 +47,6 @@ class LevelMenu(Menu):
         # time 
         self.time = pygame.time.get_ticks()
         self.delay = 200
-    
-    def setuplevelbutton(self, status):
-        pass
 
     
     def input(self):

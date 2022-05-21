@@ -14,40 +14,45 @@ class Level:
     def __init__(self, level, surface, mainmenu):
         self.surface = surface
         self.camera_x = 0
+        self.bgsound = pygame.mixer.Sound(Menu_path['ingamebg'])
+        self.bgsound.play(-1)
 
         level_layout = read_csv(level['floor'])
         player_layout = read_csv(level['player'])
         item_layout = read_csv(level['item'])
         enemy_layout = read_csv(level['enemy'])
-
-        self.status = "running"
-        
+        self.status = "running"        
         # mainmenu
         self.mainmenu = mainmenu
-
-        # gameover
-        # self.gameover = Gameover(self.surface)
-
-        # pause button
-        # self.pause = Pause(self.surface)
-        # self.pausebutton = pygame.surface.Surface((BLOCKSIZE, BLOCKSIZE))
-        # self.pausebutton = pygame.image.load(Menu_path['pause_button']).convert_alpha()
-        # self.pausebutton_rect = self.pausebutton.get_rect(center=(WIDTH - 35, HEIGHT - 385))
+        self.pause = Pause(self.surface, self.mainmenu, self.setstatus)
 
         self.item = self.setuplevel(item_layout, 'item')
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
     
-    # def pause_game(self, pointer):
-    #     if self.pausebutton_rect.collidepoint(pointer):
-    #         return True
-    #     return False
+    def createpause(self):
+        self.bgsound.stop()
+        self.pause.draw()
+        self.pause.input()
+        # if self.pause.status == 'resume':
+        #     self.bgsound.play(-1)
+        #     self.status = "running"
+        # elif self.pause.status == 'back':
+        #     self.bgsound.stop()
+        #     self.mainmenu()
+    
+    def setstatus(self, status):
+        if status == "running":
+            self.bgsound.play(-1)
+        self.status = status
+        
 
     def input(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:
-            self.mainmenu()
+        if self.status == "running":
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_p]:
+                self.setstatus("pause")
 
     def cek_gameover(self):
         if self.player.sprite.health_now <= 0:
@@ -137,7 +142,6 @@ class Level:
 
     
     def draw(self):
-
         if self.status == "running":
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
@@ -155,12 +159,7 @@ class Level:
             self.collision_x(self.player.sprite, self.floor.sprites())
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.player.draw(self.surface)
+        elif self.status == "pause":
+            self.createpause()
         
         self.input()
-
-            # self.surface.blit(self.pausebutton, self.pausebutton_rect)
-            # self.cek_gameover()
-        # elif self.status == "pause":
-        #     self.pause.draw()
-        # elif self.status == "gameover":
-        #     self.gameover.draw()
