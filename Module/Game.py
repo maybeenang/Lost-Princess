@@ -16,15 +16,25 @@ class Game:
         self.clock = pygame.time.Clock()
 
         # setup level
-        self.level = Level(LEVEL_1, self.screen)
+        self.maxlevel = 1
 
         # setup menu utama
-        self.menu = MenuManager(self.screen)
+        self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
 
         # perkondisian
-        self.running = True
-        self.cek_menu = True
+        self.status = 'menu'
         self.run()
+    
+    # membuat level
+    def createlevel(self):
+        self.level = Level(LEVEL_1, self.screen, self.createmenu)
+        self.status = 'game'
+
+    # membuat menu
+    def createmenu(self):
+        self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
+        self.status = 'menu'
+
     
     # event ketika ada sesuatu ketika game berjalan
     def events(self):
@@ -32,7 +42,6 @@ class Game:
 
             # jika tombol close ditekan
             if event.type == pygame.QUIT:
-                self.running = False
                 sys.exit()
             
                     
@@ -40,17 +49,17 @@ class Game:
         self.menu.draw()
         # self.menu.soundplay()
     
-    def draw(self):
+    def drawlevel(self):
         self.screen.fill('black')
         self.level.draw()
-        if self.level.player.sprite.health <= 0:
-            self.cek_menu = True
 
     def run(self):
-        while self.running:
+        while True:
             self.events()
-            if self.cek_menu:
+            if self.status == 'menu':
                 self.drawmenu()
+            elif self.status == 'game':
+                self.drawlevel()
 
             pygame.display.update()
             self.clock.tick(FPS)

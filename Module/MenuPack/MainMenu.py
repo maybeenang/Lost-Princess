@@ -1,3 +1,4 @@
+from Assets.Settings import WIDTH
 from Module.Menu import *
 from Module.MenuPack.Button import *
 from Module.MenuPack.LevelMenu import *
@@ -10,19 +11,21 @@ class MainMenu(Menu):
         super().__init__(surface)
 
         # logo
-        self.logo = pygame.image.load(Menu_path['logo_game'])
-        self.logo_rect = self.logo.get_rect(center=(310, 75))
+        self.font = pygame.font.Font(Menu_path['font'], 40)
+        self.logo = self.font.render("Lost Princess", True, "white")
+        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 100))
 
         # status
         self.currentbutton = 0
         self.opt = opt
+        
         self.level = level
 
         # main menu button
         self.buttons = {
-            'start': Button(self.surface, (310, 200), 'Start', 0),
-            'opt': Button(self.surface, (310, 260), 'Option', 1),
-            'quit': Button(self.surface, (310, 320), 'Quit', 2)
+            'start': Button(self.surface, (WIDTH/2, 160), 'Start', 0),
+            'opt': Button(self.surface, (WIDTH/2, 220), 'Option', 1),
+            'quit': Button(self.surface, (WIDTH/2, 280), 'Quit', 2)
         }
 
         # sound click

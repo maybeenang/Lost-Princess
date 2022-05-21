@@ -1,6 +1,7 @@
 Menu_path = {
     "font": "./Assets/LayoutMenu/font.ttf",
-    "frame_tombol": "./Assets/LayoutMenu/Frame tombol.png",
+    "frame_tombol": "./Assets/LayoutMenu/tombolpositive.png",
+    "frame_tombol_negative": "./Assets/LayoutMenu/tombolnegative.png",
     "sound_klik": "./Assets/LayoutMenu/click.wav",
     "positive_click": "./Assets/LayoutMenu/positiveclick.wav",
     "negative_click": "./Assets/LayoutMenu/negativeclick.wav",

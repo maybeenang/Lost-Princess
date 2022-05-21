@@ -6,7 +6,7 @@ class OptionMenu(Menu):
         super().__init__(surface)
 
         self.logo = self.font.render("Option", True, "white")
-        self.logo_rect = self.logo.get_rect(center=(310, 50))
+        self.logo_rect = self.logo.get_rect(center=(350, 50))
         self.currentbutton = 0
         self.createmenu = menu
 
@@ -21,11 +21,15 @@ class OptionMenu(Menu):
 
         self.soundstatus = soundstatus
         self.buttons = {
-            'back': Button(self.surface, (310, 120), 'Back', 0),
-            'sound': Button(self.surface, (180, 260), 'Sound', 1)
+            'back': Button(self.surface, (350, 120), 'Back', 0),
+            'sound': Button(self.surface, (200, 260), 'Sound', 1)
         }
 
-
+        # volume slider
+        self.currentvolume = self.soundstatus * 1000
+        self.maxvolume = 1000
+        self.volumelenght = 300
+        self.volumeratio = self.maxvolume / self.volumelenght
 
         # time
         self.time = pygame.time.get_ticks()
@@ -56,18 +60,18 @@ class OptionMenu(Menu):
             for button in self.buttons:
                 if self.buttons[button].input(self.currentbutton):
                     if button == 'sound':
-                        if self.soundstatus < 1:
-                            self.soundstatus += 0.05
-                        else:
+                        if self.soundstatus < 1.0:
+                            self.soundstatus += 0.2
+                        elif self.soundstatus == 1.0:
                             self.soundstatus = 1.0
         elif keys[pygame.K_a] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             for button in self.buttons:
                 if self.buttons[button].input(self.currentbutton):
                     if button == 'sound':
-                        if self.soundstatus > 0:
-                            self.soundstatus -= 0.05
-                        else:
+                        if self.soundstatus > 0.0:
+                            self.soundstatus -= 0.2
+                        elif self.soundstatus == 0:
                             self.soundstatus = 0.0
 
 
@@ -80,23 +84,31 @@ class OptionMenu(Menu):
                         self.createmenu()
                     elif button == 'sound':
                         self.soundclicked[2].play()
-                        # self.soundstatus(0.0)   
+                        # self.soundstatus(0.0)
+    
+    def cekvolumebar(self):
+        if int(self.currentvolume) < self.maxvolume:
+            self.currentvolume = self.soundstatus * 1000
+        else:
+            self.currentvolume = self.maxvolume 
+
+        if int(self.currentvolume) > 0:
+            self.currentvolume = self.soundstatus * 1000
+        else:
+            self.currentvolume = 0
+        
+        # print("{a}, {b}" .format(a=self.currentvolume / self.volumeratio, b=self.currentvolume))
+
     def soundbar(self):
-
-        # garis
-        pygame.draw.rect(self.surface, 'white', (300, 255, 270, 5), border_radius=6)
-        pygame.draw.rect(self.surface, 'black', (300, 255, 270, 5), 1, 6)
-
-        # circle
-        pygame.draw.circle(self.surface, 'white', (300 + (self.soundstatus * 250), 255), 10)
-        pygame.draw.circle(self.surface, 'black', (300 + (self.soundstatus * 250), 255), 10, 1)
+        self.value = pygame.draw.rect(self.surface, 'green', (350, 250, self.currentvolume / self.volumeratio, 20), border_radius=8)
+        self.border = pygame.draw.rect(self.surface, 'black', (350, 250, self.volumelenght, 20), 3, 8)
 
     def draw(self):
         self.input()
         self.surface.fill('grey')
         self.surface.blit(self.logo, self.logo_rect)
+        self.cekvolumebar()
         self.soundbar()
 
         for button in self.buttons:
             self.buttons[button].update(self.currentbutton)
-    

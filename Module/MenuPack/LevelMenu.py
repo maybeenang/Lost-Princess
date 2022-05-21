@@ -1,19 +1,32 @@
+from Assets.Settings import WIDTH
 from Module.Menu import *
 from Module.MenuPack.Button import *
 from Assets.Level_set import *
 import pygame
 
 class LevelMenu(Menu):
-    def __init__(self, surface, back):
+    def __init__(self, surface, back, createlevel, stopsound, maxlevel):
         super().__init__(surface)
+
+        # logo di atas
         self.logo = self.font.render("Level Select", True, "white")
-        self.logo_rect = self.logo.get_rect(center=(310, 50))
+        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 50))
+
+        self.maxlevel = maxlevel
         self.currentbutton = 0
         self.buttons = {}
         for level in LEVEL_SET:
-            self.buttons[level] = Button(self.surface, (310, 200 + (level-1)*60), str(level), level)
-        self.buttons[len(LEVEL_SET)] = Button(self.surface, (310, 200 + (len(LEVEL_SET)-1)*60), "Back", len(LEVEL_SET))
+            self.buttons[level] = Button(self.surface, (WIDTH/2, 200 + (level-1)*60), str(level), level)
+            if level > self.maxlevel:
+                self.buttons[level].image = pygame.image.load(Menu_path['frame_tombol_negative'])
+        self.buttons[len(LEVEL_SET)] = Button(self.surface, (WIDTH/2, 200 + (len(LEVEL_SET)-1)*60), "Back", len(LEVEL_SET))
+        
+        # kembali ke main menu
         self.back = back
+
+        # level saat ini
+        self.createlevel = createlevel
+        self.stopsound = stopsound
 
         # sound click
         self.soundclick = pygame.mixer.Sound(Menu_path['sound_klik'])
@@ -26,6 +39,10 @@ class LevelMenu(Menu):
         # time 
         self.time = pygame.time.get_ticks()
         self.delay = 200
+    
+    def setuplevelbutton(self, status):
+        pass
+
     
     def input(self):
         keys = pygame.key.get_pressed()
@@ -52,7 +69,12 @@ class LevelMenu(Menu):
                         self.soundclicked[1].play()
                         self.back()
                     else:
-                        self.soundclicked[2].play()
+                        if self.currentbutton > self.maxlevel:
+                            self.soundclicked[2].play()
+                        else:
+                            self.soundclicked[0].play()
+                            self.createlevel()
+                            self.stopsound()
     
 
     def draw(self):

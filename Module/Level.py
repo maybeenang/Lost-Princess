@@ -11,7 +11,7 @@ from Module.MenuPack.Pause import *
 from Module.MenuPack.Gameover import *
 
 class Level:
-    def __init__(self, level, surface):
+    def __init__(self, level, surface, mainmenu):
         self.surface = surface
         self.camera_x = 0
 
@@ -21,6 +21,9 @@ class Level:
         enemy_layout = read_csv(level['enemy'])
 
         self.status = "running"
+        
+        # mainmenu
+        self.mainmenu = mainmenu
 
         # gameover
         # self.gameover = Gameover(self.surface)
@@ -40,6 +43,11 @@ class Level:
     #     if self.pausebutton_rect.collidepoint(pointer):
     #         return True
     #     return False
+
+    def input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            self.mainmenu()
 
     def cek_gameover(self):
         if self.player.sprite.health_now <= 0:
@@ -147,6 +155,8 @@ class Level:
             self.collision_x(self.player.sprite, self.floor.sprites())
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.player.draw(self.surface)
+        
+        self.input()
 
             # self.surface.blit(self.pausebutton, self.pausebutton_rect)
             # self.cek_gameover()
