@@ -58,8 +58,14 @@ class Game:
             self.events()
             if self.status == 'menu':
                 self.drawmenu()
+
             elif self.status == 'game':
                 self.drawlevel()
+
+            else:
+                #self.bg_sound.fadeout(1000)
+                self.draw()
+
 
             pygame.display.update()
             self.clock.tick(FPS)
