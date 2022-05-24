@@ -3,69 +3,69 @@ import sys
 from Assets.Settings import *
 from Assets.Level_set import *
 from Module.Level import *
-from Module.MenuPack.MainMenu import *
-from Module.MenuPack.Options import *
+from Module.MenuPack.MenuManager import *
 from Assets.Menu_set import *
 
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        self.clock = pygame.time.Clock()
-        self.level = Level(LEVEL_1, self.screen)
-        self.menu = MainMenu(self.screen)
-        self.opt = Options(self.screen)
 
-        self.running = True
-        self.cek_menu = True
-        self.submenu = 'main'
+        # window yang digunakan
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        # FPS
+        self.clock = pygame.time.Clock()
+
+        # setup level
+        self.maxlevel = 1
+
+        # setup menu utama
+        self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
+
+        # perkondisian
+        self.status = 'menu'
         self.run()
     
+    # membuat level
+    def createlevel(self):
+        self.level = Level(LEVEL_1, self.screen, self.createmenu)
+        self.status = 'game'
+
+    # membuat menu
+    def createmenu(self):
+        self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
+        self.status = 'menu'
+
     
+    # event ketika ada sesuatu ketika game berjalan
     def events(self):
-        pointer = pygame.mouse.get_pos()
         for event in pygame.event.get():
+
+            # jika tombol close ditekan
             if event.type == pygame.QUIT:
-                self.running = False
                 sys.exit()
             
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pointer = pygame.mouse.get_pos()
-
-                if self.submenu == 'main':
-                    if self.menu.cek_button(pointer) == 'start':
-                        self.cek_menu = False
-                    elif self.menu.cek_button(pointer) == 'opt':
-                        self.submenu = 'opt'
-                    elif self.menu.cek_button(pointer) == False:
-                        self.running = False
-                        sys.exit()
-
-                elif self.submenu == 'opt':
-                    if self.opt.cek_button(pointer) == 'back':
-                        self.submenu = 'main'
-
+                    
     def drawmenu(self):
-        if self.submenu == 'main':
-            self.menu.draw()
-        elif self.submenu == 'opt':
-            self.opt.draw()
+        self.menu.draw()
+        # self.menu.soundplay()
     
-    def draw(self):
-        self.screen.fill('grey')
+    def drawlevel(self):
+        self.screen.fill('black')
         self.level.draw()
-        if self.level.player.sprite.health <= 0:
-            self.cek_menu = True
 
     def run(self):
-        while self.running:
+        while True:
             self.events()
-
-            if self.cek_menu:
+            if self.status == 'menu':
                 self.drawmenu()
+
+            elif self.status == 'game':
+                self.drawlevel()
+
             else:
                 #self.bg_sound.fadeout(1000)
                 self.draw()
+
 
             pygame.display.update()
             self.clock.tick(FPS)

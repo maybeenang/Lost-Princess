@@ -2,25 +2,61 @@ import pygame
 from Assets.Tools import *
 from Assets.Settings import *
 from Assets.Level_set import *
-from Module.Dump.Block import Block
-from Module.Dump.Pisang import Pisang
-from Module.NPC.Player import Player
-from Module.NPC.Enemy import Enemy
+from Assets.Menu_set import *
+from Module.ItemPack.Block import Block
+from Module.ItemPack.Pisang import Pisang
+from Module.Entitypack.Player import Player
+from Module.Entitypack.Enemy import Enemy
+from Module.MenuPack.Pause import *
+from Module.MenuPack.Gameover import *
 
 class Level:
-    def __init__(self, level, surface):
+    def __init__(self, level, surface, mainmenu):
         self.surface = surface
         self.camera_x = 0
+        self.bgsound = pygame.mixer.Sound(Menu_path['ingamebg'])
+        self.bgsound.play(-1)
 
         level_layout = read_csv(level['floor'])
         player_layout = read_csv(level['player'])
         item_layout = read_csv(level['item'])
         enemy_layout = read_csv(level['enemy'])
+        self.status = "running"        
+        # mainmenu
+        self.mainmenu = mainmenu
+        self.pause = Pause(self.surface, self.mainmenu, self.setstatus)
 
         self.item = self.setuplevel(item_layout, 'item')
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
+    
+    def createpause(self):
+        self.bgsound.stop()
+        self.pause.draw()
+        self.pause.input()
+        # if self.pause.status == 'resume':
+        #     self.bgsound.play(-1)
+        #     self.status = "running"
+        # elif self.pause.status == 'back':
+        #     self.bgsound.stop()
+        #     self.mainmenu()
+    
+    def setstatus(self, status):
+        if status == "running":
+            self.bgsound.play(-1)
+        self.status = status
+        
+
+    def input(self):
+        if self.status == "running":
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_p]:
+                self.setstatus("pause")
+
+    def cek_gameover(self):
+        if self.player.sprite.health_now <= 0:
+            self.status = "gameover"
     
     def setuplevel(self, level, type):
         if type == 'floor' or type == 'item' or type == 'enemy':
@@ -106,19 +142,24 @@ class Level:
 
     
     def draw(self):
-        self.floor.update(self.camera_x)
-        self.floor.draw(self.surface)
-        self.item.update(self.camera_x)
-        self.item.draw(self.surface)
-        self.camera()
+        if self.status == "running":
+            self.floor.update(self.camera_x)
+            self.floor.draw(self.surface)
+            self.item.update(self.camera_x)
+            self.item.draw(self.surface)
+            self.camera()
 
-        self.enemy.draw(self.surface)
-        self.enemy.update(self.camera_x)
+            self.enemy.draw(self.surface)
+            self.enemy.update(self.camera_x)
 
-        self.player.sprite.health_bar(self.surface)
-        self.player.update()
-        self.coll_item(self.player.sprite, self.item.sprites())
-        self.coll_enemy(self.player.sprite, self.enemy.sprites())
-        self.collision_x(self.player.sprite, self.floor.sprites())
-        self.collision_y(self.player.sprite, self.floor.sprites())
-        self.player.draw(self.surface)
+            self.player.sprite.health_bar(self.surface)
+            self.player.update()
+            self.coll_item(self.player.sprite, self.item.sprites())
+            self.coll_enemy(self.player.sprite, self.enemy.sprites())
+            self.collision_x(self.player.sprite, self.floor.sprites())
+            self.collision_y(self.player.sprite, self.floor.sprites())
+            self.player.draw(self.surface)
+        elif self.status == "pause":
+            self.createpause()
+        
+        self.input()

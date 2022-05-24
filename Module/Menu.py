@@ -7,11 +7,10 @@ class Menu:
         self.surface = surface
         # click sound
         self.click_sound = pygame.mixer.Sound(Menu_path['sound_klik'])
-        self.bg_sound = pygame.mixer.Sound(Menu_path['sound_bg'])
-        self.bg_sound.play(-1)
+        self.font = pygame.font.Font(Menu_path['font'], 30)
     
-    def cek_button(self, pointer):
+    def cek_button(self):
         pass
     
-    def draw(self, pointer):
+    def draw(self):
         pass
