@@ -11,11 +11,11 @@ class OptionMenu(Menu):
         self.createmenu = menu
 
         # sound click
-        self.soundclick = pygame.mixer.Sound(Menu_path['sound_klik'])
+        self.soundclick = pygame.mixer.Sound(soundPath['click'])
         self.soundclicked = [
-            pygame.mixer.Sound(Menu_path['positive_click']), 
-            pygame.mixer.Sound(Menu_path['negative_click']),
-            pygame.mixer.Sound(Menu_path['error_click'])
+            pygame.mixer.Sound(soundPath['positive_click']), 
+            pygame.mixer.Sound(soundPath['negative_click']),
+            pygame.mixer.Sound(soundPath['error_click'])
         ]
         
 

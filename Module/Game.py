@@ -4,7 +4,7 @@ from Assets.Settings import *
 from Assets.Level_set import *
 from Module.Level import *
 from Module.MenuPack.MenuManager import *
-from Assets.Menu_set import *
+from Assets.layoutMenuPath import *
 
 class Game:
     def __init__(self):

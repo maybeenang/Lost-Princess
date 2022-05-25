@@ -1,6 +1,8 @@
 from Module.Menu import *
 from Module.MenuPack.MainMenu import *
 from Module.MenuPack.OptionMenu import *
+from Assets.layoutMenuPath import *
+from Assets.soundPath import *
 import pygame
 
 class MenuManager(Menu):
@@ -8,7 +10,7 @@ class MenuManager(Menu):
         super().__init__(surface)
 
         # backsound menu
-        self.bg_sound = pygame.mixer.Sound(Menu_path['sound_bg'])
+        self.bg_sound = pygame.mixer.Sound(soundPath['inmenubacksound'])
         self.soundstatus = 0.2
         self.bg_sound.set_volume(self.soundstatus)
         self.bg_sound.play(-1)

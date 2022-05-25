@@ -3,7 +3,8 @@ from Module.Menu import *
 from Module.MenuPack.Button import *
 from Module.MenuPack.LevelMenu import *
 from Module.MenuPack.OptionMenu import *
-from Assets.Menu_set import *
+from Assets.layoutMenuPath import *
+from Assets.soundPath import *
 import pygame, sys
 
 class MainMenu(Menu):
@@ -11,7 +12,7 @@ class MainMenu(Menu):
         super().__init__(surface)
 
         # logo
-        self.font = pygame.font.Font(Menu_path['font'], 40)
+        self.font = pygame.font.Font(layoutMenuPath['font'], 40)
         self.logo = self.font.render("Lost Princess", True, "white")
         self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 100))
 
@@ -29,11 +30,11 @@ class MainMenu(Menu):
         }
 
         # sound click
-        self.soundclick = pygame.mixer.Sound(Menu_path['sound_klik'])
+        self.soundclick = pygame.mixer.Sound(soundPath['click'])
         self.soundclicked = [
-            pygame.mixer.Sound(Menu_path['positive_click']), 
-            pygame.mixer.Sound(Menu_path['negative_click']), 
-            pygame.mixer.Sound(Menu_path['error_click'])
+            pygame.mixer.Sound(soundPath['positive_click']), 
+            pygame.mixer.Sound(soundPath['negative_click']), 
+            pygame.mixer.Sound(soundPath['error_click'])
         ]
         
         # time

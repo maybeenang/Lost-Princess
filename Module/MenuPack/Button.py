@@ -1,5 +1,5 @@
 import pygame
-from Assets.Menu_set import *
+from Assets.layoutMenuPath import *
 
 class Button:
     def __init__(self, surface , pos, text, index):
@@ -8,8 +8,8 @@ class Button:
         self.surface = surface
 
         # component
-        self.font = pygame.font.Font(Menu_path['font'], 20)
-        self.image = pygame.image.load(Menu_path['frame_tombol'])
+        self.font = pygame.font.Font(layoutMenuPath['font'], 20)
+        self.image = pygame.image.load(layoutMenuPath['tombolpositive'])
         self.color = "#fde047"
         self.hover_color = "white"
         self.index = index

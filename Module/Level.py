@@ -2,7 +2,8 @@ import pygame
 from Assets.Tools import *
 from Assets.Settings import *
 from Assets.Level_set import *
-from Assets.Menu_set import *
+from Assets.layoutMenuPath import *
+from Assets.soundPath import *
 from Module.ItemPack.Block import Block
 from Module.ItemPack.Pisang import Pisang
 from Module.Entitypack.Player import Player
@@ -14,7 +15,7 @@ class Level:
     def __init__(self, level, surface, mainmenu):
         self.surface = surface
         self.camera_x = 0
-        self.bgsound = pygame.mixer.Sound(Menu_path['ingamebg'])
+        self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
         self.bgsound.play(-1)
 
         level_layout = read_csv(level['floor'])

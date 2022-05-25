@@ -1,7 +1,7 @@
 from Assets.Settings import WIDTH
 from Module.Menu import *
 from Module.MenuPack.Button import *
-from Assets.Menu_set import *
+from Assets.layoutMenuPath import *
 
 import pygame
 
@@ -13,7 +13,7 @@ class Pause(Menu):
         self.setstatus = setstatus
 
         # font
-        self.font = pygame.font.Font(Menu_path['font'], 30)
+        self.font = pygame.font.Font(layoutMenuPath['font'], 30)
 
         # text
         self.text = "Game Paused"

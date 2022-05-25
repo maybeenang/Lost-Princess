@@ -24,7 +24,7 @@ class LevelMenu(Menu):
             
             # ketika level belum di unlock
             if level > self.maxlevel:
-                self.buttons[level].image = pygame.image.load(Menu_path['frame_tombol_negative'])
+                self.buttons[level].image = pygame.image.load(layoutMenuPath['tombolnegative'])
         
         # back button
         self.buttons[len(LEVEL_SET)] = Button(self.surface, (WIDTH/2, 200 + (len(LEVEL_SET)-1)*60), "Back", len(LEVEL_SET))
@@ -37,11 +37,11 @@ class LevelMenu(Menu):
         self.stopsound = stopsound
 
         # sound click
-        self.soundclick = pygame.mixer.Sound(Menu_path['sound_klik'])
+        self.soundclick = pygame.mixer.Sound(soundPath['click'])
         self.soundclicked = [
-            pygame.mixer.Sound(Menu_path['positive_click']), 
-            pygame.mixer.Sound(Menu_path['negative_click']), 
-            pygame.mixer.Sound(Menu_path['error_click'])
+            pygame.mixer.Sound(soundPath['positive_click']), 
+            pygame.mixer.Sound(soundPath['negative_click']), 
+            pygame.mixer.Sound(soundPath['error_click'])
         ]
 
         # time 
