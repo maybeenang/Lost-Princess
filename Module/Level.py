@@ -73,22 +73,22 @@ class Level:
                 if col != '-1':
 
                     if type == 'floor':
-                        img = slice_img(LEVEL_1_IMG['floor'])[int(col)]
+                        img = slice_img(LEVEL_IMG['floor'])[int(col)]
                         block = Block((x, y), BLOCKSIZE, img)
                         dumb.add(block)
                     
                     if type == 'item':
-                        img = slice_img(LEVEL_1_IMG['item'])[int(col)]
+                        img = slice_img(LEVEL_IMG['item'])[int(col)]
                         pisang = Pisang((x, y), BLOCKSIZE, img)
                         dumb.add(pisang)
                     
                     if type == 'enemy':
-                        img = slice_img(LEVEL_1_IMG['enemy'])[int(col)]
+                        img = slice_img(LEVEL_IMG['enemy'])[int(col)]
                         enemy = Enemy((x, y), BLOCKSIZE, img)
                         dumb.add(enemy)
 
                     if type == 'player':
-                        img = slice_img(LEVEL_1_IMG['player'])[int(col)]
+                        img = slice_img(LEVEL_IMG['player'])[int(col)]
                         player = Player((x, y), BLOCKSIZE, img)
                         dumb.add(player)
         return dumb
