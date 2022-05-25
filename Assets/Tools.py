@@ -1,6 +1,7 @@
 from csv import reader
 import pygame
 from Assets.Settings import *
+# contoh
 
 def read_csv(path):
     list_map = []
