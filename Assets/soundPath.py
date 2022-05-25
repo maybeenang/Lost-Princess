@@ -6,4 +6,3 @@ soundPath = {
     "inmenubacksound": "Assets/Sound/inmenubacksound.wav",
     "ingamebacksound": "Assets/Sound/ingamebacksound.wav",    
 }
-# testimoni
