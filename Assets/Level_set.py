@@ -33,19 +33,11 @@ LEVEL_4 = {
     'item': './Assets/Level/0/level_0._item.csv',
     'unlock' : 4
 }
-LEVEL_5 = {
-    'floor': './Assets/Level/0/level_0._floor.csv',
-    'player': './Assets/Level/0/level_0._player.csv',
-    'enemy': './Assets/Level/0/level_0._Enemy.csv',
-    'item': './Assets/Level/0/level_0._item.csv',
-    'unlock' : 5
-}
 
 
 LEVEL_SET = {
     0: LEVEL_1,
     1: LEVEL_2,
     2: LEVEL_3,
-    3: LEVEL_4,
-    4: LEVEL_5
+    3: LEVEL_4
 }
