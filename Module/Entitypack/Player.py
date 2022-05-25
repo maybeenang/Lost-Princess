@@ -2,6 +2,7 @@ import pygame
 from ..Entity import Entity
 
 class Player(Entity):
+#     player
     def __init__(self, pos, size, img):
         super().__init__(1000, 10, 4, pos, size)
         self.image = img
