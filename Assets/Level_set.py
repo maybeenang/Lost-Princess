@@ -1,6 +1,9 @@
 LEVEL_IMG = {
     'floor': './Assets/Graphics/Block/floor.png',
     'player': './Assets/Graphics/Player/',
+    'particlerun': './Assets/Graphics/Particle/run',
+    'particlejump': './Assets/Graphics/Particle/jump',
+    'particleland': './Assets/Graphics/Particle/land',
     'enemy': './Assets/Graphics/Enemy/Enemy.png',
     'item': './Assets/Graphics/Item/pisang.png'
 }
