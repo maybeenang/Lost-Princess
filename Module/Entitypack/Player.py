@@ -99,5 +99,4 @@ class Player(Entity):
         self.get_input()
         self.set_status()
         self.animate()
-        print(self.pos)
         
