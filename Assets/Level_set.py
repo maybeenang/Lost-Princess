@@ -1,6 +1,6 @@
 LEVEL_IMG = {
     'floor': './Assets/Graphics/Block/floor.png',
-    'player': './Assets/Graphics/Player/player.png',
+    'player': './Assets/Graphics/Player/',
     'enemy': './Assets/Graphics/Enemy/Enemy.png',
     'item': './Assets/Graphics/Item/pisang.png'
 }

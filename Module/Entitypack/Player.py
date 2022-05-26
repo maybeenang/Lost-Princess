@@ -1,17 +1,56 @@
 import pygame
-from ..Entity import Entity
+from Assets.Tools import importanimation
+from Assets.Level_set import LEVEL_IMG
+from Module.Entity import Entity
 
 class Player(Entity):
 #     player
-    def __init__(self, pos, size, img):
+    def __init__(self, pos, size):
         super().__init__(1000, 10, 4, pos, size)
-        self.image = img
+        self.importimage()
+        self.index = 0
+        self.indexspeed = 0.15
+        self.image = self.animation["idle"][self.index]
+        # self.image = pygame.Surface((16, 32))
         # self.image.fill((255, 255, 255))
         self.health_now = 200
         self.max_health_bar = 400 
         self.health_ratio = self.health / self.max_health_bar
         self.gravity = 0.5
         self.jump_speed = -8
+        self.status = "idle"
+        self.on_ground = False
+    
+    def importimage(self):
+        playerpath = LEVEL_IMG['player']
+        self.animation = {
+            "idle": [],
+            "run": [],
+            "jump": [],
+            "fall": []
+        }
+        for animation in self.animation:
+            fullpath = playerpath + animation
+            self.animation[animation] = importanimation(fullpath) 
+    
+    def animate(self):
+        self.index += self.indexspeed
+        if self.index >= len(self.animation[self.status]):
+            self.index = 0
+        self.image = self.animation[self.status][int(self.index)]
+    
+    def set_status(self):
+        if self.pos.y < 0:
+            self.status = "jump"
+        elif self.pos.y > 0:
+            self.status = "fall"
+        else:
+            if self.pos.x != 0:
+                self.status = "run"
+            else:
+                self.status = "idle"
+
+
     
     def get_health(self, health):
         if self.health_now < self.health:
@@ -42,8 +81,7 @@ class Player(Entity):
             self.move(0)
         
         if self.keys[pygame.K_w]:
-            if self.pos.y == 0:
-                self.jump()
+            self.jump()
     
     def move(self, x):
         self.pos.x = x
@@ -59,5 +97,7 @@ class Player(Entity):
 
     def update(self):
         self.get_input()
-        self.cek_gravity()
+        self.set_status()
+        self.animate()
+        print(self.pos)
         

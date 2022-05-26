@@ -88,8 +88,8 @@ class Level:
                         dumb.add(enemy)
 
                     if type == 'player':
-                        img = slice_img(LEVEL_IMG['player'])[int(col)]
-                        player = Player((x, y), BLOCKSIZE, img)
+                        # img = slice_img(LEVEL_IMG['player'])[int(col)]
+                        player = Player((x, y), BLOCKSIZE)
                         dumb.add(player)
         return dumb
     
@@ -111,9 +111,12 @@ class Level:
                 if entity.pos.y > 0:
                     entity.rect.bottom = tile.rect.top
                     entity.pos.y = 0
+                    # entity.on_ground = True
                 elif entity.pos.y < 0:
                     entity.rect.top = tile.rect.bottom
                     entity.pos.y = 0
+        # if entity.on_ground and entity.pos.y != 0:
+        #     entity.on_ground = False
     
     def coll_item(self, player, item):
 

@@ -1,7 +1,17 @@
 from csv import reader
+from os import walk
 import pygame
 from Assets.Settings import *
-# contoh
+
+def importanimation(path):
+    animation = []
+    for a, b, file in walk(path):
+        for image in file:
+            full_path = path + '/' + image
+            img_list = pygame.image.load(full_path).convert_alpha()
+            animation.append(img_list)
+    return animation
+
 
 def read_csv(path):
     list_map = []
