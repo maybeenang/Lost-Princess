@@ -6,6 +6,7 @@ from Assets.layoutMenuPath import *
 from Assets.soundPath import *
 from Module.ItemPack.Block import Block
 from Module.ItemPack.Pisang import Pisang
+from Module.ItemPack.Particle import Particle
 from Module.Entitypack.Player import Player
 from Module.Entitypack.Enemy import Enemy
 from Module.MenuPack.Pause import *
@@ -15,6 +16,7 @@ class Level:
     def __init__(self, level, surface, mainmenu):
         self.surface = surface
         self.camera_x = 0
+        self.current_x = 0
         self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
         self.bgsound.play(-1)
 
@@ -31,6 +33,9 @@ class Level:
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
+
+        self.particle = pygame.sprite.GroupSingle()
+        self.player_ground = False
     
     def createpause(self):
         self.bgsound.stop()
@@ -89,7 +94,7 @@ class Level:
 
                     if type == 'player':
                         # img = slice_img(LEVEL_IMG['player'])[int(col)]
-                        player = Player((x, y), BLOCKSIZE)
+                        player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
                         dumb.add(player)
         return dumb
     
@@ -99,10 +104,17 @@ class Level:
             if tile.rect.colliderect(entity.rect):
                 if entity.pos.x > 0:
                     entity.rect.right = tile.rect.left
-                    entity.pos.x = 0
+                    entity.ke_kanan = True
+                    self.current_x = entity.rect.right
                 elif entity.pos.x < 0:
                     entity.rect.left = tile.rect.right
-                    entity.pos.x = 0
+                    entity.ke_kiri = True
+                    self.current_x = entity.rect.left
+        
+        if entity.ke_kiri and (entity.rect.left < self.current_x or entity.pos.x >= 0):
+            entity.ke_kiri = False
+        if entity.ke_kanan and (entity.rect.right > self.current_x or entity.pos.x <= 0):
+            entity.ke_kanan = False
                     
     def collision_y(self, entity, block):
         entity.cek_gravity()
@@ -116,13 +128,38 @@ class Level:
                 elif entity.pos.y < 0:
                     entity.rect.top = tile.rect.bottom
                     entity.pos.y = 0
+                    entity.on_ceiling = True
         
         if entity.on_ground and entity.pos.y < 0 or entity.pos.y > 1:
             entity.on_ground = False
             if entity.double_jumps >= 2:
                 entity.double_jumps = 0
-            
-            
+        if entity.on_ceiling and entity.pos.y > 0.1:
+            entity.on_ceiling = False
+            if entity.double_jumps >= 2:
+                entity.double_jumps = 0
+    
+    def jump_particleplayer(self, pos):
+
+        if self.player.sprite.arah == "kanan":
+            pos -= pygame.math.Vector2(10, 5)
+        else:
+            pos += pygame.math.Vector2(10, -5)
+        self.particle.add(Particle(pos, "jump"))
+    
+    def set_player_ground(self):
+        if self.player.sprite.on_ground:
+            self.player_ground = True
+        else:
+            self.player_ground = False
+    
+    def land_particleplayer(self):
+        if self.player.sprite.on_ground and not self.player_ground and not self.particle.sprites():
+            if self.player.sprite.arah == "kanan":
+                offset = pygame.math.Vector2(-7, 15)
+            else:
+                offset = pygame.math.Vector2(-7, 15)
+            self.particle.add(Particle(self.player.sprite.rect.midbottom - offset,'land'))
     
     def coll_item(self, player, item):
 
@@ -143,7 +180,7 @@ class Level:
         if player.rect.centerx < WIDTH / 4 and player.pos.x < 0:
             self.camera_x = 4
             player.speed = 0
-        elif player.rect.centerx > WIDTH - (WIDTH / 4) and player.pos.x > 0:
+        elif player.rect.centerx > WIDTH - (WIDTH / 2) and player.pos.x > 0:
             self.camera_x = -4
             player.speed = 0
         else:
@@ -153,6 +190,8 @@ class Level:
     
     def draw(self):
         if self.status == "running":
+            self.particle.update(self.camera_x)
+            self.particle.draw(self.surface)
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
             self.item.update(self.camera_x)
@@ -167,7 +206,9 @@ class Level:
             self.coll_item(self.player.sprite, self.item.sprites())
             self.coll_enemy(self.player.sprite, self.enemy.sprites())
             self.collision_x(self.player.sprite, self.floor.sprites())
+            self.set_player_ground()
             self.collision_y(self.player.sprite, self.floor.sprites())
+            self.land_particleplayer()
             self.player.draw(self.surface)
         elif self.status == "pause":
             self.createpause()
