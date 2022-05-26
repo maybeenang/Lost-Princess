@@ -4,6 +4,7 @@ LEVEL_IMG = {
     'enemy': './Assets/Graphics/Enemy/Enemy.png',
     'item': './Assets/Graphics/Item/pisang.png'
 }
+#tes
 
 LEVEL_1 = {
     'floor': './Assets/Level/0/level_0._floor.csv',
