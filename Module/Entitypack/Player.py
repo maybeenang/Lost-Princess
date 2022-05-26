@@ -18,8 +18,11 @@ class Player(Entity):
         self.health_ratio = self.health / self.max_health_bar
         self.gravity = 0.5
         self.jump_speed = -8
+
+        # player status
         self.status = "idle"
         self.on_ground = False
+        self.arah = 'kanan'
     
     def importimage(self):
         playerpath = LEVEL_IMG['player']
@@ -38,6 +41,13 @@ class Player(Entity):
         if self.index >= len(self.animation[self.status]):
             self.index = 0
         self.image = self.animation[self.status][int(self.index)]
+
+        if self.arah == 'kiri':
+            self.image = pygame.transform.flip(self.image, True, False)
+        elif self.arah == 'kanan':
+            self.image = pygame.transform.flip(self.image, False, False)
+        else:
+            self.image = self.animation[self.status][int(self.index)]
     
     def set_status(self):
         if self.pos.y < 0:
@@ -75,8 +85,10 @@ class Player(Entity):
         
         if self.keys[pygame.K_a]:
             self.move(-1)
+            self.arah = 'kiri'
         elif self.keys[pygame.K_d]:
             self.move(1)
+            self.arah = 'kanan'
         else:
             self.move(0)
         
@@ -99,4 +111,3 @@ class Player(Entity):
         self.get_input()
         self.set_status()
         self.animate()
-        print(self.status)
