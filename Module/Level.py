@@ -35,6 +35,7 @@ class Level:
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
 
         self.particle = pygame.sprite.GroupSingle()
+        self.player_ground = False
     
     def createpause(self):
         self.bgsound.stop()
@@ -141,11 +142,24 @@ class Level:
     def jump_particleplayer(self, pos):
 
         if self.player.sprite.arah == "kanan":
-            pos -= pygame.math.Vector2(5, 10)
+            pos -= pygame.math.Vector2(10, 5)
         else:
-            pos += pygame.math.Vector2(5, -10)
-
+            pos += pygame.math.Vector2(10, -5)
         self.particle.add(Particle(pos, "jump"))
+    
+    def set_player_ground(self):
+        if self.player.sprite.on_ground:
+            self.player_ground = True
+        else:
+            self.player_ground = False
+    
+    def land_particleplayer(self):
+        if self.player.sprite.on_ground and not self.player_ground and not self.particle.sprites():
+            if self.player.sprite.arah == "kanan":
+                offset = pygame.math.Vector2(-7, 15)
+            else:
+                offset = pygame.math.Vector2(-7, 15)
+            self.particle.add(Particle(self.player.sprite.rect.midbottom - offset,'land'))
     
     def coll_item(self, player, item):
 
@@ -192,7 +206,9 @@ class Level:
             self.coll_item(self.player.sprite, self.item.sprites())
             self.coll_enemy(self.player.sprite, self.enemy.sprites())
             self.collision_x(self.player.sprite, self.floor.sprites())
+            self.set_player_ground()
             self.collision_y(self.player.sprite, self.floor.sprites())
+            self.land_particleplayer()
             self.player.draw(self.surface)
         elif self.status == "pause":
             self.createpause()
