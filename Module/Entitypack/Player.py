@@ -29,6 +29,7 @@ class Player(Entity):
         self.time = pygame.time.get_ticks()
         self.delay = 200
     
+    # import animasi perframe ke sebuah list
     def importimage(self):
         playerpath = LEVEL_IMG['player']
         self.animation = {
