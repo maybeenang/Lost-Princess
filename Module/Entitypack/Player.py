@@ -42,7 +42,7 @@ class Player(Entity):
     def set_status(self):
         if self.pos.y < 0:
             self.status = "jump"
-        elif self.pos.y > 0:
+        elif self.pos.y > 1:
             self.status = "fall"
         else:
             if self.pos.x != 0:
@@ -99,4 +99,4 @@ class Player(Entity):
         self.get_input()
         self.set_status()
         self.animate()
-        
+        print(self.status)
