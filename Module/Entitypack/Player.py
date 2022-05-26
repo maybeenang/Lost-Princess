@@ -16,13 +16,18 @@ class Player(Entity):
         self.health_now = 200
         self.max_health_bar = 400 
         self.health_ratio = self.health / self.max_health_bar
-        self.gravity = 0.5
-        self.jump_speed = -8
+        self.gravity = 0.9
+        self.jump_speed = -10
 
         # player status
         self.status = "idle"
-        self.on_ground = False
         self.arah = 'kanan'
+        self.on_ground = False
+        self.double_jumps = 0
+
+        # time 
+        self.time = pygame.time.get_ticks()
+        self.delay = 200
     
     def importimage(self):
         playerpath = LEVEL_IMG['player']
@@ -92,8 +97,17 @@ class Player(Entity):
         else:
             self.move(0)
         
-        if self.keys[pygame.K_w]:
-            self.jump()
+        if self.keys[pygame.K_w] and self.on_ground:
+            if pygame.time.get_ticks() - self.time > self.delay:
+                self.time = pygame.time.get_ticks()
+                if self.double_jumps == 0:
+                    self.double_jumps = 1
+                    self.jump()
+        elif self.keys[pygame.K_w] and self.double_jumps == 1:
+            if pygame.time.get_ticks() - self.time > self.delay:
+                self.time = pygame.time.get_ticks()
+                self.jump()
+                self.double_jumps = 2
     
     def move(self, x):
         self.pos.x = x
@@ -111,3 +125,4 @@ class Player(Entity):
         self.get_input()
         self.set_status()
         self.animate()
+        # print(self.double_jump)

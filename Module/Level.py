@@ -111,12 +111,18 @@ class Level:
                 if entity.pos.y > 0:
                     entity.rect.bottom = tile.rect.top
                     entity.pos.y = 0
-                    # entity.on_ground = True
+                    entity.on_ground = True
+                    entity.double_jumps = 0
                 elif entity.pos.y < 0:
                     entity.rect.top = tile.rect.bottom
                     entity.pos.y = 0
-        # if entity.on_ground and entity.pos.y != 0:
-        #     entity.on_ground = False
+        
+        if entity.on_ground and entity.pos.y < 0 or entity.pos.y > 1:
+            entity.on_ground = False
+            if entity.double_jumps >= 2:
+                entity.double_jumps = 0
+            
+            
     
     def coll_item(self, player, item):
 
