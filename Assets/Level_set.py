@@ -28,25 +28,25 @@ LEVEL_1 = {
     'unlock' : 1
 }
 LEVEL_2 = {
-    'floor': './Assets/Level/0/level_0_floor.csv',
-    'player': './Assets/Level/0/level_0_player.csv',
-    'enemy': './Assets/Level/0/level_0_enemy.csv',
-    'pisang': './Assets/Level/0/level_0_pisang.csv',
-    'hati': './Assets/Level/0/level_0_hati.csv',
-    'bendera': './Assets/Level/0/level_0_bendera.csv',
-    'obor': './Assets/Level/0/level_0_obor.csv',
-    'tiang': './Assets/Level/0/level_0_tiang.csv',
+    'floor': './Assets/Level/1/level_1_floor.csv',
+    'player': './Assets/Level/1/level_1_player.csv',
+    'enemy': './Assets/Level/1/level_1_enemy.csv',
+    'pisang': './Assets/Level/1/level_1_pisang.csv',
+    'hati': './Assets/Level/1/level_1_hati.csv',
+    'bendera': './Assets/Level/1/level_1_bendera.csv',
+    'obor': './Assets/Level/1/level_1_obor.csv',
+    'tiang': './Assets/Level/1/level_1_tiang.csv',
     'unlock' : 2
 }
 LEVEL_3 = {
-    'floor': './Assets/Level/0/level_0_floor.csv',
-    'player': './Assets/Level/0/level_0_player.csv',
-    'enemy': './Assets/Level/0/level_0_enemy.csv',
-    'pisang': './Assets/Level/0/level_0_pisang.csv',
-    'hati': './Assets/Level/0/level_0_hati.csv',
-    'bendera': './Assets/Level/0/level_0_bendera.csv',
-    'obor': './Assets/Level/0/level_0_obor.csv',
-    'tiang': './Assets/Level/0/level_0_tiang.csv',
+    'floor': './Assets/Level/2/level_2_floor.csv',
+    'player': './Assets/Level/2/level_2_player.csv',
+    'enemy': './Assets/Level/2/level_2_enemy.csv',
+    'pisang': './Assets/Level/2/level_2_pisang.csv',
+    'hati': './Assets/Level/2/level_2_hati.csv',
+    'bendera': './Assets/Level/2/level_2_bendera.csv',
+    'obor': './Assets/Level/2/level_2_obor.csv',
+    'tiang': './Assets/Level/2/level_2_tiang.csv',
     'unlock' : 3
 }
 LEVEL_4 = {
@@ -61,10 +61,23 @@ LEVEL_4 = {
     'unlock' : 4
 }
 
+LEVEL_5 = {
+    'floor': './Assets/Level/0/level_0_floor.csv',
+    'player': './Assets/Level/0/level_0_player.csv',
+    'enemy': './Assets/Level/0/level_0_enemy.csv',
+    'pisang': './Assets/Level/0/level_0_pisang.csv',
+    'hati': './Assets/Level/0/level_0_hati.csv',
+    'bendera': './Assets/Level/0/level_0_bendera.csv',
+    'obor': './Assets/Level/0/level_0_obor.csv',
+    'tiang': './Assets/Level/0/level_0_tiang.csv',
+    'unlock' : 5
+}
+
 
 LEVEL_SET = {
     0: LEVEL_1,
     1: LEVEL_2,
     2: LEVEL_3,
-    3: LEVEL_4
+    3: LEVEL_4,
+    4: LEVEL_5
 }
