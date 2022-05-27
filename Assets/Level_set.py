@@ -27,10 +27,14 @@ LEVEL_1 = {
     'unlock' : 1
 }
 LEVEL_2 = {
-    'floor': './Assets/Level/0/level_0._floor.csv',
-    'player': './Assets/Level/0/level_0._player.csv',
-    'enemy': './Assets/Level/0/level_0._Enemy.csv',
-    'item': './Assets/Level/0/level_0._item.csv',
+    'floor': './Assets/Level/1/level_1_floor.csv',
+    'player': './Assets/Level/1/level_1_player.csv',
+    'enemy': './Assets/Level/1/level_1_enemy.csv',
+    'pisang': './Assets/Level/1/level_1_pisang.csv',
+    'hati': './Assets/Level/1/level_1_hati.csv',
+    'bendera': './Assets/Level/1/level_1_bendera.csv',
+    'obor': './Assets/Level/1/level_1_obor.csv',
+    'tiang': './Assets/Level/1/level_1_tiang.csv',
     'unlock' : 2
 }
 LEVEL_3 = {

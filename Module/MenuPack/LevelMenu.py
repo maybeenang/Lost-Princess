@@ -2,6 +2,7 @@ from Assets.Settings import WIDTH
 from Module.Menu import *
 from Module.MenuPack.Button import *
 from Assets.Level_set import *
+from Assets.Level_set import *
 import pygame
 
 class LevelMenu(Menu):
@@ -78,7 +79,7 @@ class LevelMenu(Menu):
                             self.soundclicked[2].play()
                         else:
                             self.soundclicked[0].play()
-                            self.createlevel()
+                            self.createlevel(LEVEL_SET[self.currentbutton])
                             self.stopsound()
     
 

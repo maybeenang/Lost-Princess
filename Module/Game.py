@@ -26,8 +26,8 @@ class Game:
         self.run()
     
     # membuat level
-    def createlevel(self):
-        self.level = Level(LEVEL_1, self.screen, self.createmenu)
+    def createlevel(self, currentlevel):
+        self.level = Level(currentlevel, self.screen, self.createmenu)
         self.status = 'game'
 
     # membuat menu
