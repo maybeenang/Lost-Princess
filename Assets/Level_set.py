@@ -50,26 +50,26 @@ LEVEL_3 = {
     'unlock' : 3
 }
 LEVEL_4 = {
-    'floor': './Assets/Level/0/level_0_floor.csv',
-    'player': './Assets/Level/0/level_0_player.csv',
-    'enemy': './Assets/Level/0/level_0_enemy.csv',
-    'pisang': './Assets/Level/0/level_0_pisang.csv',
-    'hati': './Assets/Level/0/level_0_hati.csv',
-    'bendera': './Assets/Level/0/level_0_bendera.csv',
-    'obor': './Assets/Level/0/level_0_obor.csv',
-    'tiang': './Assets/Level/0/level_0_tiang.csv',
+    'floor': './Assets/Level/3/level_3_floor.csv',
+    'player': './Assets/Level/3/level_3_player.csv',
+    'enemy': './Assets/Level/3/level_3_enemy.csv',
+    'pisang': './Assets/Level/3/level_3_pisang.csv',
+    'hati': './Assets/Level/3/level_3_hati.csv',
+    'bendera': './Assets/Level/3/level_3_bendera.csv',
+    'obor': './Assets/Level/3/level_3_obor.csv',
+    'tiang': './Assets/Level/3/level_3_tiang.csv',
     'unlock' : 4
 }
 
 LEVEL_5 = {
-    'floor': './Assets/Level/0/level_0_floor.csv',
-    'player': './Assets/Level/0/level_0_player.csv',
-    'enemy': './Assets/Level/0/level_0_enemy.csv',
-    'pisang': './Assets/Level/0/level_0_pisang.csv',
-    'hati': './Assets/Level/0/level_0_hati.csv',
-    'bendera': './Assets/Level/0/level_0_bendera.csv',
-    'obor': './Assets/Level/0/level_0_obor.csv',
-    'tiang': './Assets/Level/0/level_0_tiang.csv',
+    'floor': './Assets/Level/4/level_4_floor.csv',
+    'player': './Assets/Level/4/level_4_player.csv',
+    'enemy': './Assets/Level/4/level_4_enemy.csv',
+    'pisang': './Assets/Level/4/level_4_pisang.csv',
+    'hati': './Assets/Level/4/level_4_hati.csv',
+    'bendera': './Assets/Level/4/level_4_bendera.csv',
+    'obor': './Assets/Level/4/level_4_obor.csv',
+    'tiang': './Assets/Level/4/level_4_tiang.csv',
     'unlock' : 5
 }
 
