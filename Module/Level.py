@@ -22,7 +22,7 @@ class Level:
 
         level_layout = read_csv(level['floor'])
         player_layout = read_csv(level['player'])
-        item_layout = read_csv(level['item'])
+        item_layout = read_csv(level['pisang'])
         enemy_layout = read_csv(level['enemy'])
         self.status = "running"        
         # mainmenu
@@ -83,17 +83,16 @@ class Level:
                         dumb.add(block)
                     
                     if type == 'item':
-                        img = slice_img(LEVEL_IMG['item'])[int(col)]
+                        img = slice_img(LEVEL_IMG['pisang'])[int(col)]
                         pisang = Pisang((x, y), BLOCKSIZE, img)
                         dumb.add(pisang)
                     
                     if type == 'enemy':
-                        img = slice_img(LEVEL_IMG['enemy'])[int(col)]
-                        enemy = Enemy((x, y), BLOCKSIZE, img)
-                        dumb.add(enemy)
+                        if col == '0':
+                            enemy = Enemy((x, y), BLOCKSIZE)
+                            dumb.add(enemy)
 
                     if type == 'player':
-                        # img = slice_img(LEVEL_IMG['player'])[int(col)]
                         player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
                         dumb.add(player)
         return dumb
@@ -162,7 +161,6 @@ class Level:
             self.particle.add(Particle(self.player.sprite.rect.midbottom - offset,'land'))
     
     def coll_item(self, player, item):
-
         for pisang in item:
             if player.rect.colliderect(pisang.rect):
                 player.get_health(100)

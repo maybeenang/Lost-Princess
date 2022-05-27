@@ -4,16 +4,16 @@ LEVEL_IMG = {
     'particlerun': './Assets/Graphics/Particle/run',
     'particlejump': './Assets/Graphics/Particle/jump',
     'particleland': './Assets/Graphics/Particle/land',
-    'enemy': './Assets/Graphics/Enemy/Enemy.png',
-    'item': './Assets/Graphics/Item/pisang.png'
+    'enemy': './Assets/Graphics/Enemy/',
+    'pisang': './Assets/Graphics/Item/Pisang/1.png'
 }
 #tes
 
 LEVEL_1 = {
-    'floor': './Assets/Level/0/level_0._floor.csv',
-    'player': './Assets/Level/0/level_0._player.csv',
-    'enemy': './Assets/Level/0/level_0._Enemy.csv',
-    'item': './Assets/Level/0/level_0._item.csv',
+    'floor': './Assets/Level/0/level_0_floor.csv',
+    'player': './Assets/Level/0/level_0_player.csv',
+    'enemy': './Assets/Level/0/level_0_enemy.csv',
+    'pisang': './Assets/Level/0/level_0_pisang.csv',
     'unlock' : 1
 }
 LEVEL_2 = {
