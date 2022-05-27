@@ -4,6 +4,7 @@ from Assets.Settings import *
 from Assets.Level_set import *
 from Assets.layoutMenuPath import *
 from Assets.soundPath import *
+from Module.ItemPack.Bendera import Bendera
 from Module.ItemPack.Block import Block
 from Module.ItemPack.Pisang import Pisang
 from Module.ItemPack.Hati import Hati
@@ -38,6 +39,7 @@ class Level:
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
         self.pisang = self.setuplevel(pisang_layout, 'pisang')
         self.hati = self.setuplevel(hati_layout, 'hati')
+        self.bendera = self.setuplevel(bendera_layout, 'bendera')
 
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
@@ -70,7 +72,7 @@ class Level:
             self.status = "gameover"
     
     def setuplevel(self, level, type):
-        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati':
+        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati' or type == 'bendera':
             dumb = pygame.sprite.Group()
         elif type == 'player':
             dumb = pygame.sprite.GroupSingle()
@@ -85,6 +87,13 @@ class Level:
                     if type == 'floor':
                         img = slice_img(LEVEL_IMG['floor'])[int(col)]
                         block = Block((x, y), BLOCKSIZE, img)
+                        dumb.add(block)
+                    
+                    if type == 'bendera':
+                        if col == '0':
+                            block = Bendera((x, y), BLOCKSIZE, "merah")
+                        elif col == '1':
+                            block = Bendera((x, y), BLOCKSIZE, "biru")
                         dumb.add(block)
                     
                     if type == 'pisang':
@@ -198,14 +207,22 @@ class Level:
     
     def draw(self):
         if self.status == "running":
+
             self.particle.update(self.camera_x)
             self.particle.draw(self.surface)
+
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
+
+            self.bendera.update(self.camera_x)
+            self.bendera.draw(self.surface)
+
             self.pisang.update(self.camera_x)
             self.pisang.draw(self.surface)
+
             self.hati.update(self.camera_x)
             self.hati.draw(self.surface)
+
             self.camera()
 
             self.enemy.draw(self.surface)
