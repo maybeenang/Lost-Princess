@@ -5,8 +5,8 @@ from Assets.Settings import *
 
 def importanimation(path):
     animation = []
-    for a, b, file in walk(path):
-        for image in file:
+    for _, __, file in walk(path):
+        for image in sorted(file):
             full_path = path + '/' + image
             img_list = pygame.image.load(full_path).convert_alpha()
             animation.append(img_list)
