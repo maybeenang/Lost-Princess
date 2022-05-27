@@ -24,6 +24,7 @@ class Level:
         self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
         self.bgsound.play(-1)
         self.newmaxlevel = level['unlock']
+        self.oldmaxlevel = oldmaxlevel
 
         level_layout = read_csv(level['floor'])
         pisang_layout = read_csv(level['pisang'])
@@ -77,18 +78,18 @@ class Level:
         if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
             self.bgsound.stop()
             self.mainmenu(self.newmaxlevel)
+    
+    def cek_death(self):
+        if self.player.sprite.rect.top > HEIGHT:
+            self.bgsound.stop()
+            self.player.sprite.health_now = 0
+            self.mainmenu(self.oldmaxlevel)
         
     
     def createpause(self):
         self.bgsound.stop()
         self.pause.draw()
         self.pause.input()
-        # if self.pause.status == 'resume':
-        #     self.bgsound.play(-1)
-        #     self.status = "running"
-        # elif self.pause.status == 'back':
-        #     self.bgsound.stop()
-        #     self.mainmenu()
     
     def setstatus(self, status):
         if status == "running":
@@ -154,11 +155,6 @@ class Level:
                             img = slice_img(LEVEL_IMG['batasenemy'])[int(col)]
                             batasenemy = Block((x, y), BLOCKSIZE, img)
                             dumb.add(batasenemy)
-
-                    # if type == 'player':
-                    #     if col == '0':
-                    #         player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
-                    #         dumb.add(player)
         return dumb
 
     def enemyreverse(self):
@@ -286,10 +282,12 @@ class Level:
             self.enemyreverse()
             self.enemy.draw(self.surface)
 
-            self.player.sprite.health_bar(self.surface)
+            
             self.goal.update(self.camera_x)
             self.goal.draw(self.surface)
+
             self.player.update()
+            self.player.sprite.health_bar(self.surface)
             self.coll_item(self.player.sprite, self.hati.sprites())
             self.coll_item(self.player.sprite, self.pisang.sprites())
             self.coll_enemy(self.player.sprite, self.enemy.sprites())
@@ -297,9 +295,11 @@ class Level:
             self.set_player_ground()
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.land_particleplayer()
+            
             self.player.draw(self.surface)
 
             self.cek_goal()
+            self.cek_death()
         elif self.status == "pause":
             self.createpause()
         
