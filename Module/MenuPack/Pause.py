@@ -6,11 +6,12 @@ from Assets.layoutMenuPath import *
 import pygame
 
 class Pause(Menu):
-    def __init__(self, surface, mainmenu, setstatus):
+    def __init__(self, surface, mainmenu, setstatus, oldmaxlevel):
         super().__init__(surface)
 
         self.createmainmenu = mainmenu
         self.setstatus = setstatus
+        self.oldmaxlevel = oldmaxlevel
 
         # font
         self.font = pygame.font.Font(layoutMenuPath['font'], 30)
@@ -51,7 +52,7 @@ class Pause(Menu):
             if self.currentbutton == 0:
                 self.setstatus("running")
             elif self.currentbutton == 1:
-                self.createmainmenu()
+                self.createmainmenu(self.oldmaxlevel)
     
     def draw(self):
         self.surface.blit(self.textrender, self.textrect)

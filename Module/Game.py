@@ -27,11 +27,13 @@ class Game:
     
     # membuat level
     def createlevel(self, currentlevel):
-        self.level = Level(currentlevel, self.screen, self.createmenu)
+        self.level = Level(currentlevel, self.screen, self.createmenu, self.maxlevel)
         self.status = 'game'
 
     # membuat menu
-    def createmenu(self):
+    def createmenu(self, newmaxlevel):
+        if newmaxlevel > self.maxlevel:
+            self.maxlevel = newmaxlevel
         self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
         self.status = 'menu'
 

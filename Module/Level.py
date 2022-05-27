@@ -17,12 +17,13 @@ from Module.MenuPack.Pause import *
 from Module.MenuPack.Gameover import *
 
 class Level:
-    def __init__(self, level, surface, mainmenu):
+    def __init__(self, level, surface, mainmenu, oldmaxlevel):
         self.surface = surface
         self.camera_x = 0
         self.current_x = 0
         self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
         self.bgsound.play(-1)
+        self.newmaxlevel = level['unlock']
 
         level_layout = read_csv(level['floor'])
         pisang_layout = read_csv(level['pisang'])
@@ -35,7 +36,7 @@ class Level:
         self.status = "running"        
         # mainmenu
         self.mainmenu = mainmenu
-        self.pause = Pause(self.surface, self.mainmenu, self.setstatus)
+        self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
 
         # setup player
         player_layout = read_csv(level['player'])
@@ -71,6 +72,11 @@ class Level:
                         img = slice_img(LEVEL_IMG['batasplayer'])[int(col)]
                         batasplayer = Block((x, y), BLOCKSIZE, img)
                         self.goal.add(batasplayer)
+    
+    def cek_goal(self):
+        if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
+            self.bgsound.stop()
+            self.mainmenu(self.newmaxlevel)
         
     
     def createpause(self):
@@ -292,6 +298,8 @@ class Level:
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.land_particleplayer()
             self.player.draw(self.surface)
+
+            self.cek_goal()
         elif self.status == "pause":
             self.createpause()
         
