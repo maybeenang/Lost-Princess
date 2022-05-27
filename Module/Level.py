@@ -93,8 +93,9 @@ class Level:
                             dumb.add(enemy)
 
                     if type == 'player':
-                        player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
-                        dumb.add(player)
+                        if col == '0':
+                            player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
+                            dumb.add(player)
         return dumb
     
     def collision_x(self, entity, block):
