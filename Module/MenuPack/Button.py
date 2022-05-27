@@ -10,8 +10,7 @@ class Button:
         # component
         self.font = pygame.font.Font(layoutMenuPath['font'], 20)
         self.image = pygame.image.load(layoutMenuPath['tombolpositive'])
-        self.color = "#fde047"
-        self.hover_color = "white"
+        self.color = "#363636"
         self.index = index
 
         # text
@@ -29,14 +28,20 @@ class Button:
         else:
             return False
     
-    def hover(self, index):
+    def hover(self, index, status):
         if self.index == index:
-            self.text = self.font.render(self.temp_text, True, self.hover_color)
+            if status == "positive":
+                self.image = pygame.image.load(layoutMenuPath['tombolhover'])
+            else:
+                self.image = pygame.image.load(layoutMenuPath['tombolnegativehover'])
         else:
-            self.text = self.font.render(self.temp_text, True, self.color)
+            if status == "positive":
+                self.image = pygame.image.load(layoutMenuPath['tombolpositive'])
+            else:
+                self.image = pygame.image.load(layoutMenuPath['tombolnegative'])
 
-    def update(self, index):
-        self.hover(index)
+    def update(self, index, status):
+        self.hover(index, status)
         if self.image is not None:
             self.surface.blit(self.image, self.rect)
         self.surface.blit(self.text, self.tect_rect)

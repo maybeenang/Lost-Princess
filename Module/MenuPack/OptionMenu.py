@@ -111,4 +111,4 @@ class OptionMenu(Menu):
         self.soundbar()
 
         for button in self.buttons:
-            self.buttons[button].update(self.currentbutton)
+            self.buttons[button].update(self.currentbutton, "positive")

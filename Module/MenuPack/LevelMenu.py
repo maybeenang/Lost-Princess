@@ -87,4 +87,9 @@ class LevelMenu(Menu):
         self.surface.fill('grey')
         self.surface.blit(self.logo, self.logo_rect)
         for level in self.buttons:
-            self.buttons[level].update(self.currentbutton)
+            if level == len(LEVEL_SET):
+                self.buttons[level].update(self.currentbutton, "positive")
+            elif level > self.maxlevel:
+                self.buttons[level].update(self.currentbutton, "negative")
+            else:
+                self.buttons[level].update(self.currentbutton, "positive")

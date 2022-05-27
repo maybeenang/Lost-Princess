@@ -79,4 +79,4 @@ class MainMenu(Menu):
         self.surface.fill('grey')
         self.surface.blit(self.logo, self.logo_rect)
         for button in self.buttons:
-            self.buttons[button].update(self.currentbutton)
+            self.buttons[button].update(self.currentbutton, "positive")
