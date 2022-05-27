@@ -27,7 +27,6 @@ class Level:
         level_layout = read_csv(level['floor'])
         pisang_layout = read_csv(level['pisang'])
         hati_layout = read_csv(level['hati'])
-        player_layout = read_csv(level['player'])
         enemy_layout = read_csv(level['enemy'])
         bendera_layout = read_csv(level['bendera'])
         obor_layout = read_csv(level['obor'])
@@ -38,8 +37,15 @@ class Level:
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus)
 
+        # setup player
+        player_layout = read_csv(level['player'])
+        # self.player = self.setuplevel(player_layout, 'player')
+        self.player = pygame.sprite.GroupSingle()
+        self.goal = pygame.sprite.GroupSingle()
+        self.setupplayer(player_layout)
+
+
         self.floor = self.setuplevel(level_layout, 'floor')
-        self.player = self.setuplevel(player_layout, 'player')
         self.pisang = self.setuplevel(pisang_layout, 'pisang')
         self.hati = self.setuplevel(hati_layout, 'hati')
         self.bendera = self.setuplevel(bendera_layout, 'bendera')
@@ -50,6 +56,22 @@ class Level:
 
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
+    
+    def setupplayer(self, layout):
+        for row_index, row in enumerate(layout):
+            for col_index, col in enumerate(row):
+                x = col_index * BLOCKSIZE
+                y = row_index * BLOCKSIZE
+
+                if col != '-1':
+                    if col == '0':
+                        player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
+                        self.player.add(player)
+                    if col == '1':
+                        img = slice_img(LEVEL_IMG['batasplayer'])[int(col)]
+                        batasplayer = Block((x, y), BLOCKSIZE, img)
+                        self.goal.add(batasplayer)
+        
     
     def createpause(self):
         self.bgsound.stop()
@@ -79,10 +101,7 @@ class Level:
             self.status = "gameover"
     
     def setuplevel(self, level, type):
-        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati' or type == 'bendera' or type == 'obor' or type == 'tiang' or type == 'batasenemy':
-            dumb = pygame.sprite.Group()
-        elif type == 'player':
-            dumb = pygame.sprite.GroupSingle()
+        dumb = pygame.sprite.Group()
 
         for row_index, row in enumerate(level):
             for col_index, col in enumerate(row):
@@ -130,10 +149,10 @@ class Level:
                             batasenemy = Block((x, y), BLOCKSIZE, img)
                             dumb.add(batasenemy)
 
-                    if type == 'player':
-                        if col == '0':
-                            player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
-                            dumb.add(player)
+                    # if type == 'player':
+                    #     if col == '0':
+                    #         player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
+                    #         dumb.add(player)
         return dumb
 
     def enemyreverse(self):
@@ -262,6 +281,8 @@ class Level:
             self.enemy.draw(self.surface)
 
             self.player.sprite.health_bar(self.surface)
+            self.goal.update(self.camera_x)
+            self.goal.draw(self.surface)
             self.player.update()
             self.coll_item(self.player.sprite, self.hati.sprites())
             self.coll_item(self.player.sprite, self.pisang.sprites())
