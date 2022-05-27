@@ -40,12 +40,13 @@ class Level:
 
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
-        self.enemy = self.setuplevel(enemy_layout, 'enemy')
         self.pisang = self.setuplevel(pisang_layout, 'pisang')
         self.hati = self.setuplevel(hati_layout, 'hati')
         self.bendera = self.setuplevel(bendera_layout, 'bendera')
         self.obor = self.setuplevel(obor_layout, 'obor')
         self.tiang = self.setuplevel(tiang_layout, 'tiang')
+        self.enemy = self.setuplevel(enemy_layout, 'enemy')
+        self.batasenemy = self.setuplevel(enemy_layout, 'batasenemy')
 
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
@@ -78,7 +79,7 @@ class Level:
             self.status = "gameover"
     
     def setuplevel(self, level, type):
-        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati' or type == 'bendera' or type == 'obor' or type == 'tiang':
+        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati' or type == 'bendera' or type == 'obor' or type == 'tiang' or type == 'batasenemy':
             dumb = pygame.sprite.Group()
         elif type == 'player':
             dumb = pygame.sprite.GroupSingle()
@@ -122,12 +123,23 @@ class Level:
                         if col == '0':
                             enemy = Enemy((x, y), BLOCKSIZE)
                             dumb.add(enemy)
+                    
+                    if type == 'batasenemy':
+                        if col == '1':
+                            img = slice_img(LEVEL_IMG['batasenemy'])[int(col)]
+                            batasenemy = Block((x, y), BLOCKSIZE, img)
+                            dumb.add(batasenemy)
 
                     if type == 'player':
                         if col == '0':
                             player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
                             dumb.add(player)
         return dumb
+
+    def enemyreverse(self):
+        for enemy in self.enemy.sprites():
+            if pygame.sprite.spritecollide(enemy, self.batasenemy, False):
+                enemy.reverse()
     
     def collision_x(self, entity, block):
         entity.rect.x += entity.pos.x * entity.speed
@@ -244,8 +256,10 @@ class Level:
 
             self.camera()
 
-            self.enemy.draw(self.surface)
             self.enemy.update(self.camera_x)
+            self.batasenemy.update(self.camera_x)
+            self.enemyreverse()
+            self.enemy.draw(self.surface)
 
             self.player.sprite.health_bar(self.surface)
             self.player.update()

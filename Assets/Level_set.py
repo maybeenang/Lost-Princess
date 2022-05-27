@@ -11,6 +11,7 @@ LEVEL_IMG = {
     'benderabiru': './Assets/Graphics/Block/benderabiru.png',
     'benderamerah': './Assets/Graphics/Block/benderamerah.png',
     'tiang': './Assets/Graphics/Block/tiang.png',
+    'batasenemy': './Assets/Graphics/Tile/Enemy/enemy.png',
 }
 #tes
 
