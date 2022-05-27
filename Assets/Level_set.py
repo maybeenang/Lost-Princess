@@ -5,7 +5,10 @@ LEVEL_IMG = {
     'particlejump': './Assets/Graphics/Particle/jump',
     'particleland': './Assets/Graphics/Particle/land',
     'enemy': './Assets/Graphics/Enemy/',
-    'pisang': './Assets/Graphics/Item/Pisang/1.png'
+    'pisang': './Assets/Graphics/Item/Pisang',
+    'hati': './Assets/Graphics/Item/Hati',
+    'benderabiru': './Assets/Graphics/Item/benderabiru',
+    'benderamerah': './Assets/Graphics/Item/benderamerah',
 }
 #tes
 
@@ -14,6 +17,7 @@ LEVEL_1 = {
     'player': './Assets/Level/0/level_0_player.csv',
     'enemy': './Assets/Level/0/level_0_enemy.csv',
     'pisang': './Assets/Level/0/level_0_pisang.csv',
+    'hati': './Assets/Level/0/level_0_hati.csv',
     'unlock' : 1
 }
 LEVEL_2 = {

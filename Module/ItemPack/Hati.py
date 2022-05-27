@@ -2,10 +2,10 @@ from Module.Item import Item
 from Assets.Level_set import *
 from Assets.Tools import *
 
-class Pisang(Item):
+class Hati(Item):
     def __init__(self, x, y, size):
         super().__init__((x, y), size)
-        self.frame = importanimation(LEVEL_IMG['pisang'])
+        self.frame = importanimation(LEVEL_IMG['hati'])
         self.index = 0
         self.index_speed = 0.15
         self.image = self.frame[self.index]

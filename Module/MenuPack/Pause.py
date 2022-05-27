@@ -55,8 +55,8 @@ class Pause(Menu):
     
     def draw(self):
         self.surface.blit(self.textrender, self.textrect)
-        self.resume.update(self.currentbutton)
-        self.mainmenu.update(self.currentbutton)
+        self.resume.update(self.currentbutton, "positive")
+        self.mainmenu.update(self.currentbutton, "positive")
 
     
 

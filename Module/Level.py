@@ -6,6 +6,7 @@ from Assets.layoutMenuPath import *
 from Assets.soundPath import *
 from Module.ItemPack.Block import Block
 from Module.ItemPack.Pisang import Pisang
+from Module.ItemPack.Hati import Hati
 from Module.ItemPack.Particle import Particle
 from Module.Entitypack.Player import Player
 from Module.Entitypack.Enemy import Enemy
@@ -21,18 +22,22 @@ class Level:
         self.bgsound.play(-1)
 
         level_layout = read_csv(level['floor'])
+        pisang_layout = read_csv(level['pisang'])
+        hati_layout = read_csv(level['hati'])
         player_layout = read_csv(level['player'])
-        item_layout = read_csv(level['pisang'])
         enemy_layout = read_csv(level['enemy'])
+        bendera_layout = read_csv(level['bendera'])
+
         self.status = "running"        
         # mainmenu
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus)
 
-        self.item = self.setuplevel(item_layout, 'item')
         self.floor = self.setuplevel(level_layout, 'floor')
         self.player = self.setuplevel(player_layout, 'player')
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
+        self.pisang = self.setuplevel(pisang_layout, 'pisang')
+        self.hati = self.setuplevel(hati_layout, 'hati')
 
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
@@ -65,7 +70,7 @@ class Level:
             self.status = "gameover"
     
     def setuplevel(self, level, type):
-        if type == 'floor' or type == 'item' or type == 'enemy':
+        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati':
             dumb = pygame.sprite.Group()
         elif type == 'player':
             dumb = pygame.sprite.GroupSingle()
@@ -82,10 +87,14 @@ class Level:
                         block = Block((x, y), BLOCKSIZE, img)
                         dumb.add(block)
                     
-                    if type == 'item':
-                        img = slice_img(LEVEL_IMG['pisang'])[int(col)]
-                        pisang = Pisang((x, y), BLOCKSIZE, img)
+                    if type == 'pisang':
+                        pisang = Pisang(x, y, BLOCKSIZE)
                         dumb.add(pisang)
+                    
+                    if type == 'hati':
+                        hati = Hati(x, y, BLOCKSIZE)
+                        dumb.add(hati)
+                    
                     
                     if type == 'enemy':
                         if col == '0':
@@ -162,10 +171,10 @@ class Level:
             self.particle.add(Particle(self.player.sprite.rect.midbottom - offset,'land'))
     
     def coll_item(self, player, item):
-        for pisang in item:
-            if player.rect.colliderect(pisang.rect):
+        for i in item:
+            if player.rect.colliderect(i.rect):
                 player.get_health(100)
-                pisang.kill()
+                i.kill()
     
     def coll_enemy(self, player, enemy):
 
@@ -193,8 +202,10 @@ class Level:
             self.particle.draw(self.surface)
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
-            self.item.update(self.camera_x)
-            self.item.draw(self.surface)
+            self.pisang.update(self.camera_x)
+            self.pisang.draw(self.surface)
+            self.hati.update(self.camera_x)
+            self.hati.draw(self.surface)
             self.camera()
 
             self.enemy.draw(self.surface)
@@ -202,7 +213,8 @@ class Level:
 
             self.player.sprite.health_bar(self.surface)
             self.player.update()
-            self.coll_item(self.player.sprite, self.item.sprites())
+            self.coll_item(self.player.sprite, self.hati.sprites())
+            self.coll_item(self.player.sprite, self.pisang.sprites())
             self.coll_enemy(self.player.sprite, self.enemy.sprites())
             self.collision_x(self.player.sprite, self.floor.sprites())
             self.set_player_ground()
