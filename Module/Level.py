@@ -8,6 +8,8 @@ from Module.ItemPack.Bendera import Bendera
 from Module.ItemPack.Block import Block
 from Module.ItemPack.Pisang import Pisang
 from Module.ItemPack.Hati import Hati
+from Module.ItemPack.Obor import Obor
+from Module.ItemPack.Tiang import Tiang
 from Module.ItemPack.Particle import Particle
 from Module.Entitypack.Player import Player
 from Module.Entitypack.Enemy import Enemy
@@ -28,6 +30,8 @@ class Level:
         player_layout = read_csv(level['player'])
         enemy_layout = read_csv(level['enemy'])
         bendera_layout = read_csv(level['bendera'])
+        obor_layout = read_csv(level['obor'])
+        tiang_layout = read_csv(level['tiang'])
 
         self.status = "running"        
         # mainmenu
@@ -40,6 +44,8 @@ class Level:
         self.pisang = self.setuplevel(pisang_layout, 'pisang')
         self.hati = self.setuplevel(hati_layout, 'hati')
         self.bendera = self.setuplevel(bendera_layout, 'bendera')
+        self.obor = self.setuplevel(obor_layout, 'obor')
+        self.tiang = self.setuplevel(tiang_layout, 'tiang')
 
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
@@ -72,7 +78,7 @@ class Level:
             self.status = "gameover"
     
     def setuplevel(self, level, type):
-        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati' or type == 'bendera':
+        if type == 'floor' or type == 'pisang' or type == 'enemy' or type == 'hati' or type == 'bendera' or type == 'obor' or type == 'tiang':
             dumb = pygame.sprite.Group()
         elif type == 'player':
             dumb = pygame.sprite.GroupSingle()
@@ -89,11 +95,15 @@ class Level:
                         block = Block((x, y), BLOCKSIZE, img)
                         dumb.add(block)
                     
+                    if type == 'tiang':
+                        tiang = Tiang(x, y, BLOCKSIZE)
+                        dumb.add(tiang)
+                    
                     if type == 'bendera':
                         if col == '0':
-                            block = Bendera((x, y), BLOCKSIZE, "merah")
+                            block = Bendera(x, y, BLOCKSIZE, "merah")
                         elif col == '1':
-                            block = Bendera((x, y), BLOCKSIZE, "biru")
+                            block = Bendera(x, y, BLOCKSIZE, "biru")
                         dumb.add(block)
                     
                     if type == 'pisang':
@@ -104,6 +114,9 @@ class Level:
                         hati = Hati(x, y, BLOCKSIZE)
                         dumb.add(hati)
                     
+                    if type == 'obor':
+                        obor = Obor(x, y, BLOCKSIZE)
+                        dumb.add(obor)
                     
                     if type == 'enemy':
                         if col == '0':
@@ -214,6 +227,9 @@ class Level:
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
 
+            self.tiang.update(self.camera_x)
+            self.tiang.draw(self.surface)
+
             self.bendera.update(self.camera_x)
             self.bendera.draw(self.surface)
 
@@ -222,6 +238,9 @@ class Level:
 
             self.hati.update(self.camera_x)
             self.hati.draw(self.surface)
+
+            self.obor.update(self.camera_x)
+            self.obor.draw(self.surface)
 
             self.camera()
 

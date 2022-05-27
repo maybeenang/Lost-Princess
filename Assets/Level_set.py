@@ -7,8 +7,10 @@ LEVEL_IMG = {
     'enemy': './Assets/Graphics/Enemy/',
     'pisang': './Assets/Graphics/Item/Pisang',
     'hati': './Assets/Graphics/Item/Hati',
+    'obor': './Assets/Graphics/Block/Obor',
     'benderabiru': './Assets/Graphics/Block/benderabiru.png',
     'benderamerah': './Assets/Graphics/Block/benderamerah.png',
+    'tiang': './Assets/Graphics/Block/tiang.png',
 }
 #tes
 
@@ -19,6 +21,8 @@ LEVEL_1 = {
     'pisang': './Assets/Level/0/level_0_pisang.csv',
     'hati': './Assets/Level/0/level_0_hati.csv',
     'bendera': './Assets/Level/0/level_0_bendera.csv',
+    'obor': './Assets/Level/0/level_0_obor.csv',
+    'tiang': './Assets/Level/0/level_0_tiang.csv',
     'unlock' : 1
 }
 LEVEL_2 = {
