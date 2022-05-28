@@ -81,7 +81,9 @@ To win the game and unlock the next level, you need to get the player into the p
 
 ### Youtube Tutorial
 
-If sound is not working in your phone, you can try to play it in your Desktop.
+Unfortunately, we make this video just in MacOs system, soon we will make how to run this game with Docker on Linux and Windows specifically on this repository.
+
+`note : ` If sound is not working in your phone, you can try to play it in your Desktop.
 
 [![Youtube](./Assets/Docs/YouTube%20Thumbnail.jpg)](https://youtu.be/FSOSgkzh_t0)
 ### UML Diagram
