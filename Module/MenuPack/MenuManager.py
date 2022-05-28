@@ -10,10 +10,10 @@ class MenuManager(Menu):
         super().__init__(surface)
 
         # backsound menu
-        self.bg_sound = pygame.mixer.Sound(soundPath['inmenubacksound'])
+        # self.bg_sound = pygame.mixer.Sound(soundPath['inmenubacksound'])
         self.soundstatus = 0.2
-        self.bg_sound.set_volume(self.soundstatus)
-        self.bg_sound.play(-1)
+        # self.bg_sound.set_volume(self.soundstatus)
+        # self.bg_sound.play(-1)
         self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect)
         # level status
         self.maxlevel = maxlevel
@@ -35,10 +35,12 @@ class MenuManager(Menu):
         self.status = 'level'
     
     def set_sound(self):
-        self.bg_sound.set_volume(self.soundstatus)
+        pass
+        # self.bg_sound.set_volume(self.soundstatus)
     
     def stopsound(self):
-        self.bg_sound.stop()
+        pass
+        # self.bg_sound.stop()
     
     def draw(self):
 

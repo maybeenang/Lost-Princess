@@ -21,8 +21,8 @@ class Level:
         self.surface = surface
         self.camera_x = 0
         self.current_x = 0
-        self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
-        self.bgsound.play(-1)
+        # self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
+        # self.bgsound.play(-1)
         self.newmaxlevel = level['unlock']
         self.oldmaxlevel = oldmaxlevel
 
@@ -76,24 +76,25 @@ class Level:
     
     def cek_goal(self):
         if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
-            self.bgsound.stop()
+            # self.bgsound.stop()
             self.mainmenu(self.newmaxlevel)
     
     def cek_death(self):
         if self.player.sprite.rect.top > HEIGHT:
-            self.bgsound.stop()
+            # self.bgsound.stop()
             self.player.sprite.health_now = 0
             self.mainmenu(self.oldmaxlevel)
         
     
     def createpause(self):
-        self.bgsound.stop()
+        # self.bgsound.stop()
         self.pause.draw()
         self.pause.input()
     
     def setstatus(self, status):
         if status == "running":
-            self.bgsound.play(-1)
+            pass
+            # self.bgsound.play(-1)
         self.status = status
         
 
