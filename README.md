@@ -37,6 +37,8 @@ This is an example of how you may give instructions on setting up your project l
 * [Python 3.7](https://www.python.org/)
 * [Pygame](https://www.pygame.org/)
 * [Docker](https://www.docker.com/) (Optional)
+## Run Game Locally Without Docker (Recommended)
+
 ### Step 1: Clone the repository
 
 First you need to install the [Git](https://git-scm.com/) client on your system. Then clone the repository.
@@ -48,11 +50,13 @@ Then you can start working on your project.
 cd TUGAS-BESAR-PBO-ITERA-2021-2022
 ```
 ### Step 2: Install the dependencies
+
 Install dependencies by running the following command:
 ```bash
 pip install -r requirements.txt
 ```
 ### Step 3: Run the game
+
 Run the game by running the following command:
 ```bash
 python main.py
@@ -61,3 +65,35 @@ or
 ```bash
 python3 main.py
 ```
+### Step 4: Play the game
+
+You can play the game by pressing the following keys:
+* `W`: Select menu to move up or Jump
+* `S`: Select menu to move down
+* `A`: Select menu to move left or Run the player left
+* `D`: Select menu to move right or Run the player right
+* `P`: attack (not work yet)
+* `Space` or `Enter`: Select menu
+* `Esc`: Back or Pause (when game is running)
+
+To win the game and unlock the next level, you need to get the player into the predetermined point in each of level.
+## Run Game Locally With Docker (Optional)
+
+### Youtube Tutorial
+
+If sound is not working in your phone, you can try to play it in your Desktop.
+
+[![Youtube](./Assets/Docs/YouTube%20Thumbnail.jpg)](https://youtu.be/FSOSgkzh_t0)
+### UML Diagram
+
+On progress
+### Contributing
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (e.g. `feature/new-feature`)
+3. Commit your Changes (git commit -m 'message')
+4. Push to the Branch (git push origin feature/new-feature)
+5. Open a Pull Request
+
