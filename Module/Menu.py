@@ -1,9 +1,11 @@
 import pygame
+# from pygame.mixer import Sound
 from Assets.layoutMenuPath import *
 from Assets.soundPath import *
 
 class Menu:
     def __init__(self, surface):
+        # pygame.mixer.init()
         # window
         self.surface = surface
         # click sound
