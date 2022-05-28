@@ -98,4 +98,5 @@ If you have a suggestion that would make this better, please fork the repo and c
 3. Commit your Changes (git commit -m 'message')
 4. Push to the Branch (git push origin feature/new-feature)
 5. Open a Pull Request
-
+### Screenshots
+This game is under development, so there is no screenshot yet.
