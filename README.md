@@ -14,7 +14,7 @@
 
 | Name | StudentID | Role | GitHub |
 | :---: | :---: | :---: | :---: |
-| Muhammad Elang Permadani | 120140194 | Project Leader | [elang194](https://github.com/elang194) |
+| Muhammad Elang Permadani | 120140194 | Project Leader | [maybeenang](https://github.com/maybeenang) |
 | Hendri Aldi Zulfan | 120140186 | Programmer | [henhen02](https://github.com/henhen02) |
 | Daffa Sandi Ramadhan | 120140193 | Charachter Design | [AsNodt](https://github.com/AsNodt) |
 | Muhammad Nur Aziz | 120140175 | Game Designer | [mhhmadaziz](https://github.com/mhhmadaziz) |
