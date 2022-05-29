@@ -1,7 +1,7 @@
 
 <div align="center">
     <h1>Lost Princess</h1>
-    <img src="./Assets/Docs/Team Logo.png" height="350" width="400">
+    <img src="./Assets/Docs/Team Logo.png" height="300" width="490">
 </div>
 
 ## Table of Content
