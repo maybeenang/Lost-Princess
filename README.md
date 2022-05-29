@@ -49,7 +49,6 @@ This is an example of how you may give instructions on setting up your project l
 * [Pygame](https://www.pygame.org/)
 * [Docker](https://www.docker.com/) (Optional)
 ## Run Game Locally Without Docker (Recommended)
-
 ### Step 1: Clone the repository
 
 First you need to install the [Git](https://git-scm.com/) client on your system. Then clone the repository.
