@@ -53,7 +53,7 @@ This is an example of how you may give instructions on setting up your project l
 
 First you need to install the [Git](https://git-scm.com/) client on your system. Then clone the repository.
 ```bash
-git clone https://github.com/elang194/TUGAS-BESAR-PBO-ITERA-2021-2022.git
+git clone https://github.com/maybeenang/TUGAS-BESAR-PBO-ITERA-2021-2022.git
 ```
 Then you can start working on your project.
 ```bash
