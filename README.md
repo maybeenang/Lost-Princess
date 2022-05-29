@@ -79,13 +79,16 @@ python3 main.py
 ### Step 4: Play the game
 
 You can play the game by pressing the following keys:
-* `W`: Select menu to move up or Jump
-* `S`: Select menu to move down
-* `A`: Select menu to move left or Run the player left
-* `D`: Select menu to move right or Run the player right
-* `P`: attack (not work yet)
-* `Space` or `Enter`: Select menu
-* `Esc`: Back or Pause (when game is running)
+
+|Keys|In Menu|In Game|
+|:---:|:---:|:---:|
+| `W` | move up | Jump |
+| `S` | move down | - |
+| `A` | move left | Run to left |
+| `D` | move right | Run to right |
+| `P` | - | Attack (not work yet) |
+| `Space` or `Enter` | select | - |
+| `Esc` | back | Pause |
 
 To win the game and unlock the next level, you need to get the player into the predetermined point in each of level.
 ## Run Game Locally With Docker (Optional)
