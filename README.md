@@ -1,4 +1,7 @@
 # Lost Princess
+
+![Team Logo](./Assets/Docs/Team%20Logo.png)
+---
 ## Table of Content
 
 * [Part of Team](#part-of-team)
