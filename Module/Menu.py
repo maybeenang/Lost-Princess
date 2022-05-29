@@ -10,7 +10,7 @@ class Menu:
         # window
         self.surface = surface
         # click sound
-        # self.click_sound = pygame.mixer.Sound(soundPath['click'])
+        self.click_sound = pygame.mixer.Sound(soundPath['click'])
         self.font = pygame.font.Font(layoutMenuPath['font'], 30)
     
     def cek_button(self):

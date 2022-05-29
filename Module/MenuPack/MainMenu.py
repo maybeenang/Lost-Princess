@@ -30,12 +30,12 @@ class MainMenu(Menu):
         }
 
         # # sound click
-        # self.soundclick = pygame.mixer.Sound(soundPath['click'])
-        # self.soundclicked = [
-        #     pygame.mixer.Sound(soundPath['positive_click']), 
-        #     pygame.mixer.Sound(soundPath['negative_click']), 
-        #     pygame.mixer.Sound(soundPath['error_click'])
-        # ]
+        self.soundclick = pygame.mixer.Sound(soundPath['click'])
+        self.soundclicked = [
+            pygame.mixer.Sound(soundPath['positive_click']), 
+            pygame.mixer.Sound(soundPath['negative_click']), 
+            pygame.mixer.Sound(soundPath['error_click'])
+        ]
         
         # time
         self.time = pygame.time.get_ticks()
@@ -48,14 +48,14 @@ class MainMenu(Menu):
             if self.currentbutton == len(self.buttons) - 1:
                 self.currentbutton = len(self.buttons)-1
             else:
-                # self.soundclick.play()
+                self.soundclick.play()
                 self.currentbutton += 1
         elif keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 0:
                 self.currentbutton = 0
             else:
-                # self.soundclick.play()
+                self.soundclick.play()
                 self.currentbutton -= 1
         
         if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
@@ -63,13 +63,13 @@ class MainMenu(Menu):
             for button in self.buttons:
                 if self.buttons[button].input(self.currentbutton):
                     if button == 'start':
-                        # self.soundclicked[0].play()
+                        self.soundclicked[0].play()
                         self.level()
                     elif button == 'opt':
-                        # self.soundclicked[0].play()
+                        self.soundclicked[0].play()
                         self.opt()
                     elif button == 'quit':
-                        # self.soundclicked[1].play()
+                        self.soundclicked[1].play()
                         pygame.quit()
                         sys.exit()
     
