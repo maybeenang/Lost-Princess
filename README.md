@@ -89,7 +89,6 @@ You can play the game by pressing the following keys:
 
 To win the game and unlock the next level, you need to get the player into the predetermined point in each of level.
 ## Run Game Locally With Docker (Optional)
-
 ### Youtube Tutorial
 
 Unfortunately, we make this video just in MacOs system, soon we will make how to run this game with Docker on Linux and Windows specifically on this repository as soon as possible.
