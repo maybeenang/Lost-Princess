@@ -12,7 +12,7 @@
 * [Contributing](#contributing)
 ## Part of Team
 
-| Name | StudentID | Role | Github |
+| Name | StudentID | Role | GitHub |
 | :---: | :---: | :---: | :---: |
 | Muhammad Elang Permadani | 120140194 | Project Leader | [elang194]() |
 | Hendri Aldi Zulfan | 120140186 | Programer | [henhen02]() |
