@@ -14,12 +14,12 @@
 
 | Name | StudentID | Role | GitHub |
 | :---: | :---: | :---: | :---: |
-| Muhammad Elang Permadani | 120140194 | Project Leader | [elang194]() |
-| Hendri Aldi Zulfan | 120140186 | Programer | [henhen02]() |
-| Daffa Sandi Ramadhan | 120140193 | Charachter Design | [AsNodt]() |
-| Muhammad Nur Aziz | 120140175 | Game Designer | [mhhmadaziz]() |
-| Bagus Ardin Saputra | 120140176 | Audio Engineer | [Bagusardin]() |
-| Reyhan Gandaresta | 120140183 | Level Editor | [ReyhannGR]() |
+| Muhammad Elang Permadani | 120140194 | Project Leader | [elang194](https://github.com/elang194) |
+| Hendri Aldi Zulfan | 120140186 | Programer | [henhen02](https://github.com/henhen02) |
+| Daffa Sandi Ramadhan | 120140193 | Charachter Design | [AsNodt](https://github.com/AsNodt) |
+| Muhammad Nur Aziz | 120140175 | Game Designer | [mhhmadaziz](https://github.com/mhhmadaziz) |
+| Bagus Ardin Saputra | 120140176 | Audio Engineer | [Bagusardin](https://github.com/Bagusardin) |
+| Reyhan Gandaresta | 120140183 | Level Editor | [ReyhannGR](https://github.com/ReyhanGR) |
 ## About The Project
 
 Lost Princess is a game that is about the adventures of a knight in a demon kingdom to save the princess who was kidnapped by the devil, and to defeat the evil king. This game is inspired by the popular game [Super Mario Bros](https://en.wikipedia.org/wiki/Mario_Bros.).
