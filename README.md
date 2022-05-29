@@ -1,7 +1,9 @@
-# Lost Princess
 
-![Team Logo](./Assets/Docs/Team%20Logo.png)
----
+<div align="center">
+    <h1>Lost Princess</h1>
+    <img src="./Assets/Docs/Team Logo.png" height="350" width="400">
+</div>
+
 ## Table of Content
 
 * [Part of Team](#part-of-team)
