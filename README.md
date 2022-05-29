@@ -1,4 +1,15 @@
 # Lost Princess
+## Table of Content
+
+* [Part of Team](#part-of-team)
+* [About](#about-the-project)
+* [Built With](#built-with)
+* [Getting Started](#getting-started)
+* [Run Game Locally Without Docker](#run-game-locally-without-docker-recommended)
+* [Run Game Locally With Docker](#run-game-locally-with-docker-optional)
+* [UML Diagram](#uml-diagram)
+* [Screenshots](#screenshots)
+* [Contributing](#contributing)
 ## Part of Team
 
 | Name | StudentID | Role |
@@ -81,7 +92,7 @@ To win the game and unlock the next level, you need to get the player into the p
 
 ### Youtube Tutorial
 
-Unfortunately, we make this video just in MacOs system, soon we will make how to run this game with Docker on Linux and Windows specifically on this repository.
+Unfortunately, we make this video just in MacOs system, soon we will make how to run this game with Docker on Linux and Windows specifically on this repository as soon as possible.
 
 `note : ` If sound is not working in your phone, you can try to play it in your Desktop.
 
@@ -89,6 +100,9 @@ Unfortunately, we make this video just in MacOs system, soon we will make how to
 ### UML Diagram
 
 On progress
+### Screenshots
+
+This game is under development, so there is no screenshot yet.
 ### Contributing
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. Don't forget to give the project a star! Thanks again!
@@ -98,5 +112,3 @@ If you have a suggestion that would make this better, please fork the repo and c
 3. Commit your Changes (git commit -m 'message')
 4. Push to the Branch (git push origin feature/new-feature)
 5. Open a Pull Request
-### Screenshots
-This game is under development, so there is no screenshot yet.
