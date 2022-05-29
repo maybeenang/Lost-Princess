@@ -25,7 +25,7 @@
 Lost Princess is a game that is about the adventures of a knight in a demon kingdom to save the princess who was kidnapped by the devil, and to defeat the evil king. This game is inspired by the popular game [Super Mario Bros](https://en.wikipedia.org/wiki/Mario_Bros.).
 ## Built With
 
-![python](https://img.shields.io/pypi/pyversions/latest?color=green)
+![python](https://img.shields.io/badge/Python-latest-orange)
 
 This game is developed with [Python 3.7](https://www.python.org/). And uses the following libraries:
 * [PyGame](https://www.pygame.org/)
