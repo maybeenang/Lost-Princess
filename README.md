@@ -96,13 +96,13 @@ Unfortunately, we make this video just in MacOs system, soon we will make how to
 `note : ` If sound is not working in your phone, you can try to play it in your Desktop.
 
 [![Youtube](./Assets/Docs/YouTube%20Thumbnail.jpg)](https://youtu.be/FSOSgkzh_t0)
-### UML Diagram
+## UML Diagram
 
 On progress
-### Screenshots
+## Screenshots
 
 This game is under development, so there is no screenshot yet.
-### Contributing
+## Contributing
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. Don't forget to give the project a star! Thanks again!
 
