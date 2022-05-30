@@ -37,7 +37,7 @@ class Level:
         tiang_layout = read_csv(level['tiang'])
 
         self.level_width = len(level_layout[0]) * BLOCKSIZE
-        print(self.level_width)
+        # print(self.level_width)
 
 
         self.status = "running"        
