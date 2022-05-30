@@ -325,7 +325,7 @@ class Level:
 
             
             self.goal.update(self.camera_x)
-            self.goal.draw(self.surface)
+            # self.goal.draw(self.surface)
 
             self.player.update()
             self.player.sprite.health_bar(self.surface)
