@@ -11,6 +11,8 @@ from Module.ItemPack.Hati import Hati
 from Module.ItemPack.Obor import Obor
 from Module.ItemPack.Tiang import Tiang
 from Module.ItemPack.Particle import Particle
+from Module.ItemPack.Background import Background
+from Module.ItemPack.Lava import Lava
 from Module.Entitypack.Player import Player
 from Module.Entitypack.Enemy import Enemy
 from Module.MenuPack.Pause import *
@@ -34,6 +36,10 @@ class Level:
         obor_layout = read_csv(level['obor'])
         tiang_layout = read_csv(level['tiang'])
 
+        self.level_width = len(level_layout[0]) * BLOCKSIZE
+        print(self.level_width)
+
+
         self.status = "running"        
         # mainmenu
         self.mainmenu = mainmenu
@@ -41,9 +47,8 @@ class Level:
 
         # setup player
         player_layout = read_csv(level['player'])
-        # self.player = self.setuplevel(player_layout, 'player')
         self.player = pygame.sprite.GroupSingle()
-        self.goal = pygame.sprite.GroupSingle()
+        self.goal = pygame.sprite.Group()
         self.setupplayer(player_layout)
 
 
@@ -56,8 +61,36 @@ class Level:
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
         self.batasenemy = self.setuplevel(enemy_layout, 'batasenemy')
 
+        self.bg = pygame.sprite.Group()
+        self.setupbackground(self.level_width)
+
+        self.lava = pygame.sprite.Group()
+        self.setuplava(self.level_width)
+
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
+
+    def setuplava(self, level_width):
+        lava_start = -WIDTH
+        lava_width = 192
+        lava_full = int((level_width + WIDTH * 2) / lava_width)
+
+        for col in range(lava_full):
+            x = col * lava_width + lava_start 
+            y = HEIGHT - 40
+            lava = Lava(x, y, lava_width)
+            self.lava.add(lava)
+
+    
+    def setupbackground(self, layout):
+        for i in range(-layout, layout * 2, BLOCKSIZE):
+            for j in range(0, HEIGHT, BLOCKSIZE):
+                if j < 1 * BLOCKSIZE:
+                    self.bg.add(Background((i, j), pygame.image.load(LEVEL_IMG['bgtop'])))
+                elif j > 15 * BLOCKSIZE:
+                    self.bg.add(Background((i, j), pygame.image.load(LEVEL_IMG['bgbot'])))
+                else:
+                    self.bg.add(Background((i, j), pygame.image.load(LEVEL_IMG['bgmid'])))
     
     def setupplayer(self, layout):
         for row_index, row in enumerate(layout):
@@ -93,7 +126,6 @@ class Level:
     
     def setstatus(self, status):
         if status == "running":
-            # pass
             self.bgsound.play(-1)
         self.status = status
         
@@ -115,7 +147,6 @@ class Level:
             for col_index, col in enumerate(row):
                 x = col_index * BLOCKSIZE
                 y = row_index * BLOCKSIZE
-
                 if col != '-1':
 
                     if type == 'floor':
@@ -205,7 +236,6 @@ class Level:
                 entity.double_jumps = 0
     
     def jump_particleplayer(self, pos):
-
         if self.player.sprite.arah == "kanan":
             pos -= pygame.math.Vector2(10, 5)
         else:
@@ -233,7 +263,6 @@ class Level:
                 i.kill()
     
     def coll_enemy(self, player, enemy):
-
         for enemy in self.enemy:
             if player.rect.colliderect(enemy.rect):
                 player.get_dmg(enemy.damage)
@@ -250,10 +279,22 @@ class Level:
         else:
             player.speed = 4
             self.camera_x = 0
+        
+        # print(player.rect.center)
+        # print(WIDTH - (WIDTH / 2))
 
     
     def draw(self):
         if self.status == "running":
+            # self.drawbackground()
+
+            self.bg.draw(self.surface)
+            if self.camera_x < 0:
+                self.bg.update(self.camera_x)
+            elif self.camera_x > 0:
+                self.bg.update(self.camera_x)
+            
+
 
             self.particle.update(self.camera_x)
             self.particle.draw(self.surface)
@@ -276,7 +317,6 @@ class Level:
             self.obor.update(self.camera_x)
             self.obor.draw(self.surface)
 
-            self.camera()
 
             self.enemy.update(self.camera_x)
             self.batasenemy.update(self.camera_x)
@@ -296,9 +336,12 @@ class Level:
             self.set_player_ground()
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.land_particleplayer()
-            
             self.player.draw(self.surface)
 
+            self.lava.update(self.camera_x)
+            self.lava.draw(self.surface)
+
+            self.camera()
             self.cek_goal()
             self.cek_death()
         elif self.status == "pause":

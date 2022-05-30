@@ -12,7 +12,11 @@ LEVEL_IMG = {
     'benderamerah': './Assets/Graphics/Block/benderamerah.png',
     'tiang': './Assets/Graphics/Block/tiang.png',
     'batasenemy': './Assets/Graphics/Tile/Enemy/enemy.png',
-    'batasplayer': './Assets/Graphics/Tile/Player/player.png'
+    'batasplayer': './Assets/Graphics/Tile/Player/player.png',
+    'bgtop': './Assets/Graphics/Block/Background/top.png',
+    'bgmid': './Assets/Graphics/Block/Background/mid.png',
+    'bgbot': './Assets/Graphics/Block/Background/bot.png',
+    'lava' : './Assets/Graphics/Block/Background/Lava',
 }
 #tes
 

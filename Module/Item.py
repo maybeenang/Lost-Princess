@@ -5,9 +5,6 @@ class Item(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface((size, size))
         self.rect = self.image.get_rect(topleft = pos)
-    
-    def spawn(self):
-        pass
 
     def update(self, x):
         self.rect.x += x
