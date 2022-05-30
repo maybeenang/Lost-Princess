@@ -80,7 +80,6 @@ class Level:
             y = HEIGHT - 40
             lava = Lava(x, y, lava_width)
             self.lava.add(lava)
-
     
     def setupbackground(self, layout):
         for i in range(-layout, layout * 2, BLOCKSIZE):
