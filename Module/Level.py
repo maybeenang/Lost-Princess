@@ -270,6 +270,7 @@ class Level:
                 if enemy_top < player_bottom < enemy_center and self.player.sprite.pos.y >= 0:
                     enemy.kill()
                     self.player.sprite.pos.y = -10
+                    self.particle.add(Particle(enemy.rect.center, 'explosion'))
                 else:
                     self.player.sprite.get_dmg(100)
     
@@ -291,8 +292,6 @@ class Level:
             self.bg.draw(self.surface)
             self.bg.update(self.camera_x)
 
-            self.particle.update(self.camera_x)
-            self.particle.draw(self.surface)
 
             self.floor.update(self.camera_x)
             self.floor.draw(self.surface)
@@ -329,6 +328,9 @@ class Level:
             self.collision_y(self.player.sprite, self.floor.sprites())
             self.land_particleplayer()
             self.player.draw(self.surface)
+            
+            self.particle.update(self.camera_x)
+            self.particle.draw(self.surface)
 
             self.lava.update(self.camera_x)
             self.lava.draw(self.surface)

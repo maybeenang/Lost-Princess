@@ -13,6 +13,8 @@ class Particle(Item):
             self.frame = importanimation(LEVEL_IMG['particlejump'])
         if self.type == "land":
             self.frame = importanimation(LEVEL_IMG['particleland'])
+        if self.type == "explosion":
+            self.frame = importanimation(LEVEL_IMG['particleexplosion'])
         self.index = 0
         self.index_speed = 0.5
         self.image = self.frame[self.index]
