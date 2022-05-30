@@ -79,8 +79,8 @@ class LevelMenu(Menu):
                             self.soundclicked[2].play()
                         else:
                             self.soundclicked[0].play()
-                            self.createlevel(LEVEL_SET[self.currentbutton])
                             self.stopsound()
+                            self.createlevel(LEVEL_SET[self.currentbutton])
     
 
     def draw(self):

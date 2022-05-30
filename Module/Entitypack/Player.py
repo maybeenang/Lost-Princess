@@ -1,4 +1,5 @@
 import pygame
+from math import sin
 from Assets.Tools import importanimation
 from Assets.Level_set import LEVEL_IMG
 from Module.Entity import Entity
@@ -25,13 +26,16 @@ class Player(Entity):
         # self.particle_image = self.particle["run"][self.particle_index]
 
 
-        self.health_now = 200
+        self.health_now = 500
         self.max_health_bar = 400 
         self.health_ratio = self.health / self.max_health_bar
         self.gravity = 0.9
         self.jump_speed = -10
 
         # player status
+        self.immune = False
+        self.immune_time = 0
+        self.immune_durration = 400
         self.status = "idle"
         self.arah = 'kanan'
         self.on_ground = False
@@ -92,6 +96,12 @@ class Player(Entity):
             self.image = pygame.transform.flip(self.image, True, False)
         elif self.arah == 'kanan':
             self.image = pygame.transform.flip(self.image, False, False)
+        
+        if self.immune:
+            alpha = self.blink()
+            self.image.set_alpha(alpha)
+        else:
+            self.image.set_alpha(255)
 
         if self.on_ground and self.ke_kanan:
             self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
@@ -116,8 +126,6 @@ class Player(Entity):
                 self.status = "run"
             else:
                 self.status = "idle"
-
-
     
     def get_health(self, health):
         if self.health_now < self.health:
@@ -126,13 +134,27 @@ class Player(Entity):
             self.health_now = self.health
     
     def get_dmg(self, dmg):
-        if self.health_now > 0:
-            self.health_now -= dmg
-        elif self.health_now <= 0:
-            self.health_now = 0
+        if not self.immune:
+            if self.health_now > 0:
+                self.health_now -= dmg
+            elif self.health_now <= 0:
+                self.health_now = 0
+            self.immune = True
+            self.immune_time = pygame.time.get_ticks()
+    
+    def immune_time_check(self):
+        if self.immune:
+            if pygame.time.get_ticks() - self.immune_time >= self.immune_durration:
+                self.immune = False
+    
+    def blink(self):
+        value = sin(pygame.time.get_ticks())
+        if value >= 0:
+            return 255
+        else:
+            return 0
     
     def health_bar(self, screen):
-
         pygame.draw.rect(screen, (255, 0, 0), (5, 5, self.health_now / self.health_ratio, 25))
         pygame.draw.rect(screen, (0, 255, 0), (5, 5, self.max_health_bar, 25), 1)
 
@@ -180,4 +202,5 @@ class Player(Entity):
         self.set_status()
         self.animate()
         self.animasiparticle()
+        self.immune_time_check()
         # print(self.double_jump)

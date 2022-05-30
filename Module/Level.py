@@ -117,7 +117,6 @@ class Level:
             self.player.sprite.health_now = 0
             self.mainmenu(self.oldmaxlevel)
         
-    
     def createpause(self):
         self.bgsound.stop()
         self.pause.draw()
@@ -128,7 +127,6 @@ class Level:
             self.bgsound.play(-1)
         self.status = status
         
-
     def input(self):
         if self.status == "running":
             keys = pygame.key.get_pressed()
@@ -261,11 +259,19 @@ class Level:
                 player.get_health(100)
                 i.kill()
     
-    def coll_enemy(self, player, enemy):
-        for enemy in self.enemy:
-            if player.rect.colliderect(enemy.rect):
-                player.get_dmg(enemy.damage)
-                enemy.kill()
+    def coll_enemy(self):
+        collision = pygame.sprite.spritecollide(self.player.sprite, self.enemy, False)
+
+        if collision:
+            for enemy in collision:
+                enemy_center = enemy.rect.centery
+                enemy_top = enemy.rect.top
+                player_bottom = self.player.sprite.rect.bottom
+                if enemy_top < player_bottom < enemy_center and self.player.sprite.pos.y >= 0:
+                    enemy.kill()
+                    self.player.sprite.pos.y = -10
+                else:
+                    self.player.sprite.get_dmg(100)
     
     def camera(self):
         player = self.player.sprite
@@ -278,22 +284,12 @@ class Level:
         else:
             player.speed = 4
             self.camera_x = 0
-        
-        # print(player.rect.center)
-        # print(WIDTH - (WIDTH / 2))
-
     
     def draw(self):
         if self.status == "running":
-            # self.drawbackground()
 
             self.bg.draw(self.surface)
-            if self.camera_x < 0:
-                self.bg.update(self.camera_x)
-            elif self.camera_x > 0:
-                self.bg.update(self.camera_x)
-            
-
+            self.bg.update(self.camera_x)
 
             self.particle.update(self.camera_x)
             self.particle.draw(self.surface)
@@ -316,13 +312,11 @@ class Level:
             self.obor.update(self.camera_x)
             self.obor.draw(self.surface)
 
-
             self.enemy.update(self.camera_x)
             self.batasenemy.update(self.camera_x)
             self.enemyreverse()
             self.enemy.draw(self.surface)
 
-            
             self.goal.update(self.camera_x)
             # self.goal.draw(self.surface)
 
@@ -330,7 +324,6 @@ class Level:
             self.player.sprite.health_bar(self.surface)
             self.coll_item(self.player.sprite, self.hati.sprites())
             self.coll_item(self.player.sprite, self.pisang.sprites())
-            self.coll_enemy(self.player.sprite, self.enemy.sprites())
             self.collision_x(self.player.sprite, self.floor.sprites())
             self.set_player_ground()
             self.collision_y(self.player.sprite, self.floor.sprites())
@@ -340,6 +333,7 @@ class Level:
             self.lava.update(self.camera_x)
             self.lava.draw(self.surface)
 
+            self.coll_enemy()
             self.camera()
             self.cek_goal()
             self.cek_death()
