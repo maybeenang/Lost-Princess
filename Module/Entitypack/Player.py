@@ -205,4 +205,3 @@ class Player(Entity):
         self.animate()
         self.animasiparticle()
         self.immune_time_check()
-        # print(self.double_jump)
