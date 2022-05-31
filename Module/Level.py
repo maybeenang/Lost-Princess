@@ -130,7 +130,7 @@ class Level:
     def input(self):
         if self.status == "running":
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_p]:
+            if keys[pygame.K_ESCAPE]:
                 self.setstatus("pause")
 
     def cek_gameover(self):
@@ -192,34 +192,28 @@ class Level:
                 enemy.reverse()
     
     def collision_x(self, entity, block):
-        entity.rect.x += entity.pos.x * entity.speed
+        entity.collrect.x += entity.pos.x * entity.speed
         for tile in block:
-            if tile.rect.colliderect(entity.rect):
+            if tile.rect.colliderect(entity.collrect):
                 if entity.pos.x > 0:
-                    entity.rect.right = tile.rect.left
+                    entity.collrect.right = tile.rect.left
                     entity.ke_kanan = True
                     self.current_x = entity.rect.right
                 elif entity.pos.x < 0:
-                    entity.rect.left = tile.rect.right
+                    entity.collrect.left = tile.rect.right
                     entity.ke_kiri = True
-                    self.current_x = entity.rect.left
-        
-        if entity.ke_kiri and (entity.rect.left < self.current_x or entity.pos.x >= 0):
-            entity.ke_kiri = False
-        if entity.ke_kanan and (entity.rect.right > self.current_x or entity.pos.x <= 0):
-            entity.ke_kanan = False
                     
     def collision_y(self, entity, block):
         entity.cek_gravity()
         for tile in block:
-            if tile.rect.colliderect(entity.rect):
+            if tile.rect.colliderect(entity.collrect):
                 if entity.pos.y > 0:
-                    entity.rect.bottom = tile.rect.top
+                    entity.collrect.bottom = tile.rect.top
                     entity.pos.y = 0
                     entity.on_ground = True
                     entity.double_jumps = 0
                 elif entity.pos.y < 0:
-                    entity.rect.top = tile.rect.bottom
+                    entity.collrect.top = tile.rect.bottom
                     entity.pos.y = 0
                     entity.on_ceiling = True
         

@@ -16,6 +16,7 @@ class Player(Entity):
         self.index = 0
         self.indexspeed = 0.5
         self.image = self.animation["idle"][self.index]
+        self.collrect = pygame.Rect(self.rect.topleft, (25, self.rect.height))
 
         # particle image
         self.importparticle()
@@ -42,6 +43,7 @@ class Player(Entity):
         self.on_ceiling = False
         self.ke_kanan = False
         self.ke_kiri = False
+        self.att_status = False
         self.double_jumps = 0
 
         # time 
@@ -51,9 +53,6 @@ class Player(Entity):
     # import animasi particle
     def importparticle(self):
         self.particlerun = importanimation(LEVEL_IMG['particlerun'])
-        # for particle in self.particle:
-        #     fullpath = particlepath + particle
-        #     self.particle[particle] = importanimation(fullpath)
     
     def animasiparticle(self):
         if self.status == "run" and self.on_ground:
@@ -80,7 +79,8 @@ class Player(Entity):
             "idle": [],
             "run": [],
             "jump": [],
-            "fall": []
+            "fall": [], 
+            "attack": []
         }
         for animation in self.animation:
             fullpath = playerpath + animation
@@ -89,43 +89,39 @@ class Player(Entity):
     def animate(self):
         self.index += self.indexspeed
         if self.index >= len(self.animation[self.status]):
+            if self.att_status:
+                self.att_status = False
             self.index = 0
         self.image = self.animation[self.status][int(self.index)]
 
         if self.arah == 'kiri':
             self.image = pygame.transform.flip(self.image, True, False)
+            self.rect.bottomright = self.collrect.bottomright
         elif self.arah == 'kanan':
             self.image = pygame.transform.flip(self.image, False, False)
+            self.rect.bottomleft = self.collrect.bottomleft
         
         if self.immune:
             alpha = self.blink()
             self.image.set_alpha(alpha)
         else:
             self.image.set_alpha(255)
-
-        if self.on_ground and self.ke_kanan:
-            self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
-        elif self.on_ground and self.ke_kiri:
-            self.rect = self.image.get_rect(bottomleft = self.rect.bottomleft)
-        elif self.on_ground:
-            self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
-        elif self.on_ceiling and self.ke_kanan:
-            self.rect = self.image.get_rect(topright = self.rect.topright)
-        elif self.on_ceiling and self.ke_kiri:
-            self.rect = self.image.get_rect(topleft = self.rect.topleft)
-        elif self.on_ceiling:
-            self.rect = self.image.get_rect(midtop = self.rect.midtop) 
+        
+        self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
     
     def set_status(self):
-        if self.pos.y < 0:
-            self.status = "jump"
-        elif self.pos.y > 1:
-            self.status = "fall"
+        if self.att_status:
+            self.status = "attack"
         else:
-            if self.pos.x != 0:
-                self.status = "run"
+            if self.pos.y < 0:
+                self.status = "jump"
+            elif self.pos.y > 1:
+                self.status = "fall"
             else:
-                self.status = "idle"
+                if self.pos.x != 0:
+                    self.status = "run"
+                else:
+                    self.status = "idle"
     
     def get_health(self, health):
         if self.health_now < self.health:
@@ -171,6 +167,9 @@ class Player(Entity):
         else:
             self.move(0)
         
+        if self.keys[pygame.K_p]:
+            self.att_status = True
+        
         if self.keys[pygame.K_w] and self.on_ground:
             if pygame.time.get_ticks() - self.time > self.delay:
                 self.time = pygame.time.get_ticks()
@@ -187,14 +186,17 @@ class Player(Entity):
     
     def move(self, x):
         self.pos.x = x
-        self.rect.x += self.pos.x * self.speed
+        self.collrect.x += self.pos.x * self.speed
+    
+    def attack(self):
+        pass
 
     def jump(self):
         self.pos.y = self.jump_speed
     
     def cek_gravity(self):
         self.pos.y += self.gravity
-        self.rect.y += self.pos.y
+        self.collrect.y += self.pos.y
 
 
     def update(self):
