@@ -29,8 +29,8 @@ class Player(Entity):
         # self.particle_image = self.particle["run"][self.particle_index]
 
 
-        self.health_now = 500
-        self.max_health_bar = 400 
+        self.health_now = 1000
+        self.max_health_bar = 180
         self.health_ratio = self.health / self.max_health_bar
         self.gravity = 0.9
         self.jump_speed = -10
@@ -153,8 +153,12 @@ class Player(Entity):
             return 0
     
     def health_bar(self, screen):
-        pygame.draw.rect(screen, (255, 0, 0), (5, 5, self.health_now / self.health_ratio, 25))
-        pygame.draw.rect(screen, (0, 255, 0), (5, 5, self.max_health_bar, 25), 1)
+        healthbar = pygame.image.load(LEVEL_IMG['healthbar'])
+        rect = healthbar.get_rect(topleft = (0, 0))
+        pygame.draw.rect(screen, (255, 0, 0), (62, 32, self.health_now / self.health_ratio, 10))
+        screen.blit(healthbar, rect)
+
+        # pygame.draw.rect(screen, (0, 255, 0), (5, 5, self.max_health_bar, 25), 1)
 
     
     def get_input(self):

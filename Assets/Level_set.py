@@ -1,4 +1,5 @@
 LEVEL_IMG = {
+    'healthbar': './Assets/Graphics/Ui/healthbar.png',
     'floor': './Assets/Graphics/Block/floor.png',
     'player': './Assets/Graphics/Player/',
     'particlerun': './Assets/Graphics/Particle/run',
