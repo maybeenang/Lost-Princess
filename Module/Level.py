@@ -317,7 +317,6 @@ class Level:
             # self.goal.draw(self.surface)
 
             self.player.update()
-            self.player.sprite.health_bar(self.surface)
             self.coll_item(self.player.sprite, self.hati.sprites())
             self.coll_item(self.player.sprite, self.pisang.sprites())
             self.collision_x(self.player.sprite, self.floor.sprites())
@@ -329,6 +328,7 @@ class Level:
             self.particle.update(self.camera_x)
             self.particle.draw(self.surface)
 
+            self.player.sprite.health_bar(self.surface)
             self.lava.update(self.camera_x)
             self.lava.draw(self.surface)
 
