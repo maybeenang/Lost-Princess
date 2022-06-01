@@ -220,10 +220,6 @@ class Level:
             entity.on_ground = False
             if entity.double_jumps >= 2:
                 entity.double_jumps = 0
-        # if entity.on_ceiling and entity.pos.y > 0.1:
-        #     entity.on_ceiling = False
-        #     if entity.double_jumps >= 2:
-        #         entity.double_jumps = 0
     
     def jump_particleplayer(self, pos):
         if self.player.sprite.arah == "kanan":
@@ -249,8 +245,9 @@ class Level:
     def coll_item(self, player, item):
         for i in item:
             if player.rect.colliderect(i.rect):
-                player.get_health(100)
-                i.kill()
+                if player.health_now < player.health:
+                    player.get_health(100)
+                    i.kill()
     
     def coll_enemy(self):
         collision = pygame.sprite.spritecollide(self.player.sprite, self.enemy, False)
