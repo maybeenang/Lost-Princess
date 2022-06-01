@@ -198,7 +198,6 @@ class Level:
                 if entity.pos.x > 0:
                     entity.collrect.right = tile.rect.left
                     entity.ke_kanan = True
-                    self.current_x = entity.rect.right
                 elif entity.pos.x < 0:
                     entity.collrect.left = tile.rect.right
                     entity.ke_kiri = True
@@ -221,10 +220,10 @@ class Level:
             entity.on_ground = False
             if entity.double_jumps >= 2:
                 entity.double_jumps = 0
-        if entity.on_ceiling and entity.pos.y > 0.1:
-            entity.on_ceiling = False
-            if entity.double_jumps >= 2:
-                entity.double_jumps = 0
+        # if entity.on_ceiling and entity.pos.y > 0.1:
+        #     entity.on_ceiling = False
+        #     if entity.double_jumps >= 2:
+        #         entity.double_jumps = 0
     
     def jump_particleplayer(self, pos):
         if self.player.sprite.arah == "kanan":
@@ -260,13 +259,21 @@ class Level:
             for enemy in collision:
                 enemy_center = enemy.rect.centery
                 enemy_top = enemy.rect.top
-                player_bottom = self.player.sprite.rect.bottom
+                player_bottom = self.player.sprite.collrect.bottom
+                player_attack = self.player.sprite.att_range
                 if enemy_top < player_bottom < enemy_center and self.player.sprite.pos.y >= 0:
                     enemy.kill()
                     self.player.sprite.pos.y = -10
                     self.particle.add(Particle(enemy.rect.center, 'explosion'))
+                elif player_attack.colliderect(enemy.rect):
+                    enemy.kill()
+                    self.particle.add(Particle(enemy.rect.center, 'kill'))
+                    self.player.sprite.get_health(100)
+
                 else:
                     self.player.sprite.get_dmg(100)
+        
+        # pygame.draw.rect(self.screen, (255, 0, 0), self.enemy.rect, 1)
     
     def camera(self):
         player = self.player.sprite

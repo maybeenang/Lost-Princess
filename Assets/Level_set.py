@@ -5,6 +5,7 @@ LEVEL_IMG = {
     'particlejump': './Assets/Graphics/Particle/jump',
     'particleland': './Assets/Graphics/Particle/land',
     'particleexplosion': './Assets/Graphics/Particle/explosion',
+    'particlekill': './Assets/Graphics/Particle/kill',
     'enemy': './Assets/Graphics/Enemy/',
     'pisang': './Assets/Graphics/Item/Pisang',
     'hati': './Assets/Graphics/Item/Hati',

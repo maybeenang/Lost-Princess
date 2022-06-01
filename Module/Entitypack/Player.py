@@ -16,7 +16,9 @@ class Player(Entity):
         self.index = 0
         self.indexspeed = 0.5
         self.image = self.animation["idle"][self.index]
-        self.collrect = pygame.Rect(self.rect.topleft, (25, self.rect.height))
+        self.collrect = pygame.Rect(self.rect.topleft, (19, self.rect.height))
+        self.att_range = pygame.Rect(0, 0, 0, 0)
+        
 
         # particle image
         self.importparticle()
@@ -187,9 +189,16 @@ class Player(Entity):
     def move(self, x):
         self.pos.x = x
         self.collrect.x += self.pos.x * self.speed
+        self.rect.x = self.collrect.x
     
     def attack(self):
-        pass
+        if self.att_status:
+            if self.arah == 'kanan':
+                self.att_range = pygame.Rect(self.collrect.x + 20, self.collrect.y, 40, self.collrect.height)
+            elif self.arah == 'kiri':
+                self.att_range = pygame.Rect(self.collrect.x - 40, self.collrect.y, 40, self.collrect.height)
+        else:
+            self.att_range = pygame.Rect(0, 0, 0, 0)
 
     def jump(self):
         self.pos.y = self.jump_speed
@@ -197,9 +206,11 @@ class Player(Entity):
     def cek_gravity(self):
         self.pos.y += self.gravity
         self.collrect.y += self.pos.y
+        self.rect.y = self.collrect.y
 
 
     def update(self):
+        self.attack()
         self.get_input()
         self.set_status()
         self.animate()
