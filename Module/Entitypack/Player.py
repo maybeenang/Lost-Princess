@@ -206,13 +206,13 @@ class Player(Entity):
     def cek_gravity(self):
         self.pos.y += self.gravity
         self.collrect.y += self.pos.y
-        self.rect.y = self.collrect.y
+        # self.rect.y = self.collrect.y
 
 
     def update(self):
-        self.attack()
         self.get_input()
         self.set_status()
+        self.attack()
         self.animate()
         self.animasiparticle()
         self.immune_time_check()

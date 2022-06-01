@@ -269,7 +269,6 @@ class Level:
                     enemy.kill()
                     self.particle.add(Particle(enemy.rect.center, 'kill'))
                     self.player.sprite.get_health(100)
-
                 else:
                     self.player.sprite.get_dmg(100)
         
