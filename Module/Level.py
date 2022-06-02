@@ -20,14 +20,22 @@ from Module.MenuPack.Gameover import *
 
 class Level:
     def __init__(self, level, surface, mainmenu, oldmaxlevel):
+
+        # windows layar utama
         self.surface = surface
+
+        # pergerakan kamera
         self.camera_x = 0
-        self.current_x = 0
+
+        # music background
         self.__bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
         self.__bgsound.play(-1)
+
+        # atribut untuk menentukan level
         self.newmaxlevel = level['unlock']
         self.oldmaxlevel = oldmaxlevel
 
+        # layout dari seluruh block yang ingin di tetapkan
         level_layout = read_csv(level['floor'])
         pisang_layout = read_csv(level['pisang'])
         hati_layout = read_csv(level['hati'])
@@ -36,11 +44,12 @@ class Level:
         obor_layout = read_csv(level['obor'])
         tiang_layout = read_csv(level['tiang'])
 
+        # panjang dari level
         self.level_width = len(level_layout[0]) * BLOCKSIZE
-        # print(self.level_width)
 
+        # status level
+        self.__status = "running"
 
-        self.__status = "running"        
         # mainmenu
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
@@ -51,7 +60,7 @@ class Level:
         self.goal = pygame.sprite.Group()
         self.setupplayer(player_layout)
 
-
+        # setup level leve selain player
         self.floor = self.setuplevel(level_layout, 'floor')
         self.pisang = self.setuplevel(pisang_layout, 'pisang')
         self.hati = self.setuplevel(hati_layout, 'hati')
@@ -61,15 +70,19 @@ class Level:
         self.enemy = self.setuplevel(enemy_layout, 'enemy')
         self.batasenemy = self.setuplevel(enemy_layout, 'batasenemy')
 
+        # setup background
         self.bg = pygame.sprite.Group()
         self.setupbackground(self.level_width)
 
+        # setup lava
         self.lava = pygame.sprite.Group()
         self.setuplava(self.level_width)
 
+        # setup particle
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
 
+    # method untuk mengatur lava
     def setuplava(self, level_width):
         lava_start = -WIDTH
         lava_width = 192
@@ -81,6 +94,7 @@ class Level:
             lava = Lava(x, y, lava_width)
             self.lava.add(lava)
     
+    # method untuk mengatur background
     def setupbackground(self, layout):
         for i in range(-layout, layout * 2, BLOCKSIZE):
             for j in range(0, HEIGHT, BLOCKSIZE):
@@ -91,6 +105,7 @@ class Level:
                 else:
                     self.bg.add(Background((i, j), pygame.image.load(LEVEL_IMG['bgmid'])))
     
+    # method untuk mengatur player
     def setupplayer(self, layout):
         for row_index, row in enumerate(layout):
             for col_index, col in enumerate(row):
@@ -106,37 +121,7 @@ class Level:
                         batasplayer = Block((x, y), BLOCKSIZE, img)
                         self.goal.add(batasplayer)
     
-    def cek_goal(self):
-        if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
-            self.__bgsound.stop()
-            self.mainmenu(self.newmaxlevel)
-    
-    def cek_death(self):
-        if self.player.sprite.rect.top > HEIGHT:
-            self.__bgsound.stop()
-            self.player.sprite.health_now = 0
-            self.mainmenu(self.oldmaxlevel)
-        
-    def createpause(self):
-        self.__bgsound.stop()
-        self.pause.draw()
-        self.pause.input()
-    
-    def setstatus(self, status):
-        if status == "running":
-            self.__bgsound.play(-1)
-        self.__status = status
-        
-    def input(self):
-        if self.__status == "running":
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE]:
-                self.setstatus("pause")
-
-    def cek_gameover(self):
-        if self.player.sprite.health_now <= 0:
-            self.__status = "gameover"
-    
+    # method untuk menata block block pada level
     def setuplevel(self, level, type):
         dumb = pygame.sprite.Group()
 
@@ -186,11 +171,50 @@ class Level:
                             dumb.add(batasenemy)
         return dumb
 
+    # method untuk mengecek apakah player sudah sampai di goal
+    def cek_goal(self):
+        if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
+            self.__bgsound.stop()
+            self.mainmenu(self.newmaxlevel)
+    
+    # method untuk mengecek kondisi player
+    def cek_death(self):
+        if self.player.sprite.rect.top > HEIGHT:
+            self.__bgsound.stop()
+            self.player.sprite.health_now = 0
+            self.mainmenu(self.oldmaxlevel)
+    
+    # method membuat pause
+    def createpause(self):
+        self.__bgsound.stop()
+        self.pause.draw()
+        self.pause.input()
+    
+    # method untuk menentukan status level
+    def setstatus(self, status):
+        if status == "running":
+            self.__bgsound.play(-1)
+        self.__status = status
+    
+    # method untuk inputan pada saat level berjalan
+    def input(self):
+        if self.__status == "running":
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                self.setstatus("pause")
+
+    # method untuk menentukan gameover
+    def cek_gameover(self):
+        if self.player.sprite.health_now <= 0:
+            self.__status = "gameover"
+    
+    # method untuk menentukan pergerakan enemy
     def enemyreverse(self):
         for enemy in self.enemy.sprites():
             if pygame.sprite.spritecollide(enemy, self.batasenemy, False):
                 enemy.reverse()
     
+    # method untuk menentukan interaksi player dengan block secara horizontal
     def collision_x(self, entity, block):
         entity.collrect.x += entity.pos.x * entity.speed
         for tile in block:
@@ -201,7 +225,8 @@ class Level:
                 elif entity.pos.x < 0:
                     entity.collrect.left = tile.rect.right
                     entity.ke_kiri = True
-                    
+
+    # method untuk menentukan interaksi player dengan block secara vertikal      
     def collision_y(self, entity, block):
         entity.cek_gravity()
         for tile in block:
@@ -221,6 +246,7 @@ class Level:
             if entity.double_jumps >= 2:
                 entity.double_jumps = 0
     
+    # method membuat particle ketika player lompat
     def jump_particleplayer(self, pos):
         if self.player.sprite.arah == "kanan":
             pos -= pygame.math.Vector2(10, 5)
@@ -228,12 +254,14 @@ class Level:
             pos += pygame.math.Vector2(10, -5)
         self.particle.add(Particle(pos, "jump"))
     
+    # method untuk menentukan interaksi player dengan particle
     def set_player_ground(self):
         if self.player.sprite.on_ground:
             self.player_ground = True
         else:
             self.player_ground = False
     
+    # method membuat particle ketika player terjun
     def land_particleplayer(self):
         if self.player.sprite.on_ground and not self.player_ground and not self.particle.sprites():
             if self.player.sprite.arah == "kanan":
@@ -242,6 +270,7 @@ class Level:
                 offset = pygame.math.Vector2(-7, 15)
             self.particle.add(Particle(self.player.sprite.rect.midbottom - offset,'land'))
     
+    # method untuk interaksi player dengan item
     def coll_item(self, player, item):
         for i in item:
             if player.rect.colliderect(i.rect):
@@ -249,6 +278,7 @@ class Level:
                     player.get_health(100)
                     i.kill()
     
+    # method untuk interaksi player dengan enemy
     def coll_enemy(self):
         collision = pygame.sprite.spritecollide(self.player.sprite, self.enemy, False)
 
@@ -268,9 +298,8 @@ class Level:
                     self.player.sprite.get_health(100)
                 else:
                     self.player.sprite.get_dmg(100)
-        
-        # pygame.draw.rect(self.screen, (255, 0, 0), self.enemy.rect, 1)
     
+    # method menentukan pergerakan camera
     def camera(self):
         player = self.player.sprite
         if player.rect.centerx < WIDTH / 4 and player.pos.x < 0:
@@ -283,6 +312,7 @@ class Level:
             player.speed = 4
             self.camera_x = 0
     
+    # method untuk menampilkan seluruh level
     def draw(self):
         if self.__status == "running":
 

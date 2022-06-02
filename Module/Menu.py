@@ -3,12 +3,12 @@ import pygame
 from Assets.layoutMenuPath import *
 from Assets.soundPath import *
 
-
-
+# parent class untuk menu
 class Menu:
     def __init__(self, surface):
         # window
         self.surface = surface
+        
         # click sound
         self.click_sound = pygame.mixer.Sound(soundPath['click'])
         self.font = pygame.font.Font(layoutMenuPath['font'], 30)

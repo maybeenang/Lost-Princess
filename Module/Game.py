@@ -47,15 +47,16 @@ class Game:
             if event.type == pygame.QUIT:
                 sys.exit()
             
-                    
+    # menampilkan menu yang dipilih  
     def drawmenu(self):
         self.menu.draw()
-        # self.menu.soundplay()
     
+    # menampilkan level yang dipilih
     def drawlevel(self):
         self.screen.fill('black')
         self.level.draw()
 
+    # ketika game sedang berjalan
     def run(self):
         while True:
             self.events()
@@ -64,10 +65,6 @@ class Game:
 
             elif self.__status == 'game':
                 self.drawlevel()
-
-            else:
-                #self.bg_sound.fadeout(1000)
-                self.draw()
 
 
             pygame.display.update()
