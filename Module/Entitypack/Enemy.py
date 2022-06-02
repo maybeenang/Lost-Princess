@@ -15,8 +15,7 @@ class Enemy(Entity):
 
     def move(self):
         self.rect.x += self.speed
-    
-    
+        
     # import animasi perframe ke sebuah list
     def importimage(self):
         playerpath = LEVEL_IMG['enemy']
