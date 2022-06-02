@@ -110,17 +110,20 @@ Unfortunately, we make this video just in MacOs system, soon we will make how to
 <img src="./Assets/Docs/UML.png">
 
 ## Screenshots
+### Main Menu
 
-* Main Menu
 <img src="./Assets/Docs/Screenshots/MainMenu.png">
 
-* Option
+### Option
+
 <img src="./Assets/Docs/Screenshots/OptionMenu.png">
 
-* Level Select
+### Level Select
+
 <img src="./Assets/Docs/Screenshots/LevelSelect.png">
 
-* In Game
+### In Game
+
 <img src="./Assets/Docs/Screenshots/InGame.png">
 
 This game is under development, so there is no screenshot yet.
