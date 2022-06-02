@@ -426,6 +426,4 @@ class Level:
                 self.second += 1
             if self.second == 2:
                 self.mainmenu(self.newmaxlevel)
-        print(self.player.sprite.nyawa)
-        print(self.nyawaplayer)
         self.input()
