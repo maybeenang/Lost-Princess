@@ -17,7 +17,7 @@ class MainMenu(Menu):
         self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 100))
 
         # status
-        self.currentbutton = 0
+        self.__currentbutton = 0
         self.opt = opt
         
         self.level = level
@@ -45,23 +45,23 @@ class MainMenu(Menu):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_s] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
-            if self.currentbutton == len(self.buttons) - 1:
-                self.currentbutton = len(self.buttons)-1
+            if self.__currentbutton == len(self.buttons) - 1:
+                self.__currentbutton = len(self.buttons)-1
             else:
                 self.soundclick.play()
-                self.currentbutton += 1
+                self.__currentbutton += 1
         elif keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
-            if self.currentbutton == 0:
-                self.currentbutton = 0
+            if self.__currentbutton == 0:
+                self.__currentbutton = 0
             else:
                 self.soundclick.play()
-                self.currentbutton -= 1
+                self.__currentbutton -= 1
         
         if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             for button in self.buttons:
-                if self.buttons[button].input(self.currentbutton):
+                if self.buttons[button].input(self.__currentbutton):
                     if button == 'start':
                         self.soundclicked[0].play()
                         self.level()
@@ -79,4 +79,4 @@ class MainMenu(Menu):
         self.surface.fill('grey')
         self.surface.blit(self.logo, self.logo_rect)
         for button in self.buttons:
-            self.buttons[button].update(self.currentbutton, "positive")
+            self.buttons[button].update(self.__currentbutton, "positive")

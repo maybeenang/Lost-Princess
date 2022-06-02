@@ -10,47 +10,46 @@ class MenuManager(Menu):
         super().__init__(surface)
 
         # backsound menu
-        self.bg_sound = pygame.mixer.Sound(soundPath['inmenubacksound'])
+        self.__bg_sound = pygame.mixer.Sound(soundPath['inmenubacksound'])
         self.soundstatus = 0.2
-        self.bg_sound.set_volume(self.soundstatus)
-        self.bg_sound.play(-1)
+        self.__bg_sound.set_volume(self.soundstatus)
+        self.__bg_sound.play(-1)
         self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect)
+
         # level status
-        self.maxlevel = maxlevel
+        self._maxlevel = maxlevel
         self.level = level
-
-
-        self.status = 'main'
+        self.__status = 'main'
     
     def createoption(self):
         self.option = OptionMenu(self.surface, self.createmainmenu, self.soundstatus)
-        self.status = 'opt'
+        self.__status = 'opt'
     
     def createmainmenu(self):
         self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect)
-        self.status = 'main'
+        self.__status = 'main'
     
     def createlevelselect(self):
-        self.levelselect = LevelMenu(self.surface, self.createmainmenu, self.level, self.stopsound, self.maxlevel)
-        self.status = 'level'
+        self.levelselect = LevelMenu(self.surface, self.createmainmenu, self.level, self.stopsound, self._maxlevel)
+        self.__status = 'level'
     
     def set_sound(self):
         # pass
-        self.bg_sound.set_volume(self.soundstatus)
+        self.__bg_sound.set_volume(self.soundstatus)
     
     def stopsound(self):
         # pass
-        self.bg_sound.stop()
+        self.__bg_sound.stop()
     
     def draw(self):
 
         self.set_sound()
 
-        if self.status == 'main':
+        if self.__status == 'main':
             self.mainmenu.draw()
-        elif self.status == 'opt':
+        elif self.__status == 'opt':
             self.option.draw()
             self.soundstatus = self.option.soundstatus
-        elif self.status == 'level':
+        elif self.__status == 'level':
             self.levelselect.draw()
         # print(self.status)

@@ -14,8 +14,8 @@ class LevelMenu(Menu):
         self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 50))
 
         # setup button
-        self.maxlevel = maxlevel
-        self.currentbutton = 0
+        self._maxlevel = maxlevel
+        self.__currentbutton = 0
         self.buttons = {}
         for level in LEVEL_SET:
             if level == 0:
@@ -24,7 +24,7 @@ class LevelMenu(Menu):
                 self.buttons[level] = Button(self.surface, (WIDTH/2, 200 + (level-1)*60), "Level " + str(level), level)
             
             # ketika level belum di unlock
-            if level > self.maxlevel:
+            if level > self._maxlevel:
                 self.buttons[level].image = pygame.image.load(layoutMenuPath['tombolnegative'])
         
         # back button
@@ -54,33 +54,33 @@ class LevelMenu(Menu):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_s] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
-            if self.currentbutton == len(self.buttons) - 1:
-                self.currentbutton = len(self.buttons)-1
+            if self.__currentbutton == len(self.buttons) - 1:
+                self.__currentbutton = len(self.buttons)-1
             else:
                 self.soundclick.play()
-                self.currentbutton += 1
+                self.__currentbutton += 1
         elif keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
-            if self.currentbutton == 0:
-                self.currentbutton = 0
+            if self.__currentbutton == 0:
+                self.__currentbutton = 0
             else:
                 self.soundclick.play()
-                self.currentbutton -= 1
+                self.__currentbutton -= 1
         
         if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             for button in self.buttons:
-                if self.buttons[button].input(self.currentbutton):
+                if self.buttons[button].input(self.__currentbutton):
                     if button == len(LEVEL_SET):
                         self.soundclicked[1].play()
                         self.back()
                     else:
-                        if self.currentbutton > self.maxlevel:
+                        if self.__currentbutton > self._maxlevel:
                             self.soundclicked[2].play()
                         else:
                             self.soundclicked[0].play()
                             self.stopsound()
-                            self.createlevel(LEVEL_SET[self.currentbutton])
+                            self.createlevel(LEVEL_SET[self.__currentbutton])
     
 
     def draw(self):
@@ -89,8 +89,8 @@ class LevelMenu(Menu):
         self.surface.blit(self.logo, self.logo_rect)
         for level in self.buttons:
             if level == len(LEVEL_SET):
-                self.buttons[level].update(self.currentbutton, "positive")
-            elif level > self.maxlevel:
-                self.buttons[level].update(self.currentbutton, "negative")
+                self.buttons[level].update(self.__currentbutton, "positive")
+            elif level > self._maxlevel:
+                self.buttons[level].update(self.__currentbutton, "negative")
             else:
-                self.buttons[level].update(self.currentbutton, "positive")
+                self.buttons[level].update(self.__currentbutton, "positive")

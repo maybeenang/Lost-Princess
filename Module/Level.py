@@ -23,8 +23,8 @@ class Level:
         self.surface = surface
         self.camera_x = 0
         self.current_x = 0
-        self.bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
-        self.bgsound.play(-1)
+        self.__bgsound = pygame.mixer.Sound(soundPath['ingamebacksound'])
+        self.__bgsound.play(-1)
         self.newmaxlevel = level['unlock']
         self.oldmaxlevel = oldmaxlevel
 
@@ -40,7 +40,7 @@ class Level:
         # print(self.level_width)
 
 
-        self.status = "running"        
+        self.__status = "running"        
         # mainmenu
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
@@ -108,34 +108,34 @@ class Level:
     
     def cek_goal(self):
         if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
-            self.bgsound.stop()
+            self.__bgsound.stop()
             self.mainmenu(self.newmaxlevel)
     
     def cek_death(self):
         if self.player.sprite.rect.top > HEIGHT:
-            self.bgsound.stop()
+            self.__bgsound.stop()
             self.player.sprite.health_now = 0
             self.mainmenu(self.oldmaxlevel)
         
     def createpause(self):
-        self.bgsound.stop()
+        self.__bgsound.stop()
         self.pause.draw()
         self.pause.input()
     
     def setstatus(self, status):
         if status == "running":
-            self.bgsound.play(-1)
-        self.status = status
+            self.__bgsound.play(-1)
+        self.__status = status
         
     def input(self):
-        if self.status == "running":
+        if self.__status == "running":
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE]:
                 self.setstatus("pause")
 
     def cek_gameover(self):
         if self.player.sprite.health_now <= 0:
-            self.status = "gameover"
+            self.__status = "gameover"
     
     def setuplevel(self, level, type):
         dumb = pygame.sprite.Group()
@@ -284,7 +284,7 @@ class Level:
             self.camera_x = 0
     
     def draw(self):
-        if self.status == "running":
+        if self.__status == "running":
 
             self.bg.draw(self.surface)
             self.bg.update(self.camera_x)
@@ -336,7 +336,7 @@ class Level:
             self.camera()
             self.cek_goal()
             self.cek_death()
-        elif self.status == "pause":
+        elif self.__status == "pause":
             self.createpause()
         
         self.input()

@@ -12,30 +12,31 @@ class Game:
 
         # window yang digunakan
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
         # FPS
-        self.clock = pygame.time.Clock()
+        self.__clock = pygame.time.Clock()
 
         # setup level
-        self.maxlevel = 1
+        self._maxlevel = 1
 
         # setup menu utama
-        self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
+        self.menu = MenuManager(self.screen, self.createlevel, self._maxlevel)
 
-        # perkondisian
-        self.status = 'menu'
+        # perkondisian 
+        self.__status = 'menu'
         self.run()
     
     # membuat level
     def createlevel(self, currentlevel):
-        self.level = Level(currentlevel, self.screen, self.createmenu, self.maxlevel)
-        self.status = 'game'
+        self.level = Level(currentlevel, self.screen, self.createmenu, self._maxlevel)
+        self.__status = 'game'
 
     # membuat menu
     def createmenu(self, newmaxlevel):
-        if newmaxlevel > self.maxlevel:
-            self.maxlevel = newmaxlevel
-        self.menu = MenuManager(self.screen, self.createlevel, self.maxlevel)
-        self.status = 'menu'
+        if newmaxlevel > self._maxlevel:
+            self._maxlevel = newmaxlevel
+        self.menu = MenuManager(self.screen, self.createlevel, self._maxlevel)
+        self.__status = 'menu'
 
     
     # event ketika ada sesuatu ketika game berjalan
@@ -58,10 +59,10 @@ class Game:
     def run(self):
         while True:
             self.events()
-            if self.status == 'menu':
+            if self.__status == 'menu':
                 self.drawmenu()
 
-            elif self.status == 'game':
+            elif self.__status == 'game':
                 self.drawlevel()
 
             else:
@@ -70,4 +71,4 @@ class Game:
 
 
             pygame.display.update()
-            self.clock.tick(FPS)
+            self.__clock.tick(FPS)
