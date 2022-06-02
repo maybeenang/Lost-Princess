@@ -41,14 +41,14 @@ class OptionMenu(Menu):
         keys = pygame.key.get_pressed()
 
         # vertical input
-        if keys[pygame.K_s] and (pygame.time.get_ticks() > self.time + self.delay):
+        if (keys[pygame.K_DOWN] or keys[pygame.K_s]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.__currentbutton == len(self.buttons) - 1:
                 self.__currentbutton = len(self.buttons)-1
             else:
                 self.soundclick.play()
                 self.__currentbutton += 1
-        elif keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
+        elif (keys[pygame.K_UP] or keys[pygame.K_w]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.__currentbutton == 0:
                 self.__currentbutton = 0
@@ -57,7 +57,7 @@ class OptionMenu(Menu):
                 self.__currentbutton -= 1
         
         # horizontal input
-        if keys[pygame.K_d] and (pygame.time.get_ticks() > self.time + self.delay):
+        if (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             for button in self.buttons:
                 if self.buttons[button].input(self.__currentbutton):
@@ -66,7 +66,7 @@ class OptionMenu(Menu):
                             self.soundstatus += 0.2
                         elif self.soundstatus == 1.0:
                             self.soundstatus = 1.0
-        elif keys[pygame.K_a] and (pygame.time.get_ticks() > self.time + self.delay):
+        elif (keys[pygame.K_LEFT] or keys[pygame.K_a]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             for button in self.buttons:
                 if self.buttons[button].input(self.__currentbutton):
@@ -75,9 +75,13 @@ class OptionMenu(Menu):
                             self.soundstatus -= 0.2
                         elif self.soundstatus == 0:
                             self.soundstatus = 0.0
+        
+        if keys[pygame.K_ESCAPE] and (pygame.time.get_ticks() > self.time + self.delay):
+            self.time = pygame.time.get_ticks()
+            self.soundclicked[0].play()
+            self.createmenu()
 
-
-        if keys[pygame.K_SPACE] and (pygame.time.get_ticks() > self.time + self.delay):
+        if (keys[pygame.K_SPACE] or keys[pygame.K_RETURN]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             for button in self.buttons:
                 if self.buttons[button].input(self.__currentbutton):

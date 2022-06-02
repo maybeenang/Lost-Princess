@@ -27,6 +27,14 @@ class Pause(Menu):
         self.resume = Button(self.surface, (WIDTH/2, 200), "Resume", 0)
         self.mainmenu = Button(self.surface, (WIDTH/2, 260), "Main Menu", 1)
 
+        # # sound click
+        self.soundclick = pygame.mixer.Sound(soundPath['click'])
+        self.soundclicked = [
+            pygame.mixer.Sound(soundPath['positive_click']), 
+            pygame.mixer.Sound(soundPath['negative_click']), 
+            pygame.mixer.Sound(soundPath['error_click'])
+        ]
+
         # time
         self.time = pygame.time.get_ticks()
         self.delay = 200
@@ -34,24 +42,34 @@ class Pause(Menu):
     def input(self):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_w] and (pygame.time.get_ticks() > self.time + self.delay):
+        if (keys[pygame.K_UP] or keys[pygame.K_w]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 0:
                 self.currentbutton = 0
             else:
+                self.soundclick.play()
                 self.currentbutton -= 1
-        elif keys[pygame.K_s] and (pygame.time.get_ticks() > self.time + self.delay):
+        elif (keys[pygame.K_DOWN] or keys[pygame.K_s]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 1:
                 self.currentbutton = 1
             else:
+                self.soundclick.play()
                 self.currentbutton += 1
         
-        if keys[pygame.K_RETURN] and (pygame.time.get_ticks() > self.time + self.delay):
+        if keys[pygame.K_ESCAPE] and (pygame.time.get_ticks() > self.time + self.delay):
+            self.time = pygame.time.get_ticks()
+            self.soundclicked[0].play()
+            self.setstatus("running")
+
+        
+        if (keys[pygame.K_SPACE] or keys[pygame.K_RETURN]) and (pygame.time.get_ticks() > self.time + self.delay):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 0:
+                self.soundclicked[0].play()
                 self.setstatus("running")
             elif self.currentbutton == 1:
+                self.soundclicked[1].play()
                 self.createmainmenu(self.oldmaxlevel)
     
     def draw(self):
