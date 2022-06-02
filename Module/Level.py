@@ -18,6 +18,7 @@ from Module.Entitypack.Enemy import Enemy
 from Module.MenuPack.Pause import *
 from Module.MenuPack.DeathPage import *
 from Module.MenuPack.Gameover import *
+from Module.MenuPack.WinPage import *
 
 class Level:
     def __init__(self, level, surface, mainmenu, oldmaxlevel, nyawaplayer):
@@ -58,6 +59,7 @@ class Level:
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
         self.deathpage = DeathPage(self.surface, self.setstatus, self.nyawaplayer)
         self.gameover = Gameover(self.surface, self.mainmenu, self.setstatus, oldmaxlevel, self.createlevelagain)
+        self.winpage = WinPage(self.surface, self.newmaxlevel)
 
         # setup player
         player_layout = read_csv(level['player'])
@@ -187,7 +189,7 @@ class Level:
     def cek_goal(self):
         if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
             self.__bgsound.stop()
-            self.mainmenu(self.newmaxlevel)
+            self.setstatus("win")
     
     # method untuk menentukan gameover
     def cek_gameover(self):
@@ -223,6 +225,10 @@ class Level:
     def createdeathpage(self):
         self.__bgsound.stop()
         self.deathpage.draw()
+
+    def createwinpage(self):
+        self.__bgsound.stop()
+        self.winpage.draw()
     
     # method untuk menentukan status level
     def setstatus(self, status):
@@ -407,6 +413,12 @@ class Level:
                 self.createlevelagain(self.nyawaplayer)
         elif self.__status == "gameover":
             self.creategameover()
-                
-        print(self.nyawaplayer)
+        elif self.__status == "win":
+            self.createwinpage()
+            if pygame.time.get_ticks() - self.timer > 1000 and self.second < 2:
+                self.timer = pygame.time.get_ticks()
+                self.second += 1
+            if self.second == 2:
+                self.mainmenu(self.newmaxlevel)
+
         self.input()
