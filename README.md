@@ -106,6 +106,7 @@ Unfortunately, we make this video just in MacOs system, soon we will make how to
 ## UML Diagram
 
 On progress
+<img src="./Assets/Docs/UML.png">
 ## Screenshots
 
 This game is under development, so there is no screenshot yet.
