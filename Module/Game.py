@@ -9,6 +9,7 @@ from Assets.layoutMenuPath import *
 class Game:
     def __init__(self):
         pygame.init()
+        pygame.display.set_caption("Lost Princess")
 
         # window yang digunakan
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))

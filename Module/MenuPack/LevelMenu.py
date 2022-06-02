@@ -10,8 +10,9 @@ class LevelMenu(Menu):
         super().__init__(surface)
 
         # logo di atas
-        self.logo = self.font.render("Level Select", True, "white")
-        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 50))
+        self.logo = self.font.render("Level Select", True, "#e3b616")
+        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 55))
+        self.frame = pygame.image.load(layoutMenuPath['framelevel'])
 
         # setup button
         self._maxlevel = maxlevel
@@ -85,7 +86,8 @@ class LevelMenu(Menu):
 
     def draw(self):
         self.input()
-        self.surface.fill('grey')
+        self.surface.blit(self.bg, (0, 0))
+        self.surface.blit(self.frame, (0, 0))
         self.surface.blit(self.logo, self.logo_rect)
         for level in self.buttons:
             if level == len(LEVEL_SET):

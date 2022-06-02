@@ -12,9 +12,10 @@ class MainMenu(Menu):
         super().__init__(surface)
 
         # logo
-        self.font = pygame.font.Font(layoutMenuPath['font'], 40)
-        self.logo = self.font.render("Lost Princess", True, "white")
-        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 100))
+        self.font = pygame.font.Font(layoutMenuPath['font'], 23)
+        self.logo = self.font.render("Lost Princess", True, "#e3b616")
+        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 71))
+        
 
         # status
         self.__currentbutton = 0
@@ -24,9 +25,10 @@ class MainMenu(Menu):
 
         # main menu button
         self.buttons = {
-            'start': Button(self.surface, (WIDTH/2, 160), 'Start', 0),
-            'opt': Button(self.surface, (WIDTH/2, 220), 'Option', 1),
-            'quit': Button(self.surface, (WIDTH/2, 280), 'Quit', 2)
+            'start': Button(self.surface, (WIDTH/2, 200), 'Start', 0),
+            'opt': Button(self.surface, (WIDTH/2, 260), 'Option', 1),
+            'credits': Button(self.surface, (WIDTH/2, 320), 'Credits', 2),
+            'quit': Button(self.surface, (WIDTH/2, 380), 'Quit', 3)
         }
 
         # # sound click
@@ -76,7 +78,8 @@ class MainMenu(Menu):
     
     def draw(self):
         self.input()
-        self.surface.fill('grey')
+        self.surface.blit(self.bg, (0, 0))
+        self.surface.blit(self.frame, (0, 0))
         self.surface.blit(self.logo, self.logo_rect)
         for button in self.buttons:
             self.buttons[button].update(self.__currentbutton, "positive")

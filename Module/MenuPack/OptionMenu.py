@@ -1,12 +1,14 @@
 from Module.Menu import *
 from Module.MenuPack.Button import *
+from Assets.Settings import *
 
 class OptionMenu(Menu):
     def __init__(self, surface, menu, soundstatus):
         super().__init__(surface)
 
-        self.logo = self.font.render("Option", True, "white")
-        self.logo_rect = self.logo.get_rect(center=(350, 50))
+        self.logo = self.font.render("Option", True, "#e3b616")
+        self.logo_rect = self.logo.get_rect(center=(WIDTH/2, 71))
+        self.frame = pygame.image.load(layoutMenuPath['frameoption']).convert_alpha()
         self.__currentbutton = 0
         self.createmenu = menu
 
@@ -21,8 +23,8 @@ class OptionMenu(Menu):
 
         self.soundstatus = soundstatus
         self.buttons = {
-            'back': Button(self.surface, (350, 120), 'Back', 0),
-            'sound': Button(self.surface, (200, 260), 'Sound', 1)
+            'back': Button(self.surface, (WIDTH/2, 200), 'Back', 0),
+            'sound': Button(self.surface, (WIDTH/2, 320), 'Sound', 1)
         }
 
         # volume slider
@@ -97,16 +99,15 @@ class OptionMenu(Menu):
             self.currentvolume = self.soundstatus * 1000
         else:
             self.currentvolume = 0
-        
-        # print("{a}, {b}" .format(a=self.currentvolume / self.volumeratio, b=self.currentvolume))
 
     def soundbar(self):
-        self.value = pygame.draw.rect(self.surface, 'green', (350, 250, self.currentvolume / self.volumeratio, 20), border_radius=8)
-        self.border = pygame.draw.rect(self.surface, 'black', (350, 250, self.volumelenght, 20), 3, 8)
+        self.value = pygame.draw.rect(self.surface, 'green', (WIDTH/4 + 26, 380, self.currentvolume / self.volumeratio, 20), border_radius=8)
+        self.border = pygame.draw.rect(self.surface, 'black', (WIDTH/4 + 26, 380, self.volumelenght, 20), 3, 8)
 
     def draw(self):
         self.input()
-        self.surface.fill('grey')
+        self.surface.blit(self.bg, (0, 0))
+        self.surface.blit(self.frame, (0, 0))
         self.surface.blit(self.logo, self.logo_rect)
         self.cekvolumebar()
         self.soundbar()

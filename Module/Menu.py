@@ -11,7 +11,9 @@ class Menu:
         
         # click sound
         self.click_sound = pygame.mixer.Sound(soundPath['click'])
-        self.font = pygame.font.Font(layoutMenuPath['font'], 30)
+        self.font = pygame.font.Font(layoutMenuPath['font'], 23)
+        self.frame = pygame.image.load(layoutMenuPath['frame']).convert_alpha()
+        self.bg = pygame.image.load(layoutMenuPath['bg']).convert_alpha()
     
     def draw(self):
         pass
