@@ -6,7 +6,7 @@ from Module.Entity import Entity
 
 class Player(Entity):
 #     player
-    def __init__(self, pos, size, surface, jump_particle):
+    def __init__(self, pos, size, surface, jump_particle, nyawa):
         super().__init__(1000, 10, 4, pos, size)
 
         self.surface = surface
@@ -28,7 +28,7 @@ class Player(Entity):
         self.jump_particle = jump_particle
         # self.particle_image = self.particle["run"][self.particle_index]
 
-
+        self.nyawa = nyawa
         self.health_now = 1000
         self.max_health_bar = 180
         self.health_ratio = self.health / self.max_health_bar

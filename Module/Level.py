@@ -16,10 +16,13 @@ from Module.ItemPack.Lava import Lava
 from Module.Entitypack.Player import Player
 from Module.Entitypack.Enemy import Enemy
 from Module.MenuPack.Pause import *
+from Module.MenuPack.DeathPage import *
 from Module.MenuPack.Gameover import *
 
 class Level:
-    def __init__(self, level, surface, mainmenu, oldmaxlevel):
+    def __init__(self, level, surface, mainmenu, oldmaxlevel, nyawaplayer):
+        self.level = level
+        self.nyawaplayer = nyawaplayer
 
         # windows layar utama
         self.surface = surface
@@ -53,12 +56,16 @@ class Level:
         # mainmenu
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
+        self.gameover = Gameover(self.surface, self.mainmenu, self.setstatus, oldmaxlevel, self.createlevelagain)
 
         # setup player
         player_layout = read_csv(level['player'])
         self.player = pygame.sprite.GroupSingle()
         self.goal = pygame.sprite.Group()
         self.setupplayer(player_layout)
+
+        # setup deathpage
+        self.deathpage = DeathPage(self.surface, self.setstatus, self.player.sprite.nyawa)
 
         # setup level leve selain player
         self.floor = self.setuplevel(level_layout, 'floor')
@@ -81,6 +88,10 @@ class Level:
         # setup particle
         self.particle = pygame.sprite.GroupSingle()
         self.player_ground = False
+
+        # timer
+        self.timer = 0
+        self.second = 0
 
     # method untuk mengatur lava
     def setuplava(self, level_width):
@@ -114,7 +125,7 @@ class Level:
 
                 if col != '-1':
                     if col == '0':
-                        player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer)
+                        player = Player((x, y), BLOCKSIZE, self.surface, self.jump_particleplayer, self.nyawaplayer)
                         self.player.add(player)
                     if col == '1':
                         img = slice_img(LEVEL_IMG['batasplayer'])[int(col)]
@@ -170,6 +181,7 @@ class Level:
                             batasenemy = Block((x, y), BLOCKSIZE, img)
                             dumb.add(batasenemy)
         return dumb
+    
 
     # method untuk mengecek apakah player sudah sampai di goal
     def cek_goal(self):
@@ -177,18 +189,40 @@ class Level:
             self.__bgsound.stop()
             self.mainmenu(self.newmaxlevel)
     
+    # method untuk menentukan gameover
+    def cek_gameover(self):
+        if self.player.sprite.nyawa == -1:
+            self.__bgsound.stop()
+            self.setstatus('gameover')
+
     # method untuk mengecek kondisi player
     def cek_death(self):
         if self.player.sprite.rect.top > HEIGHT:
-            self.__bgsound.stop()
-            self.player.sprite.health_now = 0
-            self.mainmenu(self.oldmaxlevel)
+            self.timer = pygame.time.get_ticks()
+            self.nyawaplayer -= 1
+            self.setstatus("death")
+        elif self.player.sprite.health_now <= 0:
+            self.timer = pygame.time.get_ticks()
+            self.nyawaplayer -= 1
+            self.setstatus("death")   
+
+    def createlevelagain(self, nyawaplayer):
+        self.__init__(self.level, self.surface, self.mainmenu, self.oldmaxlevel, nyawaplayer)
+    
+    def creategameover(self):
+        self.__bgsound.stop()
+        self.gameover.draw()
+        self.gameover.input()
     
     # method membuat pause
     def createpause(self):
         self.__bgsound.stop()
         self.pause.draw()
         self.pause.input()
+    
+    def createdeathpage(self):
+        self.__bgsound.stop()
+        self.deathpage.draw()
     
     # method untuk menentukan status level
     def setstatus(self, status):
@@ -202,11 +236,6 @@ class Level:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE]:
                 self.setstatus("pause")
-
-    # method untuk menentukan gameover
-    def cek_gameover(self):
-        if self.player.sprite.health_now <= 0:
-            self.__status = "gameover"
     
     # method untuk menentukan pergerakan enemy
     def enemyreverse(self):
@@ -365,8 +394,19 @@ class Level:
             self.coll_enemy()
             self.camera()
             self.cek_goal()
+            # self.cek_gameover()
             self.cek_death()
         elif self.__status == "pause":
             self.createpause()
+        elif self.__status == "death":
+            self.createdeathpage()
+            if pygame.time.get_ticks() - self.timer > 1000 and self.second < 2:
+                self.timer = pygame.time.get_ticks()
+                self.second += 1
+            if self.second == 2:
+                self.createlevelagain(self.nyawaplayer)
+        elif self.__status == "gameover":
+            self.creategameover()
+                
         
         self.input()
