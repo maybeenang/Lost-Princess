@@ -115,7 +115,6 @@ Unfortunately, we make this video just in MacOs system, soon we will make how to
 <img src="./Assets/Docs/Screenshots/LevelSelect.png">
 <img src="./Assets/Docs/Screenshots/InGame.png">
 
-This game is under development, so there is no screenshot yet.
 ## Contributing
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. Don't forget to give the project a star! Thanks again!
