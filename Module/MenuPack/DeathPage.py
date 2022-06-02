@@ -20,7 +20,11 @@ class DeathPage(Menu):
         self.text = "You Death"
         self.textrender = self.font.render(self.text, True, (255, 255, 255))
         self.textrect = self.textrender.get_rect(center=(WIDTH/2, 75))
-        self.heart = self.font.render("x" + str(self.nyawa - 1), True, (255, 255, 255))
+        # self.heart = self.font.render("x" + str(self.nyawa - 1), True, (255, 255, 255))
+        # self.heartrect = self.heart.get_rect(center=(WIDTH/2, 125))
+
+    def update(self, nyawa):
+        self.heart = self.font.render("x" + str(nyawa - 1), True, (255, 255, 255))
         self.heartrect = self.heart.get_rect(center=(WIDTH/2, 125))
     
     def draw(self):

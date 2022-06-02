@@ -153,7 +153,14 @@ class Player(Entity):
             return 0
     
     def health_bar(self, screen):
-        healthbar = pygame.image.load(LEVEL_IMG['healthbar'])
+        if self.nyawa == 3:
+            healthbar = pygame.image.load(LEVEL_IMG['healthbar3'])
+        elif self.nyawa == 2:
+            healthbar = pygame.image.load(LEVEL_IMG['healthbar2'])
+        elif self.nyawa == 1:
+            healthbar = pygame.image.load(LEVEL_IMG['healthbar1'])
+        else:
+            healthbar = pygame.image.load(LEVEL_IMG['healthbar0'])
         rect = healthbar.get_rect(topleft = (0, 0))
         pygame.draw.rect(screen, (255, 0, 0), (62, 32, self.health_now / self.health_ratio, 10))
         screen.blit(healthbar, rect)

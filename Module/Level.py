@@ -57,7 +57,6 @@ class Level:
         # mainmenu
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
-        self.deathpage = DeathPage(self.surface, self.setstatus, self.nyawaplayer)
         self.gameover = Gameover(self.surface, self.mainmenu, self.setstatus, oldmaxlevel, self.createlevelagain)
         self.winpage = WinPage(self.surface, self.newmaxlevel)
 
@@ -66,6 +65,7 @@ class Level:
         self.player = pygame.sprite.GroupSingle()
         self.goal = pygame.sprite.Group()
         self.setupplayer(player_layout)
+        self.deathpage = DeathPage(self.surface, self.setstatus, self.player.sprite.nyawa)
 
         # setup deathpage
 
@@ -193,7 +193,7 @@ class Level:
     
     # method untuk menentukan gameover
     def cek_gameover(self):
-        if self.nyawaplayer < 0:
+        if self.player.sprite.nyawa < 0:
             self.__bgsound.stop()
             self.setstatus('gameover')
 
@@ -201,11 +201,11 @@ class Level:
     def cek_death(self):
         if self.player.sprite.rect.top > HEIGHT and self.player.sprite.nyawa >= 0:
             self.timer = pygame.time.get_ticks()
-            self.nyawaplayer -= 1
+            self.player.sprite.nyawa -= 1
             self.setstatus("death")
         elif self.player.sprite.health_now <= 0 and self.player.sprite.nyawa >= 0:
             self.timer = pygame.time.get_ticks()
-            self.nyawaplayer -= 1
+            self.player.sprite.nyawa -= 1
             self.setstatus("death")
 
     def createlevelagain(self, nyawaplayer):
@@ -306,12 +306,17 @@ class Level:
             self.particle.add(Particle(self.player.sprite.rect.midbottom - offset,'land'))
     
     # method untuk interaksi player dengan item
-    def coll_item(self, player, item):
+    def coll_item(self, player, item, type):
         for i in item:
             if player.rect.colliderect(i.rect):
-                if player.health_now < player.health:
-                    player.get_health(100)
-                    i.kill()
+                if type == "pisang":
+                    if player.health_now < player.health:
+                        player.get_health(100)
+                        i.kill()
+                if type == "hati":
+                    if player.nyawa < 3:
+                        player.nyawa += 1
+                        i.kill()
     
     # method untuk interaksi player dengan enemy
     def coll_enemy(self):
@@ -330,7 +335,7 @@ class Level:
                 elif player_attack.colliderect(enemy.rect):
                     enemy.kill()
                     self.particle.add(Particle(enemy.rect.center, 'kill'))
-                    self.player.sprite.get_health(100)
+                    self.player.sprite.get_health(50)
                 else:
                     self.player.sprite.get_dmg(100)
     
@@ -382,8 +387,8 @@ class Level:
             # self.goal.draw(self.surface)
 
             self.player.update()
-            self.coll_item(self.player.sprite, self.hati.sprites())
-            self.coll_item(self.player.sprite, self.pisang.sprites())
+            self.coll_item(self.player.sprite, self.hati.sprites(), "hati")
+            self.coll_item(self.player.sprite, self.pisang.sprites(), "pisang")
             self.collision_x(self.player.sprite, self.floor.sprites())
             self.set_player_ground()
             self.collision_y(self.player.sprite, self.floor.sprites())
@@ -394,6 +399,7 @@ class Level:
             self.particle.draw(self.surface)
 
             self.player.sprite.health_bar(self.surface)
+            self.deathpage.update(self.player.sprite.nyawa)
             self.lava.update(self.camera_x)
             self.lava.draw(self.surface)
 
@@ -410,7 +416,7 @@ class Level:
                 self.timer = pygame.time.get_ticks()
                 self.second += 1
             if self.second == 2:
-                self.createlevelagain(self.nyawaplayer)
+                self.createlevelagain(self.player.sprite.nyawa)
         elif self.__status == "gameover":
             self.creategameover()
         elif self.__status == "win":
@@ -420,5 +426,6 @@ class Level:
                 self.second += 1
             if self.second == 2:
                 self.mainmenu(self.newmaxlevel)
-
+        print(self.player.sprite.nyawa)
+        print(self.nyawaplayer)
         self.input()
