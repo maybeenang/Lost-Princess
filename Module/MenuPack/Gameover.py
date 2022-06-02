@@ -68,7 +68,7 @@ class Gameover(Menu):
             self.time = pygame.time.get_ticks()
             if self.currentbutton == 0:
                 self.soundclicked[0].play()
-                self.createlevelagain(2)
+                self.createlevelagain(3)
             elif self.currentbutton == 1:
                 self.soundclicked[1].play()
                 self.createmainmenu(self.oldmaxlevel)

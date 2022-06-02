@@ -19,7 +19,7 @@ class Game:
 
         # setup level
         self._maxlevel = 1
-        self.nyawaplayer = 1
+        self.nyawaplayer = 3
 
         # setup menu utama
         self.menu = MenuManager(self.screen, self.createlevel, self._maxlevel)

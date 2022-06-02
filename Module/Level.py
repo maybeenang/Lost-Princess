@@ -56,6 +56,7 @@ class Level:
         # mainmenu
         self.mainmenu = mainmenu
         self.pause = Pause(self.surface, self.mainmenu, self.setstatus, oldmaxlevel)
+        self.deathpage = DeathPage(self.surface, self.setstatus, self.nyawaplayer)
         self.gameover = Gameover(self.surface, self.mainmenu, self.setstatus, oldmaxlevel, self.createlevelagain)
 
         # setup player
@@ -65,7 +66,6 @@ class Level:
         self.setupplayer(player_layout)
 
         # setup deathpage
-        self.deathpage = DeathPage(self.surface, self.setstatus, self.player.sprite.nyawa)
 
         # setup level leve selain player
         self.floor = self.setuplevel(level_layout, 'floor')
@@ -191,20 +191,20 @@ class Level:
     
     # method untuk menentukan gameover
     def cek_gameover(self):
-        if self.player.sprite.nyawa == -1:
+        if self.nyawaplayer < 0:
             self.__bgsound.stop()
             self.setstatus('gameover')
 
     # method untuk mengecek kondisi player
     def cek_death(self):
-        if self.player.sprite.rect.top > HEIGHT:
+        if self.player.sprite.rect.top > HEIGHT and self.player.sprite.nyawa >= 0:
             self.timer = pygame.time.get_ticks()
             self.nyawaplayer -= 1
             self.setstatus("death")
-        elif self.player.sprite.health_now <= 0:
+        elif self.player.sprite.health_now <= 0 and self.player.sprite.nyawa >= 0:
             self.timer = pygame.time.get_ticks()
             self.nyawaplayer -= 1
-            self.setstatus("death")   
+            self.setstatus("death")
 
     def createlevelagain(self, nyawaplayer):
         self.__init__(self.level, self.surface, self.mainmenu, self.oldmaxlevel, nyawaplayer)
@@ -394,8 +394,8 @@ class Level:
             self.coll_enemy()
             self.camera()
             self.cek_goal()
-            # self.cek_gameover()
             self.cek_death()
+            self.cek_gameover()
         elif self.__status == "pause":
             self.createpause()
         elif self.__status == "death":
@@ -408,5 +408,5 @@ class Level:
         elif self.__status == "gameover":
             self.creategameover()
                 
-        
+        print(self.nyawaplayer)
         self.input()
