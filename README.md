@@ -90,7 +90,7 @@ You can play the game by pressing the following keys:
 | `S` | move down | - |
 | `A` | move left | Run to left |
 | `D` | move right | Run to right |
-| `P` | - | Attack (not work yet) |
+| `P` | - | Attack |
 | `Space` or `Enter` | select | - |
 | `Esc` | back | Pause |
 
