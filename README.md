@@ -105,7 +105,8 @@ Unfortunately, we make this video just in MacOs system, soon we will make how to
 [![Youtube](./Assets/Docs/YouTube%20Thumbnail.jpg)](https://youtu.be/FSOSgkzh_t0)
 ## UML Diagram
 
-On progress
+`note : ` This UML Diagram not only shows the structure of the game, but also the relationship between the classes.
+
 <img src="./Assets/Docs/UML.png">
 ## Screenshots
 
