@@ -1,6 +1,7 @@
 from Module.Menu import *
 from Module.MenuPack.MainMenu import *
 from Module.MenuPack.OptionMenu import *
+from Module.MenuPack.CreditsPage import *
 from Assets.layoutMenuPath import *
 from Assets.soundPath import *
 import pygame
@@ -14,19 +15,23 @@ class MenuManager(Menu):
         self.soundstatus = 0.2
         self.__bg_sound.set_volume(self.soundstatus)
         self.__bg_sound.play(-1)
-        self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect)
+        self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect, self.createcredits)
 
         # level status
         self._maxlevel = maxlevel
         self.level = level
         self.__status = 'main'
     
+    def createcredits(self):
+        self.credits = CreditsPage(self.surface, self.createmainmenu)
+        self.__status = 'credits'
+    
     def createoption(self):
         self.option = OptionMenu(self.surface, self.createmainmenu, self.soundstatus)
         self.__status = 'opt'
     
     def createmainmenu(self):
-        self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect)
+        self.mainmenu = MainMenu(self.surface, self.createoption, self.createlevelselect, self.createcredits)
         self.__status = 'main'
     
     def createlevelselect(self):
@@ -52,4 +57,6 @@ class MenuManager(Menu):
             self.soundstatus = self.option.soundstatus
         elif self.__status == 'level':
             self.levelselect.draw()
+        elif self.__status == 'credits':
+            self.credits.draw()
         # print(self.status)

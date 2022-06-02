@@ -8,7 +8,7 @@ from Assets.soundPath import *
 import pygame, sys
 
 class MainMenu(Menu):
-    def __init__(self, surface, opt, level):
+    def __init__(self, surface, opt, level, credits):
         super().__init__(surface)
 
         # logo
@@ -22,6 +22,8 @@ class MainMenu(Menu):
         self.opt = opt
         
         self.level = level
+
+        self.credits = credits
 
         # main menu button
         self.buttons = {
@@ -70,6 +72,9 @@ class MainMenu(Menu):
                     elif button == 'opt':
                         self.soundclicked[0].play()
                         self.opt()
+                    elif button == 'credits':
+                        self.soundclicked[0].play()
+                        self.credits()
                     elif button == 'quit':
                         self.soundclicked[1].play()
                         pygame.quit()
