@@ -1,4 +1,4 @@
-from ..Item import Item
+from Module.Item import Item
 
 class Block(Item):
     def __init__(self, pos, size, img):
